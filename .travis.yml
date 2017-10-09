@@ -1,0 +1,9 @@
+language: php
+php:
+  - '7.1'
+install:
+  - cd ui
+  - cp env.travis .env
+  - php artisan key:generate
+  - composer install --dev
+script: vendor/bin/phpunit && vendor/bin/phpcs
