@@ -1,7 +1,7 @@
 language: php
 php:
   - '7.1'
-install:
+before_script:
   - cd ui
   - cp env.travis .env
   - php artisan key:generate
