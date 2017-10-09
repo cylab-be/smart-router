@@ -7,3 +7,5 @@ before_script:
   - cp env.travis .env
   - php artisan key:generate
 script: vendor/bin/phpunit && vendor/bin/phpcs
+notifications:
+    slack: cylab-be:SgDUjbNn00DSxqr5h20OG5Hs
