@@ -12,3 +12,4 @@ ui/.env
 ui/Homestead.yaml
 ui/Homestead.json
 
+.vagrant
