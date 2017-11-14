@@ -31,8 +31,8 @@ vagrantfile:
                                 vflmnfp_tv5alpd1hjly:
                                     host: '8000'
                                     guest: '80'
-                        memory: '512'
-                        cpus: '1'
+                        memory: '3000'
+                        cpus: '3'
         provision:
             puppet:
                 manifests_path: puphpet/puppet/manifests
@@ -47,7 +47,52 @@ vagrantfile:
                 owner: www-data
                 group: www-data
                 source: ./
+#                TODO check if source can be ./public rater than ./
                 target: /var/www
+                sync_type: default
+                smb:
+                    smb_host: ''
+                    smb_username: ''
+                    smb_password: ''
+                    mount_options:
+                        dir_mode: '0775'
+                        file_mode: '0664'
+                rsync:
+                    args:
+                        - '--verbose'
+                        - '--archive'
+                        - '-z'
+                    exclude:
+                        - .vagrant/
+                        - .git/
+                    auto: 'true'
+            vflsf_0vn2nr1do9ag:
+                owner: www-data
+                group: www-data
+                source: ./python
+                target: /home/vagrant/python
+                sync_type: default
+                smb:
+                    smb_host: ''
+                    smb_username: ''
+                    smb_password: ''
+                    mount_options:
+                        dir_mode: '0775'
+                        file_mode: '0664'
+                rsync:
+                    args:
+                        - '--verbose'
+                        - '--archive'
+                        - '-z'
+                    exclude:
+                        - .vagrant/
+                        - .git/
+                    auto: 'true'
+            vflsf_0vn2nr1dertg:
+                owner: www-data
+                group: www-data
+                source: ./db
+                target: /home/vagrant/db
                 sync_type: default
                 smb:
                     smb_host: ''
@@ -96,6 +141,7 @@ server:
         - nano
         - zsh
         - libapache2-mod-php7.1
+        - python3-pip
 users_groups:
     install: '1'
     groups: {  }
@@ -265,7 +311,8 @@ ruby:
                 - vine@0.2
 python:
     install: '1'
-    packages: {  }
+    packages:
+        - pymysql
     versions: {  }
 nodejs:
     install: '0'
@@ -304,8 +351,8 @@ mysql:
             password: '123'
     databases:
         mysqlnd_m1l1bu7jw9d6:
-            name: dbname
-            sql: ''
+            name: smartrouter
+            sql: /home/vagrant/db/create_db.sql
     grants:
         mysqlng_1ni4f2qszlxh:
             user: dbuser

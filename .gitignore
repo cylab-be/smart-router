@@ -13,3 +13,4 @@ ui/Homestead.yaml
 ui/Homestead.json
 
 .vagrant
+.DS_Store
