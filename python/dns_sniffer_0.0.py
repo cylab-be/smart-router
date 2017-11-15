@@ -22,7 +22,7 @@ DB_DATABASE = os.environ.get("DB_DATABASE")
 
 db = MySQLdb.connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE)
 
-def querysniff(pkt):
+def querysniffdns(pkt):
     if IP in pkt:
         ip_dst = pkt[IP].dst
         # ip_src = pkt[IP].src
@@ -52,5 +52,6 @@ def querysniff(pkt):
                 pass
 
 
-sniff(iface=INTERFACE, filter="port 53", prn=querysniff, store=0)
+
+sniff(iface=INTERFACE, filter="port 53", prn=querysniffdns, store=0)
 print ("\n[*] Shutting Down...")
