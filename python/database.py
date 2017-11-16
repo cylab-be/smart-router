@@ -6,11 +6,14 @@ import MySQLdb
 from os.path import join, dirname
 from dotenv import load_dotenv
 import os
+import logging
 
 class database:
     def __init__(self):
         dotenv_path = join(dirname(__file__), '.env')
         load_dotenv(dotenv_path)
+        self.logfile = os.environ.get("LOGFILE")
+        logging.basicConfig(filename=self.logfile, level=logging.DEBUG, format='%(asctime)s %(levelname)s - %(message)s')
         self.host = os.environ.get("DB_HOST")
         self.port = os.environ.get("DB_PORT")
         self.user = os.environ.get("DB_USERNAME")
@@ -35,8 +38,7 @@ class database:
             return str(ret)
 
         except pymysql.err.ProgrammingError:
-            # TODO logging
-            print("SQL ERROR")
+            logging.error("SQL ERROR")
             return False
 
 

@@ -1,16 +1,26 @@
 #!/usr/bin/python3
 from scapy.all import *
 from scapy.layers.inet import UDP, IP
-from scapy.layers.dns import DNS, DNSQR
+from scapy.layers.dns import DNS, DNSQR, DNSRR
 import socket
 import datetime
+import logging
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+from database import database
 import pymysql
 pymysql.install_as_MySQLdb()
-from database import database
+
+
 
 
 class sniffer:
     def __init__(self):
+        dotenv_path = join(dirname(__file__), '.env')
+        load_dotenv(dotenv_path)
+        self.logfile = os.environ.get("LOGFILE")
+        logging.basicConfig(filename=self.logfile, level=logging.DEBUG, format='%(asctime)s %(levelname)s - %(message)s')
         self.interface = os.environ.get("INTERFACE")
         self.db = database()
         self.db.connect()
@@ -27,15 +37,14 @@ class sniffer:
                     name = (pkt.an.rdata)
                     try:
                         socket.inet_aton(name)
-                        print(ip_dst + "->" + name)
+                        logging.info(ip_dst + "->" + name)
                         now = datetime.datetime.now()
                         values = [str(ip_dst), str(name), now]
                         sql = "INSERT INTO DNSQueries (ip_iot, ip_dst, datetime) VALUES (%s, %s, %s)"
                         if self.db.execquery(sql,values) == False :
-                            # TODO logging
-                            print("ERROR while inserting tuple in database")
+                            logging.error("failed inserting tuple in database")
                         else:
-                            print("New entry in database")
+                            logging.info("New entry in database")
                     except socket.error:
                         # has no ip address field
                         pass
