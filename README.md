@@ -5,7 +5,7 @@
 
 # DNS-sniffer
 The DNS-sniffier uses the **scapy-python3** lib.
-###First tests on DNS-sniffer
+### First tests on DNS-sniffer
 DNS answers are stored into the **"smartrouter"** database on the **"DNSQueries"** table.
 
 #### Usage :
@@ -39,7 +39,7 @@ sudo python3.5 testclass.py
 #### or
 
 ```bash
-sudo /usr/bin/python3.5 /home/vagrant/python/testclass.py.py
+sudo /usr/bin/python3.5 /home/vagrant/python/testclass.py
 ```
 
 # ohmyzsh

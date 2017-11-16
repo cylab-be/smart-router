@@ -44,7 +44,7 @@ class sniffer:
                         if self.db.execquery(sql,values) == False :
                             logging.error("failed inserting tuple in database")
                         else:
-                            logging.info("New entry in database")
+                            logging.info("new entry in database")
                     except socket.error:
                         # has no ip address field
                         pass
