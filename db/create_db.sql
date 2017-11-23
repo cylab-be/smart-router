@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.20)
 # Database: smartrouter
-# Generation Time: 2017-11-14 13:50:50 +0000
+# Generation Time: 2017-11-23 06:20:04 +0000
 # ************************************************************
 
 
@@ -29,21 +29,11 @@ CREATE TABLE `DNSQueries` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip_iot` varchar(20) NOT NULL DEFAULT '',
   `ip_dst` varchar(20) NOT NULL DEFAULT '',
+  `domain` varchar(200) DEFAULT NULL,
   `datetime` varchar(50) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `DNSQueries` WRITE;
-/*!40000 ALTER TABLE `DNSQueries` DISABLE KEYS */;
-
-INSERT INTO `DNSQueries` (`id`, `ip_iot`, `ip_dst`, `datetime`)
-VALUES
-	(6,'10.0.2.15','188.213.143.111','2017-11-14 13:42:02.996192'),
-	(7,'10.0.2.15','188.213.143.111','2017-11-14 13:42:04.028723'),
-	(8,'10.0.2.15','188.213.143.111','2017-11-14 13:42:04.033689');
-
-/*!40000 ALTER TABLE `DNSQueries` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 

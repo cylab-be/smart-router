@@ -10,13 +10,11 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 from database import database
 import pymysql
-pymysql.install_as_MySQLdb()
-
-
 
 
 class sniffer:
     def __init__(self):
+        pymysql.install_as_MySQLdb()
         dotenv_path = join(dirname(__file__), '.env')
         load_dotenv(dotenv_path)
         self.logfile = os.environ.get("LOGFILE")
@@ -28,19 +26,18 @@ class sniffer:
     def dnsQuerryHandler(self, pkt):
         if IP in pkt:
             ip_dst = pkt[IP].dst
-            # ip_src = pkt[IP].src
-            # print(ip_src + "->" + ip_dst)
-            # if pkt.haslayer(DNS) and pkt.getlayer(DNS).qr == 0:
-            # print str(ip_src) + " -> " + str(ip_dst) + " : " + "(" + pkt.getlayer(DNS).qd.qname + ")"
-            if pkt.haslayer(DNS):
+            if pkt.haslayer(DNS) :
                 if pkt.ancount > 0 and isinstance(pkt.an, DNSRR):
-                    name = (pkt.an.rdata)
+                    dest = (pkt.an.rdata)
+                    name = str((pkt.getlayer(DNS).qd.qname).decode("utf-8"))
+                    if name.endswith('.'):
+                        name = name[:-1]
                     try:
-                        socket.inet_aton(name)
-                        logging.info(ip_dst + "->" + name)
+                        socket.inet_aton(dest)
+                        logging.debug(ip_dst + "->" + name + "(" + dest + ")")
                         now = datetime.datetime.now()
-                        values = [str(ip_dst), str(name), now]
-                        sql = "INSERT INTO DNSQueries (ip_iot, ip_dst, datetime) VALUES (%s, %s, %s)"
+                        values = [str(ip_dst), str(dest), str(name), now]
+                        sql = "INSERT INTO DNSQueries (ip_iot, ip_dst, domain, datetime) VALUES (%s, %s, %s, %s)"
                         if self.db.execquery(sql,values) == False :
                             logging.error("failed inserting tuple in database")
                         else:
