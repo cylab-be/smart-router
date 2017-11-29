@@ -1,9 +1,16 @@
 from sniffer import sniffer
 from database import database
 import datetime
-snif = sniffer()
+snifDNS = sniffer("dns")
+snifDNS.setType("10.0.2.15")
+snifDNS.start()
 
-snif.dnsQuerry("10.0.2.15")
+
+snifHTTP = sniffer("http")
+snifHTTP.setType("10.0.2.15")
+snifHTTP.start()
+snifDNS.join()
+snifHTTP.join()
 
 # db = database()
 # db.connect()
