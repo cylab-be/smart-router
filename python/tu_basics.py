@@ -3,7 +3,7 @@ import datetime
 from python.database import *
 
 
-class SniffTests():
+class tu_basics():
     def testCreateTables(self):
         db = database()
         db.connect()
@@ -14,18 +14,32 @@ class SniffTests():
         db.connect()
         sql = "SELECT * FROM DNSQueries"
         result = db.execquery(sql)
-        if  result == False : return False
+        if  result is False : return False
+
+        sql = "SELECT * FROM HTTPQueries"
+        result = db.execquery(sql)
+        if result is False: return False
+
+        return True
+
+    def testTablesContainSomething(self):
+        db = database()
+        db.connect()
+        sql = "SELECT * FROM DNSQueries"
+        result = db.execquery(sql)
+        if result is False or result is "": return False
         print("DNSQueries")
-        for row in result.split(";") :
+        for row in result.split(";"):
             print(row)
 
         sql = "SELECT * FROM HTTPQueries"
         result = db.execquery(sql)
-        if result == False: return False
+        if result is False or result is "": return False
         print("HTTPQueries")
-        for row in result.split(";") :
+        for row in result.split(";"):
             print(row)
         return True
+
 
     def testInserIntoTables(self):
         db = database()
@@ -62,12 +76,12 @@ class SniffTests():
 
 class ExecuteSniffTests(unittest.TestCase):
     def testCreateTables(self):
-        self.assertTrue(SniffTests.testCreateTables(self), "Tables can not been created")
-    def testTablesExistence(self):
-        self.assertTrue(SniffTests.testTablesExistence(self), "Tables do not exist")
+        self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
     def testInserIntoTables(self):
-        self.assertTrue(SniffTests.testInserIntoTables(self), "Insertion in tables failed")
+        self.assertTrue(tu_basics.testInserIntoTables(self), "Insertion in tables failed")
+    def testTablesExistence(self):
+        self.assertTrue(tu_basics.testTablesExistence(self), "Tables do not exist")
     def testTableDNSQueriesContains(self):
-        self.assertTrue(SniffTests.testTableDNSQueriesContains(self), "Insertion in DNSQueries table must have been fail because there is nothing in there")
+        self.assertTrue(tu_basics.testTableDNSQueriesContains(self), "Insertion in DNSQueries table must have been fail because there is nothing in there")
     def testTableHTTPQueriesContains(self):
-        self.assertTrue(SniffTests.testTableHTTPQueriesContains(self), "Insertion in HTTPQueries table must have been fail because there is nothing in there")
+        self.assertTrue(tu_basics.testTableHTTPQueriesContains(self), "Insertion in HTTPQueries table must have been fail because there is nothing in there")

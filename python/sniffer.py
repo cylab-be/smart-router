@@ -1,8 +1,5 @@
 #!/usr/bin/python3
 import datetime
-import logging
-import os
-import socket
 import threading
 from os.path import join, dirname
 

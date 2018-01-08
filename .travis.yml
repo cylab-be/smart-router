@@ -16,9 +16,11 @@ matrix:
       - "3.6"
     insatll:
       - pip install scapy
+      - pip install requests
     before_script:
       - cd python
     script:
-      - SniffTests.py
+      - python3.5 tu_basics.py
+      - sudo python3.5 tu_allsnifferprocess.py
 notifications:
     slack: cylab-be:SgDUjbNn00DSxqr5h20OG5Hs

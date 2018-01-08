@@ -2,7 +2,7 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Remote Python 3.5.2 Vagrant VM at ~/Dev/smart-router (/usr/bin/python3.5)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.5.2 (ssh://root@127.0.0.1:2222/usr/bin/python3.5)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="PHARS">
