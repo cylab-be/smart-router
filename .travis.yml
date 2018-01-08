@@ -17,9 +17,11 @@ matrix:
     insatll:
       - pip install scapy
       - pip install requests
+      - sudo apt-get install python3-pymysql
     before_script:
       - cd python
     script:
+      - python --version
       - python tu_basics.py
       - sudo python tu_allsnifferprocess.py
 notifications:
