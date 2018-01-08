@@ -1,11 +1,24 @@
-language: php
-php:
-  - '7.1'
-before_script:
-  - cd ui
-  - composer install --dev
-  - cp env.travis .env
-  - php artisan key:generate
-script: vendor/bin/phpunit && vendor/bin/phpcs
+matrix:
+  include:
+  - language: php
+    php:
+      - '7.1'
+    before_script:
+      - cd ui
+      - composer install --dev
+      - cp env.travis .env
+      - php artisan key:generate
+    script: vendor/bin/phpunit && vendor/bin/phpcs
+
+  - language: ptyhon
+    python:
+      - "3.5"
+      - "3.6"
+    insatll:
+      - pip install scapy
+    before_script:
+      - cd python
+    script:
+      - SniffTests.py
 notifications:
     slack: cylab-be:SgDUjbNn00DSxqr5h20OG5Hs

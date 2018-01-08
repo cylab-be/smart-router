@@ -28,6 +28,7 @@ class sniffer (threading.Thread):
         self.db = database()
         self.db.connect()
         self.type = type
+
     def run(self):
         logging.info("run")
         logging.info("type = " + self.type)
@@ -36,7 +37,7 @@ class sniffer (threading.Thread):
         elif (self.type == "http"):
             self.httpQuerry(self.host)
 
-    def setType(self, host):
+    def setHost(self, host):
         self.host = host
 
     def dnsQuerryHandler(self, pkt):
@@ -46,54 +47,64 @@ class sniffer (threading.Thread):
         if not pkt.ancount > 0 and not isinstance(pkt.an, DNSRR): return
         dest = pkt.an.rdata
         name = str(pkt.getlayer(DNS).qd.qname.decode("utf-8"))
-        if not name.endswith('.'): pass
-        name = name[:-1]
+        if name.endswith('.'):
+            name = name[:-1]
         try:
             socket.inet_aton(dest)
-            logging.debug(ip_dst + "->" + name + "(" + dest + ")")
             now = datetime.datetime.now()
             values = [str(ip_dst), str(dest), str(name), now]
-            sql = "INSERT INTO DNSQueries (ip_iot, ip_dst, domain, datetime) VALUES (%s, %s, %s, %s)"
+            if self.db.connection == "sqlite":
+                sql = "INSERT INTO DNSQueries (ip_iot, ip_dst, domain, datetime) VALUES (?,?,?,?)"
+            elif self.db.connection == "mysql":
+                sql = "INSERT INTO DNSQueries (ip_iot, ip_dst, domain, datetime) VALUES (%s, %s, %s, %s)"
             if self.db.execquery(sql, values):
                 logging.error("failed inserting tuple in database")
             else:
-                logging.info("new entry in database")
-        except socket.error:
-            # has no ip address field
-            pass
-        except TypeError:
-            pass
+                logging.info("new entry in database(DNS)")
+        except socket.error: pass
+        except TypeError: pass
 
     def httpQuerryHandler(self, pkt):
         if IP not in pkt: return
         ip_dst = pkt[IP].dst
         ip_src = pkt[IP].src
-        # logging.info("HTTP sniffer - " + ip_src + "->" + ip_dst)
-        sql = "SELECT domain FROM  DNSQueries WHERE ip_dst = %s LIMIT 1"
-        ret = self.db.execquery(sql, ip_dst)
+
+        values = [str(ip_dst)]
+
+        if self.db.connection == "sqlite":
+            sql = "select domain from DNSQueries WHERE ip_dst = ? LIMIT 1"
+        elif self.db.connection == "mysql":
+            sql = "SELECT domain FROM DNSQueries WHERE ip_dst = %s LIMIT 1"
+
+        ret = self.db.execquery(sql, values)
+
         inverted = False
-        if ret == "" :
-            sql = "SELECT domain FROM  DNSQueries WHERE ip_dst = %s LIMIT 1"
-            ret = self.db.execquery(sql, ip_src)
+        if ret == "" or ret is False:
+            # sql = "SELECT domain FROM  DNSQueries WHERE ip_dst = %s LIMIT 1"
+            values = [str(ip_src)]
+            ret = self.db.execquery(sql, values)
             inverted = True
-            if ret == "": logging.warning("No corresponding domain"); return
+            if ret == "" or ret is False :
+                logging.warning("No corresponding domain")
+            return
 
         ret = ret.replace("'", "").replace("(", "").replace(")", "").replace(",", "")
         now = datetime.datetime.now()
-        sql = "INSERT INTO HTTPQueries (ip_iot, domain, datetime) VALUES (%s, %s, %s)"
+        if self.db.connection == "sqlite":
+            sql = "INSERT INTO HTTPQueries (ip_iot, domain, datetime) VALUES (?,?,?)"
+        elif self.db.connection == "mysql":
+            sql = "INSERT INTO HTTPQueries (ip_iot, domain, datetime) VALUES (%s, %s, %s)"
         if not inverted:
             logging.info(ip_src + " -> " + ret)
             values = [str(ip_src), str(ret), now]
         else:
             values = [str(ip_dst), str(ret), now]
             logging.info(ip_dst + " -> " + ret)
-        ret = self.db.execquery(sql, values)
 
-
-        #
-        #     logging.error("failed selecting tuple in database")
-        # else:
-        #     logging.info("new entry in database")
+        if self.db.execquery(sql, values):
+            logging.error("failed inserting tuple in database")
+        else:
+            logging.info("new entry in database(HTTP)")
 
 
 
