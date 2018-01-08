@@ -23,7 +23,6 @@ matrix:
       - pip install PyMySQL
     before_script:
       - cd python
-      - export $TRAVIS_PYTHON_VERSION='3.6'
     script:
       - python3 --version
       - python3 tu_basics.py
