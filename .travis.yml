@@ -20,7 +20,7 @@ matrix:
     before_script:
       - cd python
     script:
-      - python3.6 tu_basics.py
-      - sudo python3.6 tu_allsnifferprocess.py
+      - python tu_basics.py
+      - sudo python tu_allsnifferprocess.py
 notifications:
     slack: cylab-be:SgDUjbNn00DSxqr5h20OG5Hs
