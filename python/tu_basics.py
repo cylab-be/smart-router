@@ -1,6 +1,6 @@
 import unittest
 import datetime
-from python.database import *
+from database import *
 
 
 class tu_basics():
