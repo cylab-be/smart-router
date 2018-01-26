@@ -1,0 +1,20 @@
+2018-01-26 15:55:23,908 INFO - run
+2018-01-26 15:55:23,908 INFO - type = dns
+2018-01-26 15:55:23,911 INFO - run
+2018-01-26 15:55:23,911 INFO - type = http
+2018-01-26 15:55:28,919 INFO - Starting new HTTP connection (1): nicode.me
+2018-01-26 15:55:28,949 WARNING - No corresponding domain
+2018-01-26 15:55:28,957 INFO - new entry in database(DNS)
+2018-01-26 15:55:28,972 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 15:55:28,977 INFO - new entry in database(HTTP)
+2018-01-26 15:55:28,978 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 15:55:28,982 INFO - new entry in database(HTTP)
+2018-01-26 15:55:28,995 DEBUG - "GET /index.html HTTP/1.1" 200 3755
+2018-01-26 15:55:29,001 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 15:55:29,005 INFO - new entry in database(HTTP)
+2018-01-26 15:55:29,008 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 15:55:29,011 INFO - new entry in database(HTTP)
+2018-01-26 15:55:29,012 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 15:55:29,016 INFO - new entry in database(HTTP)
+2018-01-26 15:55:29,022 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 15:55:29,026 INFO - new entry in database(HTTP)

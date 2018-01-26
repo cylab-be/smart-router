@@ -4,17 +4,5 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="Remote Python 3.5.2 (ssh://root@127.0.0.1:2222/usr/bin/python3.5)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="PHARS">
-        <CLASSES>
-          <root url="phar:///Users/benjamin/smart-router/smart-router/ui/vendor/phar-io/manifest/tests/_fixture/test.phar/" />
-          <root url="phar:///Users/benjamin/smart-router/smart-router/ui/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.1.phar/" />
-        </CLASSES>
-        <SOURCES>
-          <root url="phar:///Users/benjamin/smart-router/smart-router/ui/vendor/phar-io/manifest/tests/_fixture/test.phar/" />
-          <root url="phar:///Users/benjamin/smart-router/smart-router/ui/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.1.phar/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
   </component>
 </module>

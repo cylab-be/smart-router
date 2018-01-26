@@ -18,7 +18,9 @@ class database:
         self.connection = os.environ.get("DB_CONNECTION")
         self.dbname = os.environ.get("DB_DATABASE")
 
-        if self.connection == 'sqlite': return
+        if self.connection == 'sqlite':
+            self.db_path = os.environ.get("DB_PATH")
+            return
         self.host = os.environ.get("DB_HOST")
         self.port = os.environ.get("DB_PORT")
         self.user = os.environ.get("DB_USERNAME")
@@ -29,7 +31,7 @@ class database:
         if self.connection == 'mysql':
             self.db = MySQLdb.connect(host=self.host, port=int(self.port), user=self.user, passwd=self.passwd, db=self.dbname)
         elif self.connection == 'sqlite':
-            self.db = sqlite3.connect(self.dbname+".db", check_same_thread=False)
+            self.db = sqlite3.connect(self.db_path+self.dbname+".db", check_same_thread=False)
         self.cursor = self.db.cursor()
 
     def execquery(self, query, *args):
@@ -54,7 +56,7 @@ class database:
 
 
     def createTables(self):
-        fd = open('../db/create_db.sql', 'r')
+        fd = open(self.db_path+'create_db.sql', 'r')
         sqlFile = fd.read()
         fd.close()
 

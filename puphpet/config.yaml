@@ -110,6 +110,28 @@ vagrantfile:
                         - .vagrant/
                         - .git/
                     auto: 'true'
+            vflsf_0vn2nr1dorth:
+                owner: www-data
+                group: www-data
+                source: ./logs
+                target: /home/vagrant/logs
+                sync_type: default
+                smb:
+                    smb_host: ''
+                    smb_username: ''
+                    smb_password: ''
+                    mount_options:
+                        dir_mode: '0775'
+                        file_mode: '0664'
+                rsync:
+                    args:
+                        - '--verbose'
+                        - '--archive'
+                        - '-z'
+                    exclude:
+                        - .vagrant/
+                        - .git/
+                    auto: 'true'
         usable_port_range:
             start: 10200
             stop: 10500
