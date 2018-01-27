@@ -18,3 +18,24 @@
 2018-01-26 15:55:29,016 INFO - new entry in database(HTTP)
 2018-01-26 15:55:29,022 INFO - 10.0.2.15 -> nicode.me
 2018-01-26 15:55:29,026 INFO - new entry in database(HTTP)
+2018-01-26 16:04:20,297 INFO - run
+2018-01-26 16:04:20,297 INFO - type = dns
+2018-01-26 16:04:20,300 INFO - run
+2018-01-26 16:04:20,300 INFO - type = http
+2018-01-26 16:04:25,304 INFO - Starting new HTTP connection (1): nicode.me
+2018-01-26 16:04:25,336 INFO - new entry in database(DNS)
+2018-01-26 16:04:25,341 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 16:04:25,345 INFO - new entry in database(HTTP)
+2018-01-26 16:04:25,364 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 16:04:25,368 INFO - new entry in database(HTTP)
+2018-01-26 16:04:25,370 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 16:04:25,373 INFO - new entry in database(HTTP)
+2018-01-26 16:04:25,381 DEBUG - "GET /index.html HTTP/1.1" 200 3755
+2018-01-26 16:04:25,384 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 16:04:25,388 INFO - new entry in database(HTTP)
+2018-01-26 16:04:25,390 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 16:04:25,394 INFO - new entry in database(HTTP)
+2018-01-26 16:04:25,395 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 16:04:25,398 INFO - new entry in database(HTTP)
+2018-01-26 16:04:25,408 INFO - 10.0.2.15 -> nicode.me
+2018-01-26 16:04:25,413 INFO - new entry in database(HTTP)

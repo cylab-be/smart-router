@@ -164,6 +164,7 @@ server:
         - zsh
         - libapache2-mod-php7.1
         - python3-pip
+        - php7.1-sqlite3
 users_groups:
     install: '1'
     groups: {  }

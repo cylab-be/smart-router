@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Smart-router</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -79,16 +79,51 @@
 
     <div class="content">
         <div class="title m-b-md">
-            Laravel
+            Smart-router
         </div>
+        <h3>HTTP Traffic</h3>
+        @php($HTTPQueries = DB::select('select * from HTTPQueries '))
+        <table style="width:100%">
+            <tr>
+                <th>ip iot</th>
+                <th>Domain</th>
+                <th>Date </th>
+            </tr>
 
-        <div class="links">
-            <a href="https://laravel.com/docs">Documentation</a>
-            <a href="https://laracasts.com">Laracasts</a>
-            <a href="https://laravel-news.com">News</a>
-            <a href="https://forge.laravel.com">Forge</a>
-            <a href="https://github.com/laravel/laravel">GitHub</a>
-        </div>
+            @foreach($HTTPQueries as $query)
+            <tr>
+                <td>{{$query->ip_iot}}</td>
+                <td>{{$query->domain}}</td>
+                <td>{{$query->datetime}}</td>
+            </tr>
+            @endforeach
+
+        </table>
+
+
+        <h3>DNS Traffic</h3>
+        @php($DNSQueries = DB::select('select * from DNSQueries '))
+        <table style="width:100%">
+            <tr>
+                <th>ip iot</th>
+                <th>ip dst</th>
+                <th>Domain</th>
+                <th>Date </th>
+            </tr>
+
+            @foreach($DNSQueries as $query)
+                <tr>
+                    <td>{{$query->ip_iot}}</td>
+                    <td>{{$query->ip_dst}}</td>
+                    <td>{{$query->domain}}</td>
+                    <td>{{$query->datetime}}</td>
+                </tr>
+            @endforeach
+
+        </table>
+
+
+
     </div>
 </div>
 </body>
