@@ -1,33 +1,25 @@
-matrix:
-  include:
-  - language: php
-    php:
-      - '7.0'
-    before_script:
-      - cd ui
-      - composer install --dev
-      - cp env.travis .env
-      - php artisan key:generate
-    script: vendor/bin/phpunit && vendor/bin/phpcs
-
-  - language: python
-    sudo: true
-    python:
-      - "3.5"
-      - "3.6"
-    before_install:
-      - sudo apt update
-    install:
-      - sudo apt install python3-pip
-      - sudo pip3 install scapy-python3
-      - sudo pip3 install requests
-      - sudo pip3 install PyMySQL
-      - sudo pip3 install python-dotenv
-    before_script:
-      - cd python
-    script:
-      - python3 --version
-      - python3 tu_basics.py
-      - sudo python3 tu_allsnifferprocess.py
+sudo: required
+language: php
+php:
+  - '7.1'
+before_install:
+  - sudo apt update
+  - sudo apt install -y python3-pip
+  - sudo pip3 install scapy-python3
+  - sudo pip3 install requests
+  - sudo pip3 install PyMySQL
+  - sudo pip3 install python-dotenv
+before_script:
+  - cd ui
+  - composer install --dev
+  - cp env.travis .env
+  - php artisan key:generate
+script:
+  - vendor/bin/phpunit 
+  - vendor/bin/phpcs
+  - cd ../python
+  - python3 --version
+  - python3 tu_basics.py
+  - sudo python3 tu_allsnifferprocess.py
 notifications:
     slack: cylab-be:SgDUjbNn00DSxqr5h20OG5Hs

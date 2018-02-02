@@ -1,3 +1,5 @@
+*.pyc
+
 ui/vendor/
 ui/node_modules/
 ui/npm-debug.log
