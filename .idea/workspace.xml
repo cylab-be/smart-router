@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94b18ac4-5fb7-483a-94d8-41c8c38ee3f1" name="Default" comment="Sniffer HTTP feature added + DB update">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/resources/views/welcome.blade.php" afterPath="$PROJECT_DIR$/ui/resources/views/welcome.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -79,11 +79,31 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="welcome.blade.php" pinned="false" current-in-tab="true">
+          <file leaf-file-name="welcome.blade.php" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ui/resources/views/welcome.blade.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="790">
                   <caret line="114" column="36" lean-forward="false" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name=".env" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/python/.env">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="165">
+                  <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/.travis.yml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="195">
+                  <caret line="13" column="67" lean-forward="false" selection-start-line="13" selection-start-column="67" selection-end-line="13" selection-end-column="67" />
                   <folding />
                 </state>
               </provider>
@@ -187,7 +207,6 @@
         <option value="$PROJECT_DIR$/python/tu_allsnifferprocess.py" />
         <option value="$PROJECT_DIR$/python/tu_readdb.py" />
         <option value="$PROJECT_DIR$/python/tu_basics.py" />
-        <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/logs/smartrouter.log" />
         <option value="$PROJECT_DIR$/python/database.py" />
         <option value="$PROJECT_DIR$/python/.env" />
@@ -195,6 +214,7 @@
         <option value="$PROJECT_DIR$/db/create_db.sql" />
         <option value="$PROJECT_DIR$/python/sniffer.py" />
         <option value="$PROJECT_DIR$/ui/resources/views/welcome.blade.php" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
       </list>
     </option>
   </component>
@@ -248,24 +268,6 @@
               <item name="smart-router" type="b2602c69:ProjectViewProjectNode" />
               <item name="smart-router" type="462c0819:PsiDirectoryNode" />
               <item name="python" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smart-router" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smart-router" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smart-router" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smart-router" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="smart-router" type="b2602c69:ProjectViewProjectNode" />
-              <item name="smart-router" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -762,13 +764,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/python/tu_basics.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -785,14 +780,6 @@
             <marker date="1515509385592" expanded="true" signature="2111:2135" ph="SELECT * FRO... DNSQueries" />
             <marker date="1515509385592" expanded="true" signature="2275:2300" ph="SELECT * FRO... HTTPQueries" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -895,6 +882,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="790">
           <caret line="114" column="36" lean-forward="false" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="67" lean-forward="false" selection-start-line="13" selection-start-column="67" selection-end-line="13" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
       </provider>
