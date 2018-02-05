@@ -10,11 +10,9 @@ from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR
 from scapy.layers.inet import IP
 from scapy.layers.inet import Ether
-from scapy.layers.inet import TCP
 
 
 class sniffer (threading.Thread):
-    SYN = TCP(flags='S', seq=1000)
 
     def __init__(self, type):
         threading.Thread.__init__(self)
