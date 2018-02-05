@@ -2,8 +2,7 @@ DROP TABLE IF EXISTS `DNSQueries`;
 
 CREATE TABLE `DNSQueries` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `ip_iot` varchar(20) NOT NULL DEFAULT '',
-  `ip_dst` varchar(20) NOT NULL DEFAULT '',
+  `ip` varchar(20) NOT NULL DEFAULT '',
   `domain` varchar(200) NOT NULL DEFAULT '',
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -15,7 +14,7 @@ DROP TABLE IF EXISTS `HTTPQueries`;
 
 CREATE TABLE `HTTPQueries` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT ,
-  `ip_iot` varchar(20) NOT NULL DEFAULT '',
+  `mac_iot` varchar(20) NOT NULL DEFAULT '',
   `domain` varchar(200) NOT NULL DEFAULT '',
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`id`)
