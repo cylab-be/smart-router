@@ -47,16 +47,16 @@ class tu_basics():
         now = datetime.datetime.now()
         values = [str("1.1.1.1"), str("2.2.2.2"), str("test.org"), now]
         if db.connection == "sqlite":
-            sql = "INSERT INTO DNSQueries (ip_iot, ip_dst, domain, datetime) VALUES (?,?,?,?)"
+            sql = "INSERT INTO DNSQueries (ip , domain, datetime) VALUES (?,?,?,?)"
         elif db.connection == "mysql":
-            sql = "INSERT INTO DNSQueries (ip_iot, ip_dst, domain, datetime) VALUES (%s, %s, %s, %s)"
+            sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (%s, %s, %s, %s)"
         if db.execquery(sql, values) == False: return False
 
         values = [str("1.1.1.1"), str("test.org"), now]
         if db.connection == "sqlite":
-            sql = "INSERT INTO HTTPQueries (ip_iot, domain, datetime) VALUES (?,?,?)"
+            sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (?,?,?)"
         elif db.connection == "mysql":
-            sql = "INSERT INTO HTTPQueries (ip_iot, domain, datetime) VALUES (%s, %s, %s)"
+            sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (%s, %s, %s)"
         if db.execquery(sql, values) == False: return False
 
         return True
