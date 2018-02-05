@@ -4,7 +4,7 @@ import threading
 from os.path import join, dirname
 
 import pymysql
-from database import database
+from python.database import database
 from dotenv import load_dotenv
 from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR
@@ -28,8 +28,7 @@ class sniffer (threading.Thread):
         self.type = type
 
     def run(self):
-        logging.info("run")
-        logging.info("type = " + self.type)
+        logging.info("run " + self.type)
         if (self.type == "dns"):
             self.dnsQuerry(self.host)
         elif (self.type == "http"):
@@ -73,8 +72,8 @@ class sniffer (threading.Thread):
         # FIXME - dns request in db "fail" for the first time the domain is reached, so the first http request also fail
         time.sleep(2)
 
-        if Ether in pkt :
-            logging.debug("mac : " + pkt[IP].src +" "+ pkt[Ether].src + "->" + pkt[IP].dst +" "+ pkt[Ether].dst)
+        # if Ether in pkt :
+        #     logging.debug("mac : " + pkt[IP].src +" "+ pkt[Ether].src + "->" + pkt[IP].dst +" "+ pkt[Ether].dst)
 
         if self.db.connection == "sqlite":
             sql = "select domain from DNSQueries WHERE ip = ? LIMIT 1"
@@ -116,11 +115,12 @@ class sniffer (threading.Thread):
 
 
     def dnsQuerry(self, host):
-        # TODO - check if host, if not, launch sniif wo filter on ip add
+        # TODO - check if host, if not, launch sniff wo filter on ip add
         # sniff(iface=self.interface, filter="ip host " + host + " and port 53", prn=self.dnsQuerryHandler, store=0)
         sniff(iface=self.interface, filter="port 53", prn=self.dnsQuerryHandler, store=0)
 
     def httpQuerry(self, host):
-        # TODO - check if host, if not, launch sniif wo filter on ip add
+        # TODO - check if host, if not, launch sniff wo filter on ip add
         # sniff(iface=self.interface, filter="ip host " + host + " and port 80", prn=self.httpQuerryHandler, store=0)
+        # sniff(iface=self.interface, filter="port 80", lfilter=lambda d: d.src == '08:00:27:54:8b:1b', prn=self.httpQuerryHandler, store=0)
         sniff(iface=self.interface, filter="port 80", prn=self.httpQuerryHandler, store=0)

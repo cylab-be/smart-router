@@ -1,5 +1,5 @@
 import unittest
-from tu_basics import tu_basics
+from python.tests.tu_basics import tu_basics
 
 class Executetu_readdb(unittest.TestCase):
     def testTablesExistence(self):

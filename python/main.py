@@ -1,13 +1,13 @@
-from sniffer import sniffer
+from python.sniffer import sniffer
 # from database import database
 # import datetime
 snifDNS = sniffer("dns")
-snifDNS.setHost("10.0.2.15")
+snifDNS.setHost("")
 snifDNS.start()
 
 
 snifHTTP = sniffer("http")
-snifHTTP.setHost("10.0.2.15")
+snifHTTP.setHost("")
 snifHTTP.start()
 snifDNS.join()
 snifHTTP.join()
