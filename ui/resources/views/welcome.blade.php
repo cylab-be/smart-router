@@ -85,14 +85,14 @@
         @php($HTTPQueries = DB::select('select * from HTTPQueries '))
         <table style="width:100%">
             <tr>
-                <th>ip iot</th>
+                <th>Mac iot</th>
                 <th>Domain</th>
                 <th>Date </th>
             </tr>
 
             @foreach($HTTPQueries as $query)
             <tr>
-                <td>{{$query->ip_iot}}</td>
+                <td>{{$query->mac_iot}}</td>
                 <td>{{$query->domain}}</td>
                 <td>{{$query->datetime}}</td>
             </tr>
@@ -105,7 +105,6 @@
         @php($DNSQueries = DB::select('select * from DNSQueries '))
         <table style="width:100%">
             <tr>
-                <th>ip iot</th>
                 <th>ip dst</th>
                 <th>Domain</th>
                 <th>Date </th>
@@ -113,8 +112,7 @@
 
             @foreach($DNSQueries as $query)
                 <tr>
-                    <td>{{$query->ip_iot}}</td>
-                    <td>{{$query->ip_dst}}</td>
+                    <td>{{$query->ip}}</td>
                     <td>{{$query->domain}}</td>
                     <td>{{$query->datetime}}</td>
                 </tr>

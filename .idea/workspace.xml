@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94b18ac4-5fb7-483a-94d8-41c8c38ee3f1" name="Default" comment="Sniffer HTTP feature added + DB update">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/smartrouter.sqlite" afterPath="$PROJECT_DIR$/db/smartrouter.sqlite" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/smartrouter.log" afterPath="$PROJECT_DIR$/logs/smartrouter.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python/sniffer.py" afterPath="$PROJECT_DIR$/python/sniffer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/resources/views/welcome.blade.php" afterPath="$PROJECT_DIR$/ui/resources/views/welcome.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -63,11 +61,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="sniffer.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="sniffer.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/python/sniffer.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="164">
-                  <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+                <state relative-caret-position="509">
+                  <caret line="35" column="30" lean-forward="false" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
                   <folding>
                     <element signature="e#19#34#0" expanded="true" />
                     <marker date="1517844544155" expanded="true" signature="1697:1757" ph="INSERT INTO DNSQueries... " />
@@ -77,6 +75,16 @@
                     <marker date="1517844544155" expanded="true" signature="3485:3551" ph="INSERT INTO HTTPQueries... " />
                     <marker date="1517844544155" expanded="true" signature="3616:3687" ph="INSERT INTO HTTPQueries... " />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="welcome.blade.php" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/ui/resources/views/welcome.blade.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="790">
+                  <caret line="114" column="36" lean-forward="false" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -186,6 +194,7 @@
         <option value="$PROJECT_DIR$/ui/config/database.php" />
         <option value="$PROJECT_DIR$/db/create_db.sql" />
         <option value="$PROJECT_DIR$/python/sniffer.py" />
+        <option value="$PROJECT_DIR$/ui/resources/views/welcome.blade.php" />
       </list>
     </option>
   </component>
@@ -239,6 +248,24 @@
               <item name="smart-router" type="b2602c69:ProjectViewProjectNode" />
               <item name="smart-router" type="462c0819:PsiDirectoryNode" />
               <item name="python" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smart-router" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smart-router" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smart-router" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smart-router" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="smart-router" type="b2602c69:ProjectViewProjectNode" />
+              <item name="smart-router" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -596,7 +623,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24036281" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24036281" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08260524" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14455917" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -640,7 +667,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/python/database.py" />
     <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/python/dns_sniffer_0.0.py" />
     <entry file="file://$PROJECT_DIR$/python/sniffer.py" />
@@ -851,8 +877,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/python/sniffer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        <state relative-caret-position="509">
+          <caret line="35" column="30" lean-forward="false" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
           <folding>
             <element signature="e#19#34#0" expanded="true" />
             <marker date="1517844544155" expanded="true" signature="1697:1757" ph="INSERT INTO DNSQueries... " />
@@ -862,6 +888,14 @@
             <marker date="1517844544155" expanded="true" signature="3485:3551" ph="INSERT INTO HTTPQueries... " />
             <marker date="1517844544155" expanded="true" signature="3616:3687" ph="INSERT INTO HTTPQueries... " />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/resources/views/welcome.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="790">
+          <caret line="114" column="36" lean-forward="false" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
