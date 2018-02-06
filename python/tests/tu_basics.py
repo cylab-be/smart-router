@@ -20,6 +20,10 @@ class tu_basics():
         result = db.execquery(sql)
         if result is False: return False
 
+        sql = "SELECT * FROM Hosts"
+        result = db.execquery(sql)
+        if result is False: return False
+
         return True
 
     def testTablesContainSomething(self):
@@ -38,6 +42,13 @@ class tu_basics():
         print("HTTPQueries")
         for row in result.split(";"):
             print(row)
+
+        sql = "SELECT * FROM Hosts"
+        result = db.execquery(sql)
+        if result is False or result is "": return False
+        print("Hosts")
+        for row in result.split(";"):
+            print(row)
         return True
 
 
@@ -45,18 +56,25 @@ class tu_basics():
         db = database()
         db.connect()
         now = datetime.datetime.now()
-        values = [str("1.1.1.1"), str("2.2.2.2"), str("test.org"), now]
+        values = [str("2.2.2.2"), str("test.org"), now]
         if db.connection == "sqlite":
-            sql = "INSERT INTO DNSQueries (ip , domain, datetime) VALUES (?,?,?,?)"
+            sql = "INSERT INTO DNSQueries (ip , domain, datetime) VALUES (?,?,?)"
         elif db.connection == "mysql":
-            sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (%s, %s, %s, %s)"
+            sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (%s, %s, %s)"
         if db.execquery(sql, values) == False: return False
 
-        values = [str("1.1.1.1"), str("test.org"), now]
+        values = [str("aa:bb:cc:dd:ee:ff"), str("test.org"), now]
         if db.connection == "sqlite":
             sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (?,?,?)"
         elif db.connection == "mysql":
             sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (%s, %s, %s)"
+        if db.execquery(sql, values) == False: return False
+
+        values = [str("aa:bb:cc:dd:ee:ff"), str("test.org"), now]
+        if db.connection == "sqlite":
+            sql = "INSERT INTO Hosts (mac, hostname, first_activity) VALUES (?,?,?)"
+        elif db.connection == "mysql":
+            sql = "INSERT INTO Hosts (mac, hostname, first_activity) VALUES (%s, %s, %s)"
         if db.execquery(sql, values) == False: return False
 
         return True
@@ -72,6 +90,12 @@ class tu_basics():
         db.connect()
         sql = "SELECT * FROM HTTPQueries"
         return db.execquery(sql)
+    
+    def testTableHostsContains(self):
+        db = database()
+        db.connect()
+        sql = "SELECT * FROM Hosts"
+        return db.execquery(sql)
 
 
 class ExecuteSniffTests(unittest.TestCase):
@@ -85,3 +109,5 @@ class ExecuteSniffTests(unittest.TestCase):
         self.assertTrue(tu_basics.testTableDNSQueriesContains(self), "Insertion in DNSQueries table must have been fail because there is nothing in there")
     def testTableHTTPQueriesContains(self):
         self.assertTrue(tu_basics.testTableHTTPQueriesContains(self), "Insertion in HTTPQueries table must have been fail because there is nothing in there")
+    def testTableHostsContains(self):
+        self.assertTrue(tu_basics.testTableHostsContains(self), "Insertion in Hosts table must have been fail because there is nothing in there")
