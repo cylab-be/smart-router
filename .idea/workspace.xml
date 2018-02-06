@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94b18ac4-5fb7-483a-94d8-41c8c38ee3f1" name="Default" comment="Sniffer HTTP feature added + DB update">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/smartrouter.sqlite" afterPath="$PROJECT_DIR$/db/smartrouter.sqlite" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/1f99daac-1f11-4d5e-8585-c0c8557fe13a.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/1f99daac-1f11-4d5e-8585-c0c8557fe13a.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/puphpet/config.yaml" afterPath="$PROJECT_DIR$/puphpet/config.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python/tests/tu_basics.py" afterPath="$PROJECT_DIR$/python/tests/tu_basics.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/resources/views/welcome.blade.php" afterPath="$PROJECT_DIR$/ui/resources/views/welcome.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -131,7 +127,7 @@
             <entry file="file://$PROJECT_DIR$/puphpet/config.yaml">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="737">
-                  <caret line="76" column="37" lean-forward="false" selection-start-line="76" selection-start-column="37" selection-end-line="76" selection-end-column="37" />
+                  <caret line="76" column="36" lean-forward="true" selection-start-line="76" selection-start-column="36" selection-end-line="76" selection-end-column="36" />
                   <folding />
                 </state>
               </provider>
@@ -991,7 +987,7 @@
     <entry file="file://$PROJECT_DIR$/puphpet/config.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="737">
-          <caret line="76" column="37" lean-forward="false" selection-start-line="76" selection-start-column="37" selection-end-line="76" selection-end-column="37" />
+          <caret line="76" column="36" lean-forward="true" selection-start-line="76" selection-start-column="36" selection-end-line="76" selection-end-column="36" />
           <folding />
         </state>
       </provider>
