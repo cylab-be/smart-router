@@ -111,12 +111,18 @@ class tu_basics():
         db = database()
         db.connect()
         now = datetime.now()
-        values = [str("2.2.2.2"), str("test.org"), now]
-        if db.connection == "sqlite":
-            sql = "INSERT INTO DNSQueries (ip , domain, datetime) VALUES (?,?,?)"
-        elif db.connection == "mysql":
-            sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (%s, %s, %s)"
-        if db.execquery(sql, values) == False: return False
+        #FIXME - add corresponding DNS querries
+        # values = [str("aa:bb:cc:dd:ee:ff"), str("legit1.org"), now]
+        # if db.connection == "sqlite":
+        #     sql = "INSERT INTO DNSQueries (ip , domain, datetime) VALUES (?,?,?)"
+        # elif db.connection == "mysql":
+        #     sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (%s, %s, %s)"
+        # if db.execquery(sql, values) == False: return False
+        # values = [str("aa:bb:cc:dd:ee:ff"), str("legit2.org"), now]
+        # if db.execquery(sql, values) == False: return False
+        # values = [str("aa:bb:cc:dd:ee:ff"), str("malicious.org"), now]
+        # if db.execquery(sql, values) == False: return False
+
 
         values = [str("aa:bb:cc:dd:ee:ff"), str("malicious.org"), now]
         if db.connection == "sqlite":
@@ -124,14 +130,14 @@ class tu_basics():
         elif db.connection == "mysql":
             sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (%s, %s, %s)"
         if db.execquery(sql, values) == False: return False
-        values = [str("aa:bb:cc:dd:ee:ff"), str("legit.org"), str(now - timedelta(days=int(self.learningPeriod) + 1))]
+        values = [str("aa:bb:cc:dd:ee:ff"), str("legit2.org"), str(now - timedelta(days=int(self.learningPeriod) + 1))]
         if db.execquery(sql, values) == False: return False
-        values = [str("aa:bb:cc:dd:ee:ff"), str("legit2.org"), str(now - timedelta(days=int(self.learningPeriod) + 3) + timedelta(seconds=5))]
+        values = [str("aa:bb:cc:dd:ee:ff"), str("legit1.org"), str(now - timedelta(days=int(self.learningPeriod) + 3) + timedelta(seconds=5))]
         if db.execquery(sql, values) == False: return False
 
-        values = [str("11:22:33:44:55:66"), str("legit.org"), str(now - timedelta(days=int(self.learningPeriod) + 2))]
+        values = [str("11:22:33:44:55:66"), str("legit2.org"), str(now - timedelta(days=int(self.learningPeriod) + 2))]
         if db.execquery(sql, values) == False: return False
-        values = [str("11:22:33:44:55:66"), str("legit2.org"), str(now - timedelta(days=int(self.learningPeriod) + 4) + timedelta(seconds=5))]
+        values = [str("11:22:33:44:55:66"), str("legit1.org"), str(now - timedelta(days=int(self.learningPeriod) + 4) + timedelta(seconds=5))]
         if db.execquery(sql, values) == False: return False
         values = [str("11:22:33:44:55:66"), str("malicious.org"), str(now)]
         if db.execquery(sql, values) == False: return False
