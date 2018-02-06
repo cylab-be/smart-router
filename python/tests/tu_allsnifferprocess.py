@@ -24,7 +24,8 @@ class tu_allprocess():
     def testAnalyser(self):
         p = multiprocessing.Process(target=analyse)
         p.start()
-        p.join(5)
+        p.join()
+
 
 
 class Executetu_allprocess(unittest.TestCase):
@@ -32,8 +33,12 @@ class Executetu_allprocess(unittest.TestCase):
         # self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
         # self.assertTrue(tu_basics.testTablesExistence(self), "Tables do not exist")
         # tu_allprocess.testSniffer(self)
-        tu_allprocess.testAnalyser(self)
         # self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything")
+
+        self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
+        self.assertTrue(tu_basics.testInserIntoTablesForAnalysisSimulation(self), "Can not create insert into tables")
+        tu_allprocess.testAnalyser(self)
+
 
 def snif():
     snifDNS = sniffer("dns")

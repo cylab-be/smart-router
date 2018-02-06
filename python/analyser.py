@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import datetime
+from datetime import datetime, timedelta
 import threading
 from os.path import join, dirname
 
@@ -20,6 +20,7 @@ class analyser (threading.Thread):
         self.logfile = os.environ.get("LOGFILE")
         logging.basicConfig(filename=self.logfile, level=logging.DEBUG,
                             format='%(asctime)s %(levelname)s - %(message)s')
+        self.learningPeriod = os.environ.get("LEARNING_PERIOD")
         self.db = database()
         self.db.connect()
 
@@ -29,10 +30,14 @@ class analyser (threading.Thread):
 
         # macAddresses = ('08:00:27:54:8b:1b',':8b:1b','08:008b:1b','08:00:27:')
         # logging.debug(macAddresses)
-
+        macAddresses = list(set(macAddresses))
+        # print(macAddresses)
         for mac in macAddresses :
             # logging.debug(mac)
             self.checkHostAndAddItIfNotPresent(mac)
+            self.analyse(mac)
+
+
 
     def getAllHosts(self):
 
@@ -55,14 +60,14 @@ class analyser (threading.Thread):
         ret = self.db.execquery(sql, values)
         if ret is not "" : return
 
-        logging.info("host not registered, the host has to be added in db")
+        logging.info("host not registered, the host has to be added in DB.. adding it now")
 
         if self.db.connection == "sqlite":
             sql = "select datetime from HTTPQueries WHERE mac_iot = ? ORDER BY datetime LIMIT 1 "
         elif self.db.connection == "mysql":
             sql = "SELECT datetime FROM HTTPQueries WHERE mac_iot = %s ORDER BY datetime LIMIT 1 "
         first_activity = self.db.execquery(sql, values)
-        first_activity = str(first_activity).replace("(", "").replace(")", "").replace("'", "").replace(" ", "").replace(",", "")
+        first_activity = str(first_activity).replace("(", "").replace(")", "").replace("'", "").replace(",", "")
 
         if self.db.connection == "sqlite":
             sql = "INSERT INTO Hosts (mac, hostname, first_activity) VALUES (?,?,?)"
@@ -72,4 +77,41 @@ class analyser (threading.Thread):
         values = [str(host), "", first_activity]
         self.db.execquery(sql, values)
         logging.info("Host with mac address " + host + " added in DB")
+
+    def analyse(self, host):
+
+        if self.db.connection == "sqlite":
+            sql = "SELECT first_activity FROM Hosts WHERE mac = ?"
+        elif self.db.connection == "mysql":
+            sql = "SELECT first_activity FROM Hosts WHERE mac = %s"
+        values = [str(host)]
+        firstRequestDatetime = self.db.execquery(sql, values).replace("(","").replace(")","").replace(",","").replace("'","")
+
+        lastAllowedLearningRequestTime = datetime.strptime(firstRequestDatetime, "%Y-%m-%d %H:%M:%S.%f") + timedelta(days=int(self.learningPeriod))
+
+        if self.db.connection == "sqlite":
+            sql = "SELECT * from HTTPQueries WHERE mac_iot = ? AND domain NOT IN (SELECT domain from HTTPQueries WHERE mac_iot = ? AND datetime < ? ORDER BY datetime ) ORDER BY datetime"
+        elif self.db.connection == "mysql":
+            sql = "SELECT * from HTTPQueries WHERE mac_iot = %s AND domain NOT IN (SELECT domain from HTTPQueries WHERE mac_iot = %s AND datetime < %s ORDER BY datetime ) ORDER BY datetime"
+
+        values = [str(host), str(host), str(lastAllowedLearningRequestTime)]
+        maliciousDomains = self.db.execquery(sql, values)
+
+
+        #FIXME - need hostname ?
+        maliciousDomains = maliciousDomains.replace("(", "").replace(")", "").replace("'", "").split(";")
+
+        for mal in maliciousDomains :
+            if len(mal) > 0 :
+                mal = mal.split(",")
+
+                if self.db.connection == "sqlite":
+                    sql = "INSERT INTO Alerts (mac, domain_reached, infraction_date) VALUES (?,?,?)"
+                elif self.db.connection == "mysql":
+                    sql = "INSERT INTO Alerts (mac, domain_reached, infraction_date) VALUES (%s, %s, %s)"
+
+                values = [str(mal[0]), str(mal[1]).replace(" ", ""), mal[2][1:]]
+                self.db.execquery(sql, values)
+
+
 
