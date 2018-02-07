@@ -23,6 +23,6 @@ script:
   - python3 --version
   - python3 tu_basics.py
   - sed -i 's|/home/vagrant|/home/travis/build/RUCD/smart-router|g' /home/travis/build/RUCD/smart-router/python/.env
-  - sudo python3 tu_allsnifferprocess.py
+  - sudo python3 tu_allprocess.py
 notifications:
     slack: cylab-be:SgDUjbNn00DSxqr5h20OG5Hs

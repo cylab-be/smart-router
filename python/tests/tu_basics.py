@@ -31,7 +31,7 @@ class tu_basics():
 
         return True
 
-    def testTablesContainSomething(self):
+    def testAllTablesContainSomething(self):
         db = database()
         db.connect()
         sql = "SELECT * FROM DNSQueries"
@@ -59,6 +59,24 @@ class tu_basics():
         result = db.execquery(sql)
         if result is False or result is "": return False
         print("Alerts")
+        for row in result.split(";"):
+            print(row)
+        return True
+
+    def testTablesContainSomething(self):
+        db = database()
+        db.connect()
+        sql = "SELECT * FROM DNSQueries"
+        result = db.execquery(sql)
+        if result is False or result is "": return False
+        print("DNSQueries")
+        for row in result.split(";"):
+            print(row)
+
+        sql = "SELECT * FROM HTTPQueries"
+        result = db.execquery(sql)
+        if result is False or result is "": return False
+        print("HTTPQueries")
         for row in result.split(";"):
             print(row)
         return True
@@ -112,16 +130,16 @@ class tu_basics():
         db.connect()
         now = datetime.now()
         #FIXME - add corresponding DNS querries
-        # values = [str("aa:bb:cc:dd:ee:ff"), str("legit1.org"), now]
-        # if db.connection == "sqlite":
-        #     sql = "INSERT INTO DNSQueries (ip , domain, datetime) VALUES (?,?,?)"
-        # elif db.connection == "mysql":
-        #     sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (%s, %s, %s)"
-        # if db.execquery(sql, values) == False: return False
-        # values = [str("aa:bb:cc:dd:ee:ff"), str("legit2.org"), now]
-        # if db.execquery(sql, values) == False: return False
-        # values = [str("aa:bb:cc:dd:ee:ff"), str("malicious.org"), now]
-        # if db.execquery(sql, values) == False: return False
+        values = [str("aa:bb:cc:dd:ee:ff"), str("legit1.org"), now]
+        if db.connection == "sqlite":
+            sql = "INSERT INTO DNSQueries (ip , domain, datetime) VALUES (?,?,?)"
+        elif db.connection == "mysql":
+            sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (%s, %s, %s)"
+        if db.execquery(sql, values) == False: return False
+        values = [str("aa:bb:cc:dd:ee:ff"), str("legit2.org"), now]
+        if db.execquery(sql, values) == False: return False
+        values = [str("aa:bb:cc:dd:ee:ff"), str("malicious.org"), now]
+        if db.execquery(sql, values) == False: return False
 
 
         values = [str("aa:bb:cc:dd:ee:ff"), str("malicious.org"), now]
