@@ -24,16 +24,16 @@ class tu_allprocess():
     def testAnalyser(self):
         p = multiprocessing.Process(target=analyse)
         p.start()
-        p.join()
+        p.join(10)
 
 
 
 class Executetu_allprocess(unittest.TestCase):
     def testAll(self):
-        # self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
-        # self.assertTrue(tu_basics.testTablesExistence(self), "Tables do not exist")
-        # tu_allprocess.testSniffer(self)
-        # self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything")
+        self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
+        self.assertTrue(tu_basics.testTablesExistence(self), "Tables do not exist")
+        tu_allprocess.testSniffer(self)
+        self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything")
 
         self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
         self.assertTrue(tu_basics.testInserIntoTablesForAnalysisSimulation(self), "Can not create insert into tables")

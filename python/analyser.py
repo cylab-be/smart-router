@@ -1,10 +1,11 @@
 #!/usr/bin/python3
+import sqlite3
 from datetime import datetime, timedelta
 import threading
 from os.path import join, dirname
 
 import pymysql
-from python.database import database
+from database import database
 from dotenv import load_dotenv
 from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR
@@ -106,11 +107,18 @@ class analyser (threading.Thread):
                 mal = mal.split(",")
 
                 if self.db.connection == "sqlite":
+                    sql = "SELECT * FROM Alerts WHERE mac = ? AND domain_reached = ? AND infraction_date = ?"
+                elif self.db.connection == "mysql":
+                    sql = "SELECT * FROM Alerts WHERE mac = %s AND domain_reached = %s AND infraction_date = %s"
+                values = [str(mal[0]), str(mal[1]).replace(" ", ""), mal[2][1:]]
+                ret = self.db.execquery(sql, values)
+                if len(ret) > 0 : return
+
+                if self.db.connection == "sqlite":
                     sql = "INSERT INTO Alerts (mac, domain_reached, infraction_date) VALUES (?,?,?)"
                 elif self.db.connection == "mysql":
                     sql = "INSERT INTO Alerts (mac, domain_reached, infraction_date) VALUES (%s, %s, %s)"
 
-                values = [str(mal[0]), str(mal[1]).replace(" ", ""), mal[2][1:]]
                 self.db.execquery(sql, values)
 
 

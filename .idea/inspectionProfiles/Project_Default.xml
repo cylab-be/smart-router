@@ -5,6 +5,9 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="tu_basics" />
+          <option value="python.main.psniffer" />
+          <option value="python.sniffer.database" />
+          <option value="python.main.sniffer" />
         </list>
       </option>
     </inspection_tool>

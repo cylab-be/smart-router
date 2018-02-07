@@ -4,7 +4,7 @@ import threading
 from os.path import join, dirname
 
 import pymysql
-from python.database import database
+from database import database
 from dotenv import load_dotenv
 from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR
@@ -26,6 +26,7 @@ class sniffer (threading.Thread):
         self.db = database()
         self.db.connect()
         self.type = type
+        self.host = ""
 
     def run(self):
         logging.info("run " + self.type)
