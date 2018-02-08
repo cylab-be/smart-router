@@ -82,7 +82,6 @@
             Smart-router
         </div>
         <h3>HTTP Traffic</h3>
-        @php($HTTPQueries = DB::select('select * from HTTPQueries Order by datetime'))
         <table style="width:100%">
             <tr>
                 <th>Mac iot</th>
@@ -90,7 +89,7 @@
                 <th>Date </th>
             </tr>
 
-            @foreach($HTTPQueries as $query)
+            @foreach(\App\Http\Controllers\HTTPQueriesController::getAll() as $query)
             <tr>
                 <td>{{$query->mac_iot}}</td>
                 <td>{{$query->domain}}</td>
@@ -102,7 +101,6 @@
 
 
         <h3>DNS Traffic</h3>
-        @php($DNSQueries = DB::select('select * from DNSQueries order by datetime'))
         <table style="width:100%">
             <tr>
                 <th>ip dst</th>
@@ -110,7 +108,7 @@
                 <th>Date </th>
             </tr>
 
-            @foreach($DNSQueries as $query)
+            @foreach(\App\Http\Controllers\DNSQueriesController::getAll() as $query)
                 <tr>
                     <td>{{$query->ip}}</td>
                     <td>{{$query->domain}}</td>
@@ -121,7 +119,6 @@
         </table>
 
         <h3>Hosts</h3>
-        @php($Hosts = DB::select('select * from Hosts order by first_activity'))
         <table style="width:100%">
             <tr>
                 <th>MAC</th>
@@ -129,7 +126,7 @@
                 <th>First Activity Detected</th>
             </tr>
 
-            @foreach($Hosts as $host)
+            @foreach(\App\Http\Controllers\HostsController::getAll() as $host)
                 <tr>
                     <td>{{$host->mac}}</td>
                     <td>{{$host->hostname}}</td>
@@ -140,7 +137,6 @@
         </table>
 
         <h3>Alerts</h3>
-        @php($Alerts = DB::select('select * from Alerts order by infraction_date'))
         <table style="width:100%">
             <tr>
                 <th>MAC</th>
@@ -149,7 +145,7 @@
                 <th>@</th>
             </tr>
 
-            @foreach($Alerts as $alert)
+            @foreach(\App\Http\Controllers\AlertsController::getAll() as $alert)
                 <tr>
                     <td>{{$alert->mac}}</td>
                     <td>{{$alert->hostname}}</td>
