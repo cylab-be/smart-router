@@ -1,9 +1,6 @@
+#Python
 *.pyc
 logs/
-
-ui/vendor/
-ui/node_modules/
-ui/npm-debug.log
 
 # Laravel 5 & Lumen specific
 ui/public/storage
@@ -14,6 +11,14 @@ ui/.env.php
 ui/.env
 ui/Homestead.yaml
 ui/Homestead.json
+ui/vendor/
+ui/node_modules/
+ui/npm-debug.log
+
 
 .vagrant
 .DS_Store
+
+
+#Inteliji
+.idea/
