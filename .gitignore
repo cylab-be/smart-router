@@ -22,3 +22,6 @@ ui/npm-debug.log
 
 #Inteliji
 .idea/
+
+#SqlLite
+db/smartrouter.sqlite

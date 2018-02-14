@@ -4,7 +4,7 @@ import threading
 from os.path import join, dirname
 
 import pymysql
-from database import database
+from python.database import database
 from dotenv import load_dotenv
 from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR
