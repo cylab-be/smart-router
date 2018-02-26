@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
-import pymysql
-pymysql.install_as_MySQLdb()
-import MySQLdb
+#import pymysql
+#pymysql.install_as_MySQLdb()
+#import MySQLdb
 from os.path import join, dirname
 from dotenv import load_dotenv
 import os
@@ -47,9 +47,9 @@ class database:
             self.db.commit()
             return str(ret)
 
-        except pymysql.err.ProgrammingError:
-            logging.error("SQL ERROR")
-            return False
+#        except pymysql.err.ProgrammingError:
+#            logging.error("SQL ERROR")
+#            return False
         except sqlite3.ProgrammingError:
             logging.error("SQL ERROR")
             return False

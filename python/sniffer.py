@@ -3,8 +3,8 @@ import datetime
 import threading
 from os.path import join, dirname
 
-import pymysql
-from python.database import database
+#import pymysql
+from database import database
 from dotenv import load_dotenv
 from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR
@@ -16,7 +16,7 @@ class sniffer (threading.Thread):
 
     def __init__(self, type):
         threading.Thread.__init__(self)
-        pymysql.install_as_MySQLdb()
+        #pymysql.install_as_MySQLdb()
         dotenv_path = join(dirname(__file__), '.env')
         load_dotenv(dotenv_path)
         self.logfile = os.environ.get("LOGFILE")

@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import threading
 from os.path import join, dirname
 
-import pymysql
+#import pymysql
 from database import database
 from dotenv import load_dotenv
 from scapy.all import *
@@ -15,7 +15,7 @@ from scapy.layers.inet import Ether
 class analyser (threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
-        pymysql.install_as_MySQLdb()
+#        pymysql.install_as_MySQLdb()
         dotenv_path = join(dirname(__file__), '.env')
         load_dotenv(dotenv_path)
         self.logfile = os.environ.get("LOGFILE")
