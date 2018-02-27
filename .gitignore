@@ -27,3 +27,4 @@ ui/npm-debug.log
 db/smartrouter.sqlite
 
 python/.env
+docs/images/*
