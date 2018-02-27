@@ -17,6 +17,12 @@ def snif():
     print("OK!")
 
 
+    snifHTTPS = sniffer("https")
+    print("Starting HTTPS sniffer ...")
+    snifHTTPS.start()
+    print("OK!")
+
+
     snifDNS.join()
     snifHTTP.join()
 print("Launching ...")

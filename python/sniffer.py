@@ -34,6 +34,8 @@ class sniffer (threading.Thread):
             self.dnsQuerry(self.host)
         elif (self.type == "http"):
             self.httpQuerry(self.host)
+        elif (self.type == "https"):
+            self.httpsQuerry(self.host)
 
     def setHost(self, host):
         self.host = host
@@ -125,3 +127,7 @@ class sniffer (threading.Thread):
         # sniff(iface=self.interface, filter="ip host " + host + " and port 80", prn=self.httpQuerryHandler, store=0)
         # sniff(iface=self.interface, filter="port 80", lfilter=lambda d: d.src == '08:00:27:54:8b:1b', prn=self.httpQuerryHandler, store=0)
         sniff(iface=self.interface, filter="port 80", prn=self.httpQuerryHandler, store=0)
+
+    def httpsQuerry(self, host):
+        # TODO - check if host, if not, launch sniff wo filter on ip add
+        sniff(iface=self.interface, filter="port 443", prn=self.httpQuerryHandler, store=0)
