@@ -8,9 +8,8 @@ from os.path import join, dirname
 from database import database
 from dotenv import load_dotenv
 from scapy.all import *
-from scapy.layers.dns import DNS, DNSRR
-from scapy.layers.inet import IP
-from scapy.layers.inet import Ether
+from slackclient import SlackClient
+
 
 class analyser (threading.Thread):
     def __init__(self):
@@ -22,23 +21,44 @@ class analyser (threading.Thread):
         logging.basicConfig(filename=self.logfile, level=logging.DEBUG,
                             format='%(asctime)s %(levelname)s - %(message)s')
         self.learningPeriod = os.environ.get("LEARNING_PERIOD")
+        if "True" in os.environ.get("SLACK_NOTIFICATIONS"):
+            self.slack_alert = True
+        else:
+            self.slack_alert = False
+
+        self.slack_token = os.environ.get("SLACK_API_TOKEN")
+        self.slack_channel = os.environ.get("SLACK_CHANNEL")
         self.db = database()
         self.db.connect()
 
     def run(self):
-        logging.info("run analyser")
+        self.allmaliciousdomains = []
         macAddresses = self.getAllHosts()
-
-        # macAddresses = ('08:00:27:54:8b:1b',':8b:1b','08:008b:1b','08:00:27:')
-        # logging.debug(macAddresses)
         macAddresses = list(set(macAddresses))
-        # print(macAddresses)
         for mac in macAddresses :
-            # logging.debug(mac)
             self.checkHostAndAddItIfNotPresent(mac)
-            self.analyse(mac)
+            self.allmaliciousdomains.extend(self.analyse(mac))
+
+        self.sendAlert()
+
+    def sendAlert(self):
+        if self.slack_alert is True:
+            sc = SlackClient(self.slack_token)
+            ret = []
+            ret = sc.api_call(
+                "chat.postMessage",
+                channel=self.slack_channel,
+                # text="Hello from Python! :tada:",
+                text=str(self.allmaliciousdomains),
+            )
+
+            if ret.get('ok') is True:
+                logging.info("Alert send to Slack")
+            else:
+                logging.error("Alert has not been send to Slack")
 
 
+        print("all malicious domains : ", *self.allmaliciousdomains, sep=', ')
 
     def getAllHosts(self):
 
@@ -120,6 +140,8 @@ class analyser (threading.Thread):
                     sql = "INSERT INTO Alerts (mac, domain_reached, infraction_date) VALUES (%s, %s, %s)"
 
                 self.db.execquery(sql, values)
+
+        return maliciousDomains
 
 
 

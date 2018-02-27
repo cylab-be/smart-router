@@ -51,8 +51,13 @@ def snif():
     snifHTTP.setHost("")
     snifHTTP.start()
 
+    snifHTTPS = sniffer("https")
+    snifHTTPS.setHost("")
+    snifHTTPS.start()
+
     snifDNS.join()
     snifHTTP.join()
+    snifHTTPS.join()
 
 def analyse():
     a = analyser()
