@@ -26,5 +26,5 @@ ui/npm-debug.log
 #SqlLite
 db/smartrouter.sqlite
 
-
+python/.env
 docs/images/*
