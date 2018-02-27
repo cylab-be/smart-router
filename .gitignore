@@ -25,3 +25,4 @@ ui/npm-debug.log
 
 #SqlLite
 db/smartrouter.sqlitepython/.env
+db/smartrouter.sqlite
