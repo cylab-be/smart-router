@@ -56,4 +56,6 @@ git clone https://github.com/RUCD/smart-router.git --branch=openwrt
 #apache
 opkg install apache
 
+#Slack
+pip3 install slackclient
 

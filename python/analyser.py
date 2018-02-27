@@ -38,12 +38,14 @@ class analyser (threading.Thread):
         macAddresses = list(set(macAddresses))
         for mac in macAddresses :
             self.checkHostAndAddItIfNotPresent(mac)
-            self.allmaliciousdomains.extend(self.analyse(mac))
-
+            try :
+                self.allmaliciousdomains.extend(self.analyse(mac))
+            except TypeError :
+                pass
         self.sendAlert()
 
     def sendAlert(self):
-        if self.slack_alert is True:
+        if self.slack_alert is True and len(self.allmaliciousdomains) > 0 :
             sc = SlackClient(self.slack_token)
             ret = []
             txt = "Sir, during the last " + self.minutes_between_analysis + " minutes, the next potential malicious traffic has been detected : ```"
