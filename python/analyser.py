@@ -42,6 +42,7 @@ class analyser (threading.Thread):
                 self.allmaliciousdomains.extend(self.analyse(mac))
             except TypeError :
                 pass
+        self.allmaliciousdomains = list(filter(None, self.allmaliciousdomains))
         self.sendAlert()
 
     def sendAlert(self):
@@ -64,6 +65,8 @@ class analyser (threading.Thread):
             else:
                 logging.error("Alert has not been send to Slack")
 
+        else:
+            logging.info("No alert sent to Slack because there is not malicious traffic dtected")
 
     def getAllHosts(self):
 
@@ -147,6 +150,4 @@ class analyser (threading.Thread):
                 self.db.execquery(sql, values)
 
         return maliciousDomains
-
-
 

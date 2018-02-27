@@ -61,3 +61,6 @@ pip3 install slackclient
 
 #htop
 opkg install htop
+
+## rc.local
+#/usr/bin/python3 /root/smart-router/python/main.py
