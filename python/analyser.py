@@ -25,6 +25,7 @@ class analyser (threading.Thread):
             self.slack_alert = True
         else:
             self.slack_alert = False
+        self.minutes_between_analysis=os.environ.get("MINUTES_BETWEEN_ANALYSIS")
 
         self.slack_token = os.environ.get("SLACK_API_TOKEN")
         self.slack_channel = os.environ.get("SLACK_CHANNEL")
@@ -45,11 +46,15 @@ class analyser (threading.Thread):
         if self.slack_alert is True:
             sc = SlackClient(self.slack_token)
             ret = []
+            txt = "Sir, during the last " + self.minutes_between_analysis + " minutes, the next potential malicious traffic has been detected : ```"
+            for row in self.allmaliciousdomains :
+                txt += row.replace(", ", "->", 1).replace(',', " @", 1) + "\n"
+            txt=txt[:-1]+'```'
             ret = sc.api_call(
                 "chat.postMessage",
                 channel=self.slack_channel,
                 # text="Hello from Python! :tada:",
-                text=str(self.allmaliciousdomains),
+                text=str(txt),
             )
 
             if ret.get('ok') is True:
@@ -57,8 +62,6 @@ class analyser (threading.Thread):
             else:
                 logging.error("Alert has not been send to Slack")
 
-
-        print("all malicious domains : ", *self.allmaliciousdomains, sep=', ')
 
     def getAllHosts(self):
 
