@@ -59,3 +59,5 @@ opkg install apache
 #Slack
 pip3 install slackclient
 
+#htop
+opkg install htop
