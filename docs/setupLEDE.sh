@@ -63,4 +63,13 @@ pip3 install slackclient
 opkg install htop
 
 ## rc.local
-#/usr/bin/python3 /root/smart-router/python/main.py
+echo "sleep 10 ; /usr/bin/python3 /root/smart-router/python/main.py &" > /etc/rc.local
+echo "exit 0" >> /etc/rc.local
+
+
+#ntp client
+opkg update
+opkg install ntpd
+/etc/init.d/sysntpd disable
+/etc/init.d/ntpd enable
+/etc/init.d/ntpd start

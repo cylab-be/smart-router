@@ -41,6 +41,7 @@ class analyser (threading.Thread):
             try :
                 self.allmaliciousdomains.extend(self.analyse(mac))
             except TypeError :
+                logging.warning("TYPE ERROR")
                 pass
         self.allmaliciousdomains = list(filter(None, self.allmaliciousdomains))
         self.sendAlert()
@@ -66,7 +67,7 @@ class analyser (threading.Thread):
                 logging.error("Alert has not been send to Slack")
 
         else:
-            logging.info("No alert sent to Slack because there is not malicious traffic dtected")
+            logging.info("No alert sent to Slack because there is not malicious traffic detected")
 
     def getAllHosts(self):
 
@@ -124,6 +125,7 @@ class analyser (threading.Thread):
             sql = "SELECT * from HTTPQueries WHERE mac_iot = %s AND domain NOT IN (SELECT domain from HTTPQueries WHERE mac_iot = %s AND datetime < %s ORDER BY datetime ) ORDER BY datetime"
 
         values = [str(host), str(host), str(lastAllowedLearningRequestTime)]
+        print (sql, values)
         maliciousDomains = self.db.execquery(sql, values)
 
 
@@ -150,4 +152,7 @@ class analyser (threading.Thread):
                 self.db.execquery(sql, values)
 
         return maliciousDomains
+
+if __name__ == "__main__":
+    analyser().run()
 
