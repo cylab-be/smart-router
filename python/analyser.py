@@ -41,7 +41,7 @@ class analyser (threading.Thread):
             try :
                 self.allmaliciousdomains.extend(self.analyse(mac))
             except TypeError :
-                logging.warning("TYPE ERROR")
+                # logging.warning("TYPE ERROR")
                 pass
         self.allmaliciousdomains = list(filter(None, self.allmaliciousdomains))
         self.sendAlert()
