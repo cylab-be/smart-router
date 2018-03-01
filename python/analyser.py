@@ -125,7 +125,6 @@ class analyser (threading.Thread):
             sql = "SELECT * from HTTPQueries WHERE mac_iot = %s AND domain NOT IN (SELECT domain from HTTPQueries WHERE mac_iot = %s AND datetime < %s ORDER BY datetime ) ORDER BY datetime"
 
         values = [str(host), str(host), str(lastAllowedLearningRequestTime)]
-        print (sql, values)
         maliciousDomains = self.db.execquery(sql, values)
 
 
