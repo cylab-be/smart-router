@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 import os
 import logging
 import sqlite3
+from host import host
+import importlib
 
 class database:
     def __init__(self):
@@ -35,10 +37,15 @@ class database:
         self.cursor = self.db.cursor()
 
     def execquery(self, query, *args):
+        if self.connection == 'mysql':
+            query = query.replace("XXX", "%s")
+        elif self.connection == 'sqlite':
+            query = query.replace("XXX", "?")
         try :
             values = []
             for ar in args:
                 values = ar
+            #FIXME - return a list
             self.cursor.execute(query, values)
             ret = ''
             for r in self.cursor:
@@ -53,6 +60,27 @@ class database:
         except sqlite3.ProgrammingError:
             logging.error("SQL ERROR")
             return False
+
+    def getAll(self, module_name,class_name, table_name ):
+        query = "SELECT * FROM XXX"
+        #FIXME - insecure but does not work with ?
+        query=query.replace("XXX", table_name)
+        try:
+            values = []
+            self.cursor.execute(query, values)
+            ret = []
+            for r in self.cursor:
+                module = importlib.import_module(module_name)
+                class_ = getattr(module, class_name)
+                instance = class_(r)
+                ret.append(instance)
+            self.db.commit()
+            return ret
+
+        except sqlite3.ProgrammingError:
+            logging.error("SQL ERROR")
+            return False
+
 
 
     def createTables(self):

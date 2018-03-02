@@ -18,8 +18,7 @@ class analyser (threading.Thread):
         dotenv_path = join(dirname(__file__), '.env')
         load_dotenv(dotenv_path)
         self.logfile = os.environ.get("LOGFILE")
-        logging.basicConfig(filename=self.logfile, level=logging.DEBUG,
-                            format='%(asctime)s %(levelname)s - %(message)s')
+        logging.basicConfig(filename=self.logfile, level=logging.DEBUG,format='%(asctime)s %(levelname)s - %(message)s')
         self.learningPeriod = os.environ.get("LEARNING_PERIOD")
         if "True" in os.environ.get("SLACK_NOTIFICATIONS"):
             self.slack_alert = True
@@ -49,7 +48,7 @@ class analyser (threading.Thread):
     def sendAlert(self):
         if self.slack_alert is True and len(self.allmaliciousdomains) > 0 :
             sc = SlackClient(self.slack_token)
-            ret = []
+            # ret = []
             txt = "Sir, during the last " + self.minutes_between_analysis + " minutes, the next potential malicious traffic has been detected : ```"
             for row in self.allmaliciousdomains :
                 txt += row.replace(", ", "->", 1).replace(',', " @", 1) + "\n"
@@ -57,7 +56,6 @@ class analyser (threading.Thread):
             ret = sc.api_call(
                 "chat.postMessage",
                 channel=self.slack_channel,
-                # text="Hello from Python! :tada:",
                 text=str(txt),
             )
 
@@ -71,38 +69,26 @@ class analyser (threading.Thread):
 
     def getAllHosts(self):
 
-        if self.db.connection == "sqlite":
-            sql = "select mac_iot from HTTPQueries"
-        elif self.db.connection == "mysql":
-            sql = "SELECT mac_iot FROM HTTPQueries"
+        sql = "SELECT mac_iot FROM HTTPQueries"
         ret = self.db.execquery(sql)
-
+        print ("ret : " , ret)
         return str(ret).replace("(", "").replace(")", "").replace("'", "").replace(" ", "").replace(",", "").split(
             ";")
 
     def checkHostAndAddItIfNotPresent(self, host):
         values = [str(host)]
-        if self.db.connection == "sqlite":
-            sql = "select first_activity from Hosts WHERE mac = ? LIMIT 1"
-        elif self.db.connection == "mysql":
-            sql = "select first_activity from Hosts WHERE mac = %s LIMIT 1"
+        sql = "select first_activity from Hosts WHERE mac = XXX LIMIT 1"
 
         ret = self.db.execquery(sql, values)
         if ret is not "" : return
 
         logging.info("host not registered, the host has to be added in DB.. adding it now")
 
-        if self.db.connection == "sqlite":
-            sql = "select datetime from HTTPQueries WHERE mac_iot = ? ORDER BY datetime LIMIT 1 "
-        elif self.db.connection == "mysql":
-            sql = "SELECT datetime FROM HTTPQueries WHERE mac_iot = %s ORDER BY datetime LIMIT 1 "
+        sql = "SELECT datetime FROM HTTPQueries WHERE mac_iot = XXX ORDER BY datetime LIMIT 1 "
         first_activity = self.db.execquery(sql, values)
         first_activity = str(first_activity).replace("(", "").replace(")", "").replace("'", "").replace(",", "")
 
-        if self.db.connection == "sqlite":
-            sql = "INSERT INTO Hosts (mac, hostname, first_activity) VALUES (?,?,?)"
-        elif self.db.connection == "mysql":
-            sql = "INSERT INTO Hosts (mac, hostname, first_activity) VALUES (%s, %s, %s)"
+        sql = "INSERT INTO Hosts (mac, hostname, first_activity) VALUES (XXX, XXX, XXX)"
 
         values = [str(host), "", first_activity]
         self.db.execquery(sql, values)
@@ -110,19 +96,13 @@ class analyser (threading.Thread):
 
     def analyse(self, host):
 
-        if self.db.connection == "sqlite":
-            sql = "SELECT first_activity FROM Hosts WHERE mac = ?"
-        elif self.db.connection == "mysql":
-            sql = "SELECT first_activity FROM Hosts WHERE mac = %s"
+        sql = "SELECT first_activity FROM Hosts WHERE mac = XXX"
         values = [str(host)]
         firstRequestDatetime = self.db.execquery(sql, values).replace("(","").replace(")","").replace(",","").replace("'","")
 
         lastAllowedLearningRequestTime = datetime.strptime(firstRequestDatetime, "%Y-%m-%d %H:%M:%S.%f") + timedelta(days=int(self.learningPeriod))
 
-        if self.db.connection == "sqlite":
-            sql = "SELECT * from HTTPQueries WHERE mac_iot = ? AND domain NOT IN (SELECT domain from HTTPQueries WHERE mac_iot = ? AND datetime < ? ORDER BY datetime ) ORDER BY datetime"
-        elif self.db.connection == "mysql":
-            sql = "SELECT * from HTTPQueries WHERE mac_iot = %s AND domain NOT IN (SELECT domain from HTTPQueries WHERE mac_iot = %s AND datetime < %s ORDER BY datetime ) ORDER BY datetime"
+        sql = "SELECT * from HTTPQueries WHERE mac_iot = XXX AND domain NOT IN (SELECT domain from HTTPQueries WHERE mac_iot = XXX AND datetime < XXX ORDER BY datetime ) ORDER BY datetime"
 
         values = [str(host), str(host), str(lastAllowedLearningRequestTime)]
         maliciousDomains = self.db.execquery(sql, values)
@@ -135,18 +115,12 @@ class analyser (threading.Thread):
             if len(mal) > 0 :
                 mal = mal.split(",")
 
-                if self.db.connection == "sqlite":
-                    sql = "SELECT * FROM Alerts WHERE mac = ? AND domain_reached = ? AND infraction_date = ?"
-                elif self.db.connection == "mysql":
-                    sql = "SELECT * FROM Alerts WHERE mac = %s AND domain_reached = %s AND infraction_date = %s"
+                sql = "SELECT * FROM Alerts WHERE mac = XXX AND domain_reached = XXX AND infraction_date = XXX"
                 values = [str(mal[0]), str(mal[1]).replace(" ", ""), mal[2][1:]]
                 ret = self.db.execquery(sql, values)
                 if len(ret) > 0 : return
 
-                if self.db.connection == "sqlite":
-                    sql = "INSERT INTO Alerts (mac, domain_reached, infraction_date) VALUES (?,?,?)"
-                elif self.db.connection == "mysql":
-                    sql = "INSERT INTO Alerts (mac, domain_reached, infraction_date) VALUES (%s, %s, %s)"
+                sql = "INSERT INTO Alerts (mac, domain_reached, infraction_date) VALUES (XXX, XXX, XXX)"
 
                 self.db.execquery(sql, values)
 

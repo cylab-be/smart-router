@@ -52,10 +52,7 @@ class sniffer (threading.Thread):
             socket.inet_aton(dest)
             now = datetime.datetime.now()
             values = [str(dest), str(name), now]
-            if self.db.connection == "sqlite":
-                sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (?,?,?)"
-            elif self.db.connection == "mysql":
-                sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (%s, %s, %s)"
+            sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (XXX,XXX,XXX)"
             if self.db.execquery(sql, values):
                 logging.error("failed inserting tuple in database")
             else:
@@ -75,14 +72,7 @@ class sniffer (threading.Thread):
         # FIXME - dns request in db "fail" for the first time the domain is reached, so the first http request also fail
         time.sleep(2)
 
-        # if Ether in pkt :
-        #     logging.debug("mac : " + pkt[IP].src +" "+ pkt[Ether].src + "->" + pkt[IP].dst +" "+ pkt[Ether].dst)
-
-        if self.db.connection == "sqlite":
-            sql = "select domain from DNSQueries WHERE ip = ? LIMIT 1"
-        elif self.db.connection == "mysql":
-            sql = "SELECT domain FROM DNSQueries WHERE ip = %s LIMIT 1"
-
+        sql = "select domain from DNSQueries WHERE ip = XXX LIMIT 1"
         ret = self.db.execquery(sql, values)
 
         inverted = False
@@ -97,10 +87,7 @@ class sniffer (threading.Thread):
 
         ret = ret.replace("'", "").replace("(", "").replace(")", "").replace(",", "")
         now = datetime.datetime.now()
-        if self.db.connection == "sqlite":
-            sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (?,?,?)"
-        elif self.db.connection == "mysql":
-            sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (%s, %s, %s)"
+        sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (XXX,XXX,XXX)"
         if not inverted:
             logging.info(pkt[Ether].src + " -> " + ret)
             # values = [str(ip_src), str(ret), now]
