@@ -2,7 +2,6 @@
 import datetime
 import threading
 from os.path import join, dirname
-from python.database import database
 from dotenv import load_dotenv
 from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR
@@ -11,7 +10,7 @@ from scapy.layers.inet import Ether
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 #import pymysql
 from python.httpquery import httpquery
-from python.dnsquery import dnsquery
+from python.database import database
 
 
 class sniffer (threading.Thread):
