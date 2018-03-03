@@ -46,7 +46,11 @@ class sniffer (threading.Thread):
         if domain.endswith('.'):
             domain = domain[:-1]
 
-        socket.inet_aton(dest)
+        try :
+            socket.inet_aton(dest)
+        except TypeError :
+            # Not a correct packet
+            return
         now = datetime.datetime.now()
         dns_querry = httpquery([dest, domain, str(now)])
         #Add domain only if ipx domain not present in dns querry table, can be changed by using addTable() function
