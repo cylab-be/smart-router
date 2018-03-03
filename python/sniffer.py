@@ -63,6 +63,7 @@ class sniffer (threading.Thread):
         except TypeError: pass
 
     def httpQuerryHandler(self, pkt):
+        #FIXME - redo with correct db logic
         if IP not in pkt: return
         ip_dst = pkt[IP].dst
         ip_src = pkt[IP].src

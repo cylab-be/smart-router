@@ -12,3 +12,5 @@ class dnsquery:
 
     def __str__(self):
         return self.ip+","+self.domain+","+str(self.datetime)
+    def toTuple(self):
+        return "('"+ self.ip+"','"+self.domain+"','"+str(self.datetime)+"')"

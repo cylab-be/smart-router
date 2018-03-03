@@ -53,7 +53,7 @@ class analyser (threading.Thread):
             # ret = []
             txt = "Sir, during the last " + self.minutes_between_analysis + " minutes, the next potential malicious traffic has been detected : ```"
             for row in self.allmaliciousdomains :
-                txt += str(row).replace(", ", "->", 1).replace(',', " @ ", 1) + "\n"
+                txt += row.toSlack()
             txt=txt[:-1]+'```'
             ret = sc.api_call(
                 "chat.postMessage",
