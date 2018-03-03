@@ -83,6 +83,10 @@ class database:
             self.db.commit()
             return ret
 
+        except sqlite3.OperationalError:
+            self.createTables()
+            self.getAllFromTable(module_name, class_name, table_name)
+
         except sqlite3.ProgrammingError:
             logging.error("SQL ERROR")
             return False
