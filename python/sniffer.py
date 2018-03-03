@@ -78,16 +78,19 @@ class sniffer (threading.Thread):
             if not domain :
                 #Using ip dst if no domains availmables to not lose data
                 #FIXME - experimental feature
-                logging.warning("No corresponding domain, resolving ip ...")#("+ip_dst+")")#, using "+ip_dst+" instead")
+                logging.warning("No corresponding domain for "+ip_dst+", resolving ip ...")#("+ip_dst+")")#, using "+ip_dst+" instead")
                 now = datetime.datetime.now()
                 domain = socket.getfqdn(ip_dst)
                 logging.debug("Resolved ip "+ ip_dst +" added as " + domain)
-                # dns_querry = httpquery([ip_dst, "UNRESOLVED("+ip_dst+")", str(now)])
-                dns_querry = httpquery([ip_dst, domain, str(now)])
+                try :
+                    socket.inet_aton(domain)
+                    domain = "UNRESOLVED("+ip_dst+")"
+                except OSError :
+                    # if exception, domain is domain and not an ip address
+                    pass
 
+                dns_querry = httpquery([ip_dst, domain, str(now)])
                 self.db.insertOrIgnoreIntoTable("dnsqueries", dns_querry.toTuple())
-                # return False
-                # domain = ip_dst
             ip = str(pkt[Ether].src)
 
         now = datetime.datetime.now()
