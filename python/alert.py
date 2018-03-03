@@ -14,3 +14,6 @@ class alert:
 
     def __str__(self):
         return self.mac+","+self.hostname+","+self.domain_reached+","+str(self.infraction_date)
+
+    def toTuple(self):
+        return "('"+ self.mac+"','"+self.hostname+"','"+self.domain_reached+"','"+str(self.infraction_date)+"')"

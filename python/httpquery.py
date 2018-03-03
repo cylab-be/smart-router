@@ -12,3 +12,6 @@ class httpquery:
 
     def __str__(self):
         return self.mac_iot+","+self.domain+","+str(self.datetime)
+
+    def toSlack(self):
+        return self.mac_iot+" -> "+self.domain+" @ "+str(self.datetime)

@@ -10,6 +10,8 @@ from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR
 from scapy.layers.inet import IP
 from scapy.layers.inet import Ether
+from host import host
+from dnsquery import dnsquery
 
 
 class sniffer (threading.Thread):
@@ -72,30 +74,28 @@ class sniffer (threading.Thread):
         # FIXME - dns request in db "fail" for the first time the domain is reached, so the first http request also fail
         time.sleep(2)
 
-        sql = "select domain from DNSQueries WHERE ip = XXX LIMIT 1"
-        ret = self.db.execquery(sql, values)
+        sql = "select * from DNSQueries WHERE ip = XXX LIMIT 1"
+        tmp = self.db.execquery(sql, values)
 
-        inverted = False
-        if ret == "" or ret is False:
-            # sql = "SELECT domain FROM  DNSQueries WHERE ip_dst = %s LIMIT 1"
+        if tmp :
+            ret_dnsquery = dnsquery(tmp[0])
+            ip = str(pkt[Ether].dst)
+        else:
             values = [str(ip_src)]
-            ret = self.db.execquery(sql, values)
-            inverted = True
-            if ret == "" or ret is False :
+            tmp = self.db.execquery(sql, values)
+            if not tmp :
                 logging.warning("No corresponding domain")
-            return
+                return False
+            ret_dnsquery = dnsquery(tmp[0])
+            ip = str(pkt[Ether].src)
 
-        ret = ret.replace("'", "").replace("(", "").replace(")", "").replace(",", "")
+        print(str(ret_dnsquery))
+
+        domain = ret_dnsquery.domain
         now = datetime.datetime.now()
         sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (XXX,XXX,XXX)"
-        if not inverted:
-            logging.info(pkt[Ether].src + " -> " + ret)
-            # values = [str(ip_src), str(ret), now]
-            values = [str(pkt[Ether].src), str(ret), now]
-        else:
-            # values = [str(ip_dst), str(ret), now]
-            values = [str(pkt[Ether].dst), str(ret), now]
-            logging.info(pkt[Ether].dts + " -> " + ret)
+
+        values = [ip, str(domain), now]
 
         if self.db.execquery(sql, values):
             logging.error("failed inserting tuple in database")

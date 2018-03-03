@@ -1,5 +1,7 @@
-import unittest
+import unittest, time, os, sys
 from datetime import datetime, timedelta
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from python.alert import alert
 from python.database import *
 
 
@@ -34,51 +36,45 @@ class tu_basics():
     def testAllTablesContainSomething(self):
         db = database()
         db.connect()
-        sql = "SELECT * FROM DNSQueries"
-        result = db.execquery(sql)
-        if result is False or result is "": return False
+        dnsqueries = db.getAllFromTable("dnsquery", "dnsquery", "dnsqueries")
+        if not dnsqueries: return False
         print("DNSQueries")
-        for row in result.split(";"):
-            print(row)
+        for query in dnsqueries:
+            print(str(query))
 
-        sql = "SELECT * FROM HTTPQueries"
-        result = db.execquery(sql)
-        if result is False or result is "": return False
+        httpqueries = db.getAllFromTable("httpquery", "httpquery", "httpqueries")
+        if not dnsqueries: return False
         print("HTTPQueries")
-        for row in result.split(";"):
-            print(row)
+        for query in httpqueries:
+            print(str(query))
 
-        sql = "SELECT * FROM Hosts"
-        result = db.execquery(sql)
-        if result is False or result is "": return False
+        hosts = db.getAllFromTable("host", "host", "hosts")
+        if not hosts: return False
         print("Hosts")
-        for row in result.split(";"):
-            print(row)
+        for host in hosts:
+            print(str(host))
 
-        sql = "SELECT * FROM Alerts"
-        result = db.execquery(sql)
-        if result is False or result is "": return False
+        alerts = db.getAllFromTable("alert", "alert", "alerts")
+        if not alerts: return False
         print("Alerts")
-        for row in result.split(";"):
-            print(row)
+        for alert in alerts:
+            print(str(alert))
         return True
 
     def testTablesContainSomething(self):
         db = database()
         db.connect()
-        sql = "SELECT * FROM DNSQueries"
-        result = db.execquery(sql)
-        if result is False or result is "": return False
-        print("DNSQueries")
-        for row in result.split(";"):
-            print(row)
+        dnsqueries = db.getAllFromTable("dnsquery", "dnsquery", "dnsqueries")
+        if not dnsqueries : return False
+        # print("DNSQueries")
+        # for query in dnsqueries:
+        #     print(str(query))
 
-        sql = "SELECT * FROM HTTPQueries"
-        result = db.execquery(sql)
-        if result is False or result is "": return False
-        print("HTTPQueries")
-        for row in result.split(";"):
-            print(row)
+        httpqueries = db.getAllFromTable("httpquery", "httpquery", "httpqueries")
+        if not dnsqueries: return False
+        # print("HTTPQueries")
+        # for query in httpqueries:
+        #     print(str(query))
         return True
 
 
@@ -118,12 +114,12 @@ class tu_basics():
         db.connect()
         now = datetime.now()
         #FIXME - add corresponding DNS querries
-        values = [str("aa:bb:cc:dd:ee:ff"), str("legit1.org"), now]
+        values = [str("188.213.143.111"), str("legit1.org"), now]
         sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (XXX, XXX, XXX)"
         if db.execquery(sql, values) == False: return False
-        values = [str("aa:bb:cc:dd:ee:ff"), str("legit2.org"), now]
+        values = [str("8.8.8.8"), str("legit2.org"), now]
         if db.execquery(sql, values) == False: return False
-        values = [str("aa:bb:cc:dd:ee:ff"), str("malicious.org"), now]
+        values = [str("8.8.4.4"), str("malicious.org"), now]
         if db.execquery(sql, values) == False: return False
 
 
@@ -175,34 +171,69 @@ class tu_basics():
     def testDTO(self):
         db = database()
         db.connect()
-        hosts = db.getAll("host", "host", "Hosts")
+        hosts = db.getAllFromTable("host", "host", "Hosts")
         if hosts is False or len(hosts) == 0:
             return False
         # for host in hosts:
         #     print (str(host))
 
-        alerts = db.getAll("alert", "alert", "Alerts")
+        alerts = db.getAllFromTable("alert", "alert", "Alerts")
         if alerts is False or len(alerts) == 0:
             return False
         # for alert in alerts:
         #     print(str(alert))
 
-        httpqueries = db.getAll("httpquery", "httpquery", "httpqueries")
+        httpqueries = db.getAllFromTable("httpquery", "httpquery", "httpqueries")
         if httpqueries is False or len(httpqueries) == 0:
             return False
         # for httpquery in httpqueries:
         #     print(str(httpquery))
 
-        dnsqueries = db.getAll("dnsquery", "dnsquery", "dnsqueries")
+        dnsqueries = db.getAllFromTable("dnsquery", "dnsquery", "dnsqueries")
         if dnsqueries is False or len(dnsqueries) == 0:
             return False
         # for dnsquery in dnsqueries:
         #     print(str(dnsquery))
 
-
-
         return True
 
+    def testGetDomainFromIp(self):
+        db = database()
+        db.connect()
+        return db.getDomainFromIp("188.213.143.111")
+
+    def testGetHostFromMac(self):
+        db = database()
+        db.connect()
+        return db.getHostFromMac("aa:bb:cc:dd:ee:ff")
+
+    def testGetDateTimeFromHttpQueryFromMacByDate(self):
+        db = database()
+        db.connect()
+        return db.getDateTimeFromHttpQueryFromMacByDate("aa:bb:cc:dd:ee:ff")
+
+    def testAddIntoTable(self):
+        db = database()
+        db.connect()
+        h = host(['aa:bb:cc:dd:ee:ff', 'smb.local', '2018-03-07 00:03:08.748273'])
+        return db.addIntoTable("hosts", h.toTuple())
+
+    def testInsertOrIgnoreIntoTable(self):
+        db = database()
+        db.connect()
+        a = alert(['aa:bb:cc:dd:ee:ff', 'smb.local', 'malicious.org', '2018-03-07 00:03:08.748273'])
+        return db.insertOrIgnoreIntoTable("alerts", a.toTuple())
+
+    def testGetMaliciousDomainsFromMacAfterX(self):
+        db = database()
+        db.connect()
+        queries = db.getMaliciousDomainsFromMacAfterX("aa:bb:cc:dd:ee:ff", "2018-03-01")
+        # for query in queries :
+        #     print(str(query))
+        queries = db.getMaliciousDomainsFromMacAfterX("11:22:33:44:55:66", "2018-03-01")
+        # for query in queries:
+        #     print(str(query))
+        return queries
 
 class ExecuteBasicsTests(unittest.TestCase):
     # def testCreateTables(self):
@@ -222,5 +253,17 @@ class ExecuteBasicsTests(unittest.TestCase):
 
 #FIXME - below function work only if uppers are commented, do not know why, but tables are empty if not commented, and should not
 
-    def testDTO(self):
-        self.assertTrue(tu_basics.testDTO(self), "DTO test failed")
+    # def testDTO(self):
+    #     self.assertTrue(tu_basics.testDTO(self), "DTO test failed")
+    def testGetDomainFromIp(self):
+        self.assertIsNot(False, tu_basics.testGetDomainFromIp(self), "Get domain from ip failed")
+    # def testGetHostFromMac(self):
+    #     self.assertIsNot(False, tu_basics.testGetHostFromMac(self), "Get host from mac failed")
+    def testGetDateTimeFromHttpQueryFromMacByDate(self):
+        self.assertIsNot(False, tu_basics.testGetDateTimeFromHttpQueryFromMacByDate(self), "Get datetime from httpquery by date failed")
+    # def testAddIntoTable(self):
+    #     self.assertIsNot(False, tu_basics.testAddIntoTable(self), "Fail add into table")
+    def testGetMaliciousDomainsFromMacAfterX(self):
+        self.assertIsNot(False, tu_basics.testGetMaliciousDomainsFromMacAfterX(self), "Failed get alerts")
+    def testInsertOrIgnoreIntoTable(self):
+        self.assertIsNot(False, tu_basics.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")

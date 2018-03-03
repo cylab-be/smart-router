@@ -12,3 +12,6 @@ class host:
 
     def __str__(self):
         return self.mac+","+self.hostname+","+str(self.first_activity)
+
+    def toTuple(self):
+        return "('"+ self.mac+"','"+self.hostname+"','"+str(self.first_activity)+"')"

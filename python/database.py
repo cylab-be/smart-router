@@ -5,11 +5,14 @@
 #import MySQLdb
 from os.path import join, dirname
 from dotenv import load_dotenv
-import os
+import os, sys
 import logging
 import sqlite3
-from host import host
 import importlib
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from python.host import host
+from python.dnsquery import dnsquery
+from python.httpquery import httpquery
 
 class database:
     def __init__(self):
@@ -42,26 +45,26 @@ class database:
         elif self.connection == 'sqlite':
             query = query.replace("XXX", "?")
         try :
+            #TODO test this, not sure it really works
             values = []
             for ar in args:
                 values = ar
-            #FIXME - return a list
             self.cursor.execute(query, values)
-            ret = ''
+            matrix =[]
             for r in self.cursor:
-                ret = ret + ';' + str(r)
-            ret = ret[1:]
+                matrix.append(list(r))
+
             self.db.commit()
-            return str(ret)
+            return matrix
 
 #        except pymysql.err.ProgrammingError:
 #            logging.error("SQL ERROR")
 #            return False
         except sqlite3.ProgrammingError:
             logging.error("SQL ERROR")
-            return False
+        return False
 
-    def getAll(self, module_name,class_name, table_name ):
+    def getAllFromTable(self, module_name, class_name, table_name):
         query = "SELECT * FROM XXX"
         #FIXME - insecure but does not work with ?
         query=query.replace("XXX", table_name)
@@ -81,6 +84,66 @@ class database:
             logging.error("SQL ERROR")
             return False
 
+    def getHostFromMac(self, mac):
+        sql = "select * from Hosts WHERE mac = XXX LIMIT 1"
+        tmp = self.execquery(sql, [mac])
+        if not tmp:
+            return False
+        return host(tmp[0])
+
+    def getDomainFromIp(self, ip):
+        sql = "select * from DNSQueries WHERE ip = XXX LIMIT 1"
+        tmp = self.execquery(sql, [ip])
+        if not tmp:
+            return False
+        return dnsquery(tmp[0]).domain
+
+    def getDateTimeFromHttpQueryFromMacByDate(self, mac):
+        sql = "SELECT * FROM HTTPQueries WHERE mac_iot = XXX ORDER BY datetime LIMIT 1 "
+        tmp = self.execquery(sql, [mac])
+        if not tmp:
+            return False
+        return httpquery(tmp[0]).datetime
+
+    def getMaliciousDomainsFromMacAfterX(self, mac, limit_time):
+        sql = "SELECT * from HTTPQueries WHERE mac_iot = XXX AND domain NOT IN (SELECT domain from HTTPQueries WHERE mac_iot = XXX AND datetime < XXX ORDER BY datetime ) ORDER BY datetime"
+        sql =sql.replace("XXX", "'"+mac+"'", 2).replace("XXX", "'"+str(limit_time)+"'")
+        malicious_requets = self.execquery(sql, [])
+        malicious_http = []
+        for mal in malicious_requets :
+            malicious_http.append(httpquery(mal))
+        return malicious_http
+
+
+    def addIntoTable(self, table_name, insert_values):
+        query = "INSERT INTO XXX VALUES XXX"
+
+        query = query.replace("XXX", table_name, 1)
+        query = query.replace("XXX", insert_values, 1)
+
+        try:
+            self.cursor.execute(query)
+            self.db.commit()
+            return True
+
+        except sqlite3.ProgrammingError:
+            logging.error("SQL ERROR")
+            return False
+
+    def insertOrIgnoreIntoTable(self, table_name, insert_values):
+        query = "INSERT OR IGNORE INTO XXX VALUES XXX"
+
+        query = query.replace("XXX", table_name, 1)
+        query = query.replace("XXX", insert_values, 1)
+
+        try:
+            self.cursor.execute(query)
+            self.db.commit()
+            return True
+        except sqlite3.ProgrammingError :
+            logging.error("SQL ERROR")
+            return False
+
 
 
     def createTables(self):
@@ -97,6 +160,7 @@ class database:
             command = command.replace('\n', ' ').replace('\r', '').lstrip() + ";"
             # print(command)
             self.execquery(str(command))
+
         return True
 
     def close(self):

@@ -1,4 +1,4 @@
-import unittest
+import unittest, time
 import multiprocessing
 import requests
 from python.sniffer import sniffer
@@ -10,9 +10,11 @@ class tu_allprocess():
     def testSniffer(self):
         p = multiprocessing.Process(target=snif)
         p.start()
+        # p.join(5)
         p.join(5)
         r = requests.get("http://nicode.me/index.html")
         # Wait for 10 seconds or until process finishes
+        # p.join(10)
         p.join(10)
         # If thread is still active
         if p.is_alive():
@@ -30,16 +32,16 @@ class tu_allprocess():
 
 class Executetu_allprocess(unittest.TestCase):
     def testAll(self):
-        self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
-        # self.assertTrue(tu_basics.testTablesExistence(self), "Tables do not exist")
-        tu_allprocess.testSniffer(self)
-        self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after sniffing")
+        # self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
+        # tu_allprocess.testSniffer(self)
+        # self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after sniffing")
 
         self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
         self.assertTrue(tu_basics.testInserIntoTablesForAnalysisSimulation(self), "Can not create insert into tables")
+        self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after inserting")
 
         tu_allprocess.testAnalyser(self)
-        self.assertTrue(tu_basics.testAllTablesContainSomething(self), "Tables do not contain anything after analysing")
+        # self.assertTrue(tu_basics.testAllTablesContainSomething(self), "Tables do not contain anything after analysing")
 
 
 def snif():
@@ -64,5 +66,5 @@ def analyse():
     a.start()
     a.join()
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
