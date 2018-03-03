@@ -73,7 +73,8 @@ class database:
             self.cursor.execute(query, values)
             ret = []
             for r in self.cursor:
-                module = importlib.import_module(module_name)
+                #FIXME - watchout @ "python."+
+                module = importlib.import_module("python."+module_name)
                 class_ = getattr(module, class_name)
                 instance = class_(r)
                 ret.append(instance)

@@ -11,6 +11,7 @@ from slackclient import SlackClient
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from python.host import host
 from python.httpquery import httpquery
+from python.dnsquery import dnsquery
 from python.database import database
 from python.alert import alert
 

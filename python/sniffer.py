@@ -1,17 +1,18 @@
 #!/usr/bin/python3
 import datetime
 import threading
+import os, sys
 from os.path import join, dirname
-
-#import pymysql
-from database import database
+from python.database import database
 from dotenv import load_dotenv
 from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR
 from scapy.layers.inet import IP
 from scapy.layers.inet import Ether
-from host import host
-from dnsquery import dnsquery
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+#import pymysql
+from python.host import host
+from python.dnsquery import dnsquery
 
 
 class sniffer (threading.Thread):

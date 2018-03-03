@@ -1,6 +1,6 @@
 import unittest, time, os, sys
 from datetime import datetime, timedelta
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 from python.alert import alert
 from python.database import *
 
