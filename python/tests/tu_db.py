@@ -1,6 +1,6 @@
 import unittest, sys, os
 from datetime import datetime
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 from python.tests.tu_basics import tu_basics
 from python.alert import alert
 from python.database import *
@@ -69,6 +69,8 @@ class ExecuteDBTests(unittest.TestCase):
         self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
         self.assertTrue(tu_basics.testInserIntoTables(self), "Insertion in tables failed")
         self.assertTrue(tu_db.testDTO(self), "DTO test failed")
+        self.assertIsNot(False, tu_db.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")
+        self.assertIsNot(False, tu_db.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")
         self.assertIsNot(False, tu_db.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")
         self.assertIsNot(False, tu_db.testGetDomainFromIp(self), "Get domain from ip failed")
         self.assertIsNot(False, tu_db.testGetHostFromMac(self), "Get host from mac failed")

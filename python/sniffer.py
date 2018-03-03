@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import datetime
 import threading
-import os, sys
 from os.path import join, dirname
 from python.database import database
 from dotenv import load_dotenv
@@ -11,7 +10,7 @@ from scapy.layers.inet import IP
 from scapy.layers.inet import Ether
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 #import pymysql
-from python.host import host
+from python.httpquery import httpquery
 from python.dnsquery import dnsquery
 
 
@@ -29,39 +28,33 @@ class sniffer (threading.Thread):
         self.db = database()
         self.db.connect()
         self.type = type
-        self.host = ""
 
     def run(self):
-        logging.info("run " + self.type)
+        logging.info("Starting " + self.type +" sniffer")
         if (self.type == "dns"):
-            self.dnsQuerry(self.host)
+            self.dnsQuerry()
         elif (self.type == "http"):
-            self.httpQuerry(self.host)
+            self.httpQuerry()
         elif (self.type == "https"):
-            self.httpsQuerry(self.host)
-
-    def setHost(self, host):
-        self.host = host
+            self.httpsQuerry()
 
     def dnsQuerryHandler(self, pkt):
         if IP not in pkt: return
         if not pkt.haslayer(DNS): return
         if not pkt.ancount > 0 and not isinstance(pkt.an, DNSRR): return
         dest = pkt.an.rdata
-        name = str(pkt.getlayer(DNS).qd.qname.decode("utf-8"))
-        if name.endswith('.'):
-            name = name[:-1]
-        try:
-            socket.inet_aton(dest)
-            now = datetime.datetime.now()
-            values = [str(dest), str(name), now]
-            sql = "INSERT INTO DNSQueries (ip, domain, datetime) VALUES (XXX,XXX,XXX)"
-            if self.db.execquery(sql, values):
-                logging.error("failed inserting tuple in database")
-            else:
-                logging.info("new entry in database(DNS)")
-        except socket.error: pass
-        except TypeError: pass
+        domain = str(pkt.getlayer(DNS).qd.qname.decode("utf-8"))
+        if domain.endswith('.'):
+            domain = domain[:-1]
+
+        socket.inet_aton(dest)
+        now = datetime.datetime.now()
+        dns_querry = httpquery([dest, domain, str(now)])
+        #Add domain only if ipx domain not present in dns querry table, can be changed by using addTable() function
+        if self.db.insertOrIgnoreIntoTable("dnsqueries", dns_querry.toTuple()):
+            logging.info("new entry in database(DNS) : " + domain)
+        else:
+            logging.error("failed inserting DNS tuple in database")
 
     def httpQuerryHandler(self, pkt):
         #FIXME - redo with correct db logic
@@ -69,54 +62,44 @@ class sniffer (threading.Thread):
         ip_dst = pkt[IP].dst
         ip_src = pkt[IP].src
 
-        values = [str(ip_dst)]
-
         if not pkt['TCP'].flags & 2: return
 
-        # FIXME - dns request in db "fail" for the first time the domain is reached, so the first http request also fail
-        time.sleep(2)
+        # FIXME - Tghe first time tho domain is reached, it is add to DNS tables, beacause of this addition, first request to DNS table can return False if DB is to "slow" to add the DNS entry and commit it
+        # time.sleep(2)
+        domain = self.db.getDomainFromIp(str(ip_dst))
 
-        sql = "select * from DNSQueries WHERE ip = XXX LIMIT 1"
-        tmp = self.db.execquery(sql, values)
-
-        if tmp :
-            ret_dnsquery = dnsquery(tmp[0])
+        if domain :
             ip = str(pkt[Ether].dst)
         else:
-            values = [str(ip_src)]
-            tmp = self.db.execquery(sql, values)
-            if not tmp :
-                logging.warning("No corresponding domain")
-                return False
-            ret_dnsquery = dnsquery(tmp[0])
+            domain = self.db.getDomainFromIp(str(ip_src))
+            if not domain :
+                #Using ip dst if no domains availmables to not lose data
+                logging.warning("No corresponding domain, using "+ip_dst+" instead")
+                # return False
+                domain = ip_dst
             ip = str(pkt[Ether].src)
 
-        print(str(ret_dnsquery))
-
-        domain = ret_dnsquery.domain
         now = datetime.datetime.now()
-        sql = "INSERT INTO HTTPQueries (mac_iot, domain, datetime) VALUES (XXX,XXX,XXX)"
 
-        values = [ip, str(domain), now]
-
-        if self.db.execquery(sql, values):
-            logging.error("failed inserting tuple in database")
+        http_querry = httpquery([ip, domain, str(now)])
+        if not self.db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()):
+            logging.error("failed inserting HTTP tuple in database")
         else:
-            logging.info("new entry in database(HTTP)")
+            logging.info("new entry in database(HTTP(s)) : " + domain)
 
 
 
-    def dnsQuerry(self, host):
+    def dnsQuerry(self):
         # TODO - check if host, if not, launch sniff wo filter on ip add
         # sniff(iface=self.interface, filter="ip host " + host + " and port 53", prn=self.dnsQuerryHandler, store=0)
         sniff(iface=self.interface, filter="port 53", prn=self.dnsQuerryHandler, store=0)
 
-    def httpQuerry(self, host):
+    def httpQuerry(self):
         # TODO - check if host, if not, launch sniff wo filter on ip add
         # sniff(iface=self.interface, filter="ip host " + host + " and port 80", prn=self.httpQuerryHandler, store=0)
         # sniff(iface=self.interface, filter="port 80", lfilter=lambda d: d.src == '08:00:27:54:8b:1b', prn=self.httpQuerryHandler, store=0)
         sniff(iface=self.interface, filter="port 80", prn=self.httpQuerryHandler, store=0)
 
-    def httpsQuerry(self, host):
+    def httpsQuerry(self):
         # TODO - check if host, if not, launch sniff wo filter on ip add
         sniff(iface=self.interface, filter="port 443", prn=self.httpQuerryHandler, store=0)

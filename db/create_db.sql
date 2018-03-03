@@ -4,7 +4,7 @@ CREATE TABLE `DNSQueries` (
   `ip` varchar(20) NOT NULL DEFAULT '',
   `domain` varchar(200) NOT NULL DEFAULT '',
   `datetime` datetime NOT NULL,
-  PRIMARY KEY (ip,"domain", datetime)
+  PRIMARY KEY (ip,"domain")
 ) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=latin1 ;
 
 
