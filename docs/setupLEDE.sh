@@ -50,8 +50,11 @@ pip3 install python-dotenv
 pip3 install scapy-python3
 
 
+cd /root
 git clone https://github.com/RUCD/smart-router.git --branch=openwrt
-#crontab main.py
+cp smart-router/docs/init_script.sh /etc/init.d/smartrouter
+chmod +x /etc/init.d/smartrouter
+/etc/init.d/smartrouter enable
 
 #apache
 opkg install apache
@@ -63,7 +66,7 @@ pip3 install slackclient
 opkg install htop
 
 ## rc.local
-echo "sleep 10 ; /usr/bin/python3 /root/smart-router/python/main.py &" > /etc/rc.local
+echo "/usr/bin/python3 /root/smart-router/python/main.py >> /root/smart-router/logs/errors.log 2>&1" > /etc/rc.local
 echo "exit 0" >> /etc/rc.local
 
 

@@ -62,6 +62,10 @@ class tu_db():
         db.connect()
         queries = db.getMaliciousDomainsFromMacAfterX("aa:bb:cc:dd:ee:ff", "2018-03-01")
         return queries
+    def testFaker(self):
+        db = database()
+        db.connect()
+        return db.insertFakeHTTPQueriesBeforeFirstActivity()
 
 class ExecuteDBTests(unittest.TestCase):
 
@@ -77,6 +81,7 @@ class ExecuteDBTests(unittest.TestCase):
         self.assertIsNot(False, tu_db.testGetDateTimeFromHttpQueryFromMacByDate(self),
                          "Get datetime from httpquery by date failed")
         self.assertIsNot(False, tu_db.testGetMaliciousDomainsFromMacAfterX(self), "Failed get alerts")
+        self.assertIsNot(False, tu_db.testFaker(self), "Test faker falied")
 
 
 

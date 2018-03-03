@@ -9,6 +9,7 @@ import os, sys
 import logging
 import sqlite3
 import importlib
+from datetime import timedelta, datetime
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from python.host import host
 from python.dnsquery import dnsquery
@@ -150,6 +151,15 @@ class database:
         except sqlite3.ProgrammingError :
             logging.error("SQL ERROR")
             return False
+
+    def insertFakeHTTPQueriesBeforeFirstActivity(self):
+        hosts = self.getAllFromTable('host', 'host', 'hosts')
+        for h in hosts :
+            fa = datetime.strptime(h.first_activity, "%Y-%m-%d %H:%M:%S.%f")
+            d = fa - timedelta(days=int(os.environ.get("LEARNING_PERIOD")))
+            query = httpquery([h.mac, "FAKER.org", str(d)])
+            if self.insertOrIgnoreIntoTable('httpqueries', query.toTuple()) is False : return False
+        return True
 
 
 
