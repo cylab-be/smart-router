@@ -85,7 +85,7 @@ class database:
 
         except sqlite3.OperationalError:
             self.createTables()
-            self.getAllFromTable(module_name, class_name, table_name)
+            return self.getAllFromTable(module_name, class_name, table_name)
 
         except sqlite3.ProgrammingError:
             logging.error("SQL ERROR")
