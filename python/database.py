@@ -62,6 +62,8 @@ class database:
 #            return False
         except sqlite3.ProgrammingError:
             logging.error("SQL ERROR")
+        except sqlite3.OperationalError:
+            self.createTables()
         return False
 
     def getAllFromTable(self, module_name, class_name, table_name):
