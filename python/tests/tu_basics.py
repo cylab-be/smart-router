@@ -17,27 +17,15 @@ class tu_basics():
         db.connect()
         dnsqueries = db.getAllFromTable("dnsquery", "dnsquery", "dnsqueries")
         if not dnsqueries: return False
-        print("DNSQueries")
-        for query in dnsqueries:
-            print(str(query))
 
         httpqueries = db.getAllFromTable("httpquery", "httpquery", "httpqueries")
-        if not dnsqueries: return False
-        print("HTTPQueries")
-        for query in httpqueries:
-            print(str(query))
+        if not httpqueries: return False
 
         hosts = db.getAllFromTable("host", "host", "hosts")
         if not hosts: return False
-        print("Hosts")
-        for host in hosts:
-            print(str(host))
 
         alerts = db.getAllFromTable("alert", "alert", "alerts")
         if not alerts: return False
-        print("Alerts")
-        for alert in alerts:
-            print(str(alert))
         return True
 
     def testTablesContainSomething(self):
@@ -82,7 +70,7 @@ class tu_basics():
         now = datetime.now()
 
         five_minutes_ago = now - timedelta(minutes=5)
-        yesterday = now - timedelta(days=int(self.learningPeriod))
+        yesterday = now - timedelta(days=int(self.learningPeriod))- timedelta(hours=5)
         yesterday_later = now - timedelta(days=int(self.learningPeriod))+ timedelta(hours=5)
 
 

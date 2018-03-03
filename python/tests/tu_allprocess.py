@@ -41,7 +41,7 @@ class Executetu_allprocess(unittest.TestCase):
         self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after inserting")
 
         tu_allprocess.testAnalyser(self)
-        # self.assertTrue(tu_basics.testAllTablesContainSomething(self), "Tables do not contain anything after analysing")
+        self.assertTrue(tu_basics.testAllTablesContainSomething(self), "Tables do not contain anything after analysing")
 
 
 def snif():
