@@ -26,17 +26,17 @@ class main:
     def snif(self):
 
         snifDNS = sniffer("dns")
-        logging.info("Starting DNS  ...")
+        # logging.info("Starting DNS  ...")
         snifDNS.start()
         logging.info("OK!")
 
         snifHTTP = sniffer("http")
-        logging.info("Starting HTTP sniffer ...")
+        # logging.info("Starting HTTP sniffer ...")
         snifHTTP.start()
         logging.info("OK!")
 
         snifHTTPS = sniffer("https")
-        logging.info("Starting HTTPS sniffer ...")
+        # logging.info("Starting HTTPS sniffer ...")
         snifHTTPS.start()
         logging.info("OK!")
 
