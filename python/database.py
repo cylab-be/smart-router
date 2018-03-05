@@ -37,7 +37,7 @@ class database:
         if self.connection == 'mysql':
             self.db = MySQLdb.connect(host=self.host, port=int(self.port), user=self.user, passwd=self.passwd, db=self.dbname)
         elif self.connection == 'sqlite':
-            self.db = sqlite3.connect(self.dbname, check_same_thread=False)
+            self.db = sqlite3.connect(self.dbname, timeout=60, check_same_thread=False)
         self.cursor = self.db.cursor()
 
     def execquery(self, query, *args):
@@ -116,6 +116,7 @@ class database:
     def getMaliciousDomainsFromMacAfterX(self, mac, limit_time):
         sql = "SELECT * from HTTPQueries WHERE mac_iot = XXX AND domain NOT IN (SELECT domain from HTTPQueries WHERE mac_iot = XXX AND datetime < XXX ORDER BY datetime ) ORDER BY datetime"
         sql =sql.replace("XXX", "'"+mac+"'", 2).replace("XXX", "'"+str(limit_time)+"'")
+        print(sql)
         malicious_requets = self.execquery(sql, [])
         malicious_http = []
         for mal in malicious_requets :
