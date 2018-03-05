@@ -33,12 +33,12 @@ class analyser (threading.Thread):
         self.slack_channel = os.environ.get("SLACK_CHANNEL")
         self.db = database()
         self.db.connect()
+
+
+    def run(self):
         self.before_analysis_alerts = self.db.getAllFromTable('alert', 'alert', 'alerts')
         self.analysed_mac = []
         self.all_malicious_domains = []
-
-    def run(self):
-
         httpqueries = self.db.getAllFromTable("httpquery", "httpquery", "httpqueries")
         for query in httpqueries:
             self.checkHostAndAddItIfNotPresent(query.mac_iot)
