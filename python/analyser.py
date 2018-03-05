@@ -33,26 +33,36 @@ class analyser (threading.Thread):
         self.slack_channel = os.environ.get("SLACK_CHANNEL")
         self.db = database()
         self.db.connect()
+        self.before_analysis_alerts = self.db.getAllFromTable('alert', 'alert', 'alerts')
+        self.analysed_mac = []
+        self.all_malicious_domains = []
 
     def run(self):
-        self.allmaliciousdomains = []
+
         httpqueries = self.db.getAllFromTable("httpquery", "httpquery", "httpqueries")
-        self.analysed_mac = []
         for query in httpqueries:
             self.checkHostAndAddItIfNotPresent(query.mac_iot)
             ret = self.analyse(query.mac_iot)
             if ret is not None :
-                self.allmaliciousdomains.extend(ret)
-        self.allmaliciousdomains = list(filter(None, self.allmaliciousdomains))
+                self.all_malicious_domains.extend(ret)
+        self.all_malicious_domains = list(filter(None, self.all_malicious_domains))
         self.sendAlert()
 
     def sendAlert(self):
-        if self.slack_alert is True and len(self.allmaliciousdomains) > 0 :
-            sc = SlackClient(self.slack_token)
-            # ret = []
-            txt = "Sir, during the last " + self.minutes_between_analysis + " minutes, the next potential malicious traffic has been detected : ```"
-            for row in self.allmaliciousdomains :
-                txt += row.toSlack()
+
+        #TODO - transform  all_malicious_domains to alert list, check if alreday in db, if not send alert, else pass
+        sc = SlackClient(self.slack_token)
+        txt = "Sir, during the last " + self.minutes_between_analysis + " minutes, the next potential malicious traffic has been detected : ```"
+        alerts_to_send = []
+        for z in self.all_malicious_domains :
+            a = alert([z.mac_iot, "not needed", z.domain, z.datetime])
+            if a not in self.before_analysis_alerts :
+                alerts_to_send.append(z)
+
+        for a in alerts_to_send :
+            txt += a.toSlack()
+
+        if len(alerts_to_send) > 0 :
             txt=txt[:-1]+'```'
             ret = sc.api_call(
                 "chat.postMessage",
@@ -64,9 +74,8 @@ class analyser (threading.Thread):
                 logging.info("Alert send to Slack")
             else:
                 logging.error("Alert has not been send to Slack")
-
-        else:
-            logging.info("No alert sent to Slack because there is not malicious traffic detected")
+            return
+        logging.info("No alert sent to Slack because there is not malicious traffic detected")
 
     def checkHostAndAddItIfNotPresent(self, mac_host):
         if self.db.getHostFromMac(mac_host): return
@@ -88,8 +97,10 @@ class analyser (threading.Thread):
         self.analysed_mac.append(mac_host)
 
         first_activity = self.db.getHostFromMac(mac_host).first_activity
+        # print("FA : ", first_activity)
 
         last_allowed_learning_request_time = datetime.strptime(first_activity, "%Y-%m-%d %H:%M:%S.%f") + timedelta(days=int(self.learningPeriod))
+        # print("LA :" , last_allowed_learning_request_time)
         maliciousDomains = self.db.getMaliciousDomainsFromMacAfterX(mac_host, last_allowed_learning_request_time)
 
         for mal in maliciousDomains :

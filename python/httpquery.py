@@ -14,6 +14,6 @@ class httpquery:
         return self.mac_iot+","+self.domain+","+str(self.datetime)
 
     def toSlack(self):
-        return self.mac_iot+" -> "+self.domain+" @ "+str(self.datetime)
+        return self.mac_iot+" -> "+self.domain+" @ "+str(self.datetime)+"\n"
     def toTuple(self):
         return "('"+ self.mac_iot+"','"+self.domain+"','"+str(self.datetime)+"')"

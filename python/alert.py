@@ -15,5 +15,11 @@ class alert:
     def __str__(self):
         return self.mac+","+self.hostname+","+self.domain_reached+","+str(self.infraction_date)
 
+    def __eq__(self, other):
+        #FIXME - no nedd hostname to be equal
+        if self.mac == other.mac and self.domain_reached == other.domain_reached and self.infraction_date == other.infraction_date :
+            return True
+        return False
+
     def toTuple(self):
         return "('"+ self.mac+"','"+self.hostname+"','"+self.domain_reached+"','"+str(self.infraction_date)+"')"

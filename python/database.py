@@ -122,6 +122,10 @@ class database:
             malicious_http.append(httpquery(mal))
         return malicious_http
 
+    def checkIfAlert(self, a):
+        sql = "SELECT * FROM Alerts WHERE mac = XXX AND domain_reached = XXX AND infraction_date = XXX"
+        return self.execquery(sql, [a.mac, a.domain_reached, a.infraction_date])
+
 
     def addIntoTable(self, table_name, insert_values):
         query = "INSERT INTO XXX VALUES XXX"
