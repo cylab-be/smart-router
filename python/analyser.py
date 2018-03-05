@@ -97,10 +97,8 @@ class analyser (threading.Thread):
         self.analysed_mac.append(mac_host)
 
         first_activity = self.db.getHostFromMac(mac_host).first_activity
-        # print("FA : ", first_activity)
 
         last_allowed_learning_request_time = datetime.strptime(first_activity, "%Y-%m-%d %H:%M:%S.%f") + timedelta(days=int(self.learningPeriod))
-        # print("LA :" , last_allowed_learning_request_time)
         maliciousDomains = self.db.getMaliciousDomainsFromMacAfterX(mac_host, last_allowed_learning_request_time)
 
         for mal in maliciousDomains :

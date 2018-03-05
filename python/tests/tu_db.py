@@ -77,18 +77,18 @@ class tu_db():
 class ExecuteDBTests(unittest.TestCase):
 
     def testAll(self):
-        # self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
-        # self.assertTrue(tu_basics.testInserIntoTables(self), "Insertion in tables failed")
-        # self.assertTrue(tu_db.testDTO(self), "DTO test failed")
-        # self.assertIsNot(False, tu_db.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")
-        # self.assertIsNot(False, tu_db.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")
-        # self.assertIsNot(False, tu_db.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")
-        # self.assertIsNot(False, tu_db.testGetDomainFromIp(self), "Get domain from ip failed")
-        # self.assertIsNot(False, tu_db.testGetHostFromMac(self), "Get host from mac failed")
-        # self.assertIsNot(False, tu_db.testGetDateTimeFromHttpQueryFromMacByDate(self),
-        #                  "Get datetime from httpquery by date failed")
-        # self.assertIsNot(False, tu_db.testGetMaliciousDomainsFromMacAfterX(self), "Failed get alerts")
-        # self.assertIsNot(False, tu_db.testFaker(self), "Test faker falied")
+        self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
+        self.assertTrue(tu_basics.testInserIntoTables(self), "Insertion in tables failed")
+        self.assertTrue(tu_db.testDTO(self), "DTO test failed")
+        self.assertIsNot(False, tu_db.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")
+        self.assertIsNot(False, tu_db.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")
+        self.assertIsNot(False, tu_db.testInsertOrIgnoreIntoTable(self), "Failed ignore or insert")
+        self.assertIsNot(False, tu_db.testGetDomainFromIp(self), "Get domain from ip failed")
+        self.assertIsNot(False, tu_db.testGetHostFromMac(self), "Get host from mac failed")
+        self.assertIsNot(False, tu_db.testGetDateTimeFromHttpQueryFromMacByDate(self),
+                         "Get datetime from httpquery by date failed")
+        self.assertIsNot(False, tu_db.testGetMaliciousDomainsFromMacAfterX(self), "Failed get alerts")
+        self.assertIsNot(False, tu_db.testFaker(self), "Test faker falied")
         self.assertIsNot(False, tu_db.testCheckAlert(self), "Test alert failed")
 
 

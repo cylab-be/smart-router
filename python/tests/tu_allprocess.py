@@ -59,11 +59,11 @@ class Executetu_allprocess(unittest.TestCase):
         tu_allprocess.testAnalyser(self)
         self.assertTrue(tu_basics.testAllTablesContainSomething(self), "Tables do not contain anything after analysing")
 
-
-    def testSniffer(self):
-        self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
-        tu_allprocess.testSniffer(self)
-        self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after sniffing")
+    #
+    # def testSniffer(self):
+    #     self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
+    #     tu_allprocess.testSniffer(self)
+    #     self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after sniffing")
 
 
 
