@@ -161,7 +161,7 @@ class database:
         hosts = self.getAllFromTable('host', 'host', 'hosts')
         for h in hosts :
             fa = datetime.strptime(h.first_activity, "%Y-%m-%d %H:%M:%S.%f")
-            d = fa - timedelta(days=int(os.environ.get("LEARNING_PERIOD")))
+            d = fa - timedelta(hours=int(os.environ.get("LEARNING_PERIOD")))
             query = httpquery([h.mac, "FAKER.org", str(d)])
             if self.insertOrIgnoreIntoTable('httpqueries', query.toTuple()) is False : return False
         return True

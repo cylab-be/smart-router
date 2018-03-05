@@ -48,7 +48,7 @@ class sniffer (threading.Thread):
 
         try :
             socket.inet_aton(dest)
-        except TypeError :
+        except (TypeError, OSError) :
             # Not a correct packet
             return
         now = datetime.datetime.now()
@@ -66,10 +66,10 @@ class sniffer (threading.Thread):
         ip_src = pkt[IP].src
 
         SYN = 0x02
-        if not pkt['TCP'].flags & SYN: return
+        if not pkt['TCP'].flags == SYN: return
 
         # FIXME - Tghe first time tho domain is reached, it is add to DNS tables, beacause of this addition, first request to DNS table can return False if DB is to "slow" to add the DNS entry and commit it
-        # time.sleep(2)
+        time.sleep(2)
         domain = self.db.getDomainFromIp(str(ip_dst))
 
         if domain :
