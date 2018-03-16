@@ -84,6 +84,8 @@ class tu_basics():
         if not db.insertOrIgnoreIntoTable("dnsqueries", dns_querry.toTuple()): return False
 
 
+
+        # DOES NOT HAVE TO BE DETECTED BECASUE MAC ADDRESS IS ROUTER MAC ADDRESS
         http_querry = httpquery(["5a:ef:68:a6:35:48", "nicode.me", str(yesterday)])
         if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
 
@@ -106,6 +108,35 @@ class tu_basics():
         if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
 
         http_querry = httpquery(["5a:ef:68:a6:35:48", "malicious.org", str(now)])
+        if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
+
+
+
+
+
+
+        http_querry = httpquery(["3c:2e:ff:29:4d:93", "nicode.me", str(yesterday)])
+        if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
+
+        http_querry = httpquery(["3c:2e:ff:29:4d:93", "nicode.me", str(yesterday_later)])
+        if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
+
+        http_querry = httpquery(["3c:2e:ff:29:4d:93", "nicode.me", str(now)])
+        if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
+
+        http_querry = httpquery(["3c:2e:ff:29:4d:93", "benjaminnicode.be", str(yesterday)])
+        if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
+
+        http_querry = httpquery(["3c:2e:ff:29:4d:93", "benjaminnicode.be", str(yesterday_later)])
+        if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
+
+        http_querry = httpquery(["3c:2e:ff:29:4d:93", "benjaminnicode.be", str(now)])
+        if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
+
+        http_querry = httpquery(["3c:2e:ff:29:4d:93", "malicious.org", str(five_minutes_ago)])
+        if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
+
+        http_querry = httpquery(["3c:2e:ff:29:4d:93", "malicious.org", str(now)])
         if not db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()): return False
 
         return True

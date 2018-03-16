@@ -23,14 +23,15 @@ class analyser (threading.Thread):
         self.logfile = os.environ.get("LOGFILE")
         logging.basicConfig(filename=self.logfile, level=logging.DEBUG,format='%(asctime)s %(levelname)s - %(message)s')
         self.learningPeriod = os.environ.get("LEARNING_PERIOD")
-        if "True" in os.environ.get("SLACK_NOTIFICATIONS"):
-            self.slack_alert = True
-        else:
-            self.slack_alert = False
+        # if "True" in os.environ.get("SLACK_NOTIFICATIONS"):
+        #     self.slack_alert = True
+        # else:
+        #     self.slack_alert = False
         self.minutes_between_analysis=os.environ.get("MINUTES_BETWEEN_ANALYSIS")
 
         self.slack_token = os.environ.get("SLACK_API_TOKEN")
         self.slack_channel = os.environ.get("SLACK_CHANNEL")
+        self.ignored_mac = os.environ.get("IGNORED_MAC").split(",")
         self.db = database()
         self.db.connect()
 
@@ -46,7 +47,9 @@ class analyser (threading.Thread):
             if ret is not None :
                 self.all_malicious_domains.extend(ret)
         self.all_malicious_domains = list(filter(None, self.all_malicious_domains))
-        self.sendAlert()
+
+        if "True" in os.environ.get("SLACK_NOTIFICATIONS"):
+            self.sendAlert()
 
     def sendAlert(self):
 
@@ -92,6 +95,9 @@ class analyser (threading.Thread):
     def analyse(self, mac_host):
 
         for h in self.analysed_mac :
+            if mac_host in h:
+                return None
+        for h in self.ignored_mac :
             if mac_host in h:
                 return None
         self.analysed_mac.append(mac_host)
