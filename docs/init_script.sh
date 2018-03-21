@@ -1,18 +1,22 @@
 #!/bin/sh /etc/rc.common
 # SmartRouter
-START=60
+START=70
 STOP=15
 
+SERVICE_DAEMONIZE=1
+SERVICE_WRITE_PID=1
+
 start() {
-        echo start
-	/usr/bin/python3 /root/smart-router/python/main.py >> /root/smart-router/logs/errors.log &
         # commands to launch application
+        logger "SMARTROUTER :  started"
+		/usr/bin/python3 /etc/smart-router/python/main.py >> /var/log/smart-router-errors.log &
 }
 
 stop() {
-        echo stop
-	/usr/bin/killall python3
         # commands to kill application
+	logger "SMARTROUTER : killing next porcesses : $(pgrep -f smart-router)"
+	pkill -f smart-router
+	logger "SMARTROUTER : stoped"
 }
 
 restart() {
@@ -20,6 +24,7 @@ restart() {
 	start
 }
 
-boot() {
-	start_service
+boot () {
+	sleep 60
+	start
 }
