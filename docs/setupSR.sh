@@ -80,8 +80,18 @@ procps-ng-pkill
 
 
 #apache
-opkg install apache
 
+
+
+opkg install lighttpd lighttpd-mod-cgi php7 php7-cgi php7-fastcgi
+sed -i 's|"/var"|"/var/www/ui/public"|' /etc/lighttpd/lighttpd.conf
+sed -i 's|".erb" => "/usr/bin/eruby",|".erb" => "/usr/bin/eruby", ".php" =>"/usr/bin/php-cgi",|' /etc/lighttpd/conf.d/30-cgi.conf
+sed -i 's|doc_root = "/www"|doc_root = "/var/www/ui/public"|'
+
+mkdir /var/www
+ln -s /root/smart-router/ui/ /var/www
+# sed -i 's|root   html|root   /var/www/public|' /etc/nginx/nginx.conf
+# sed -i 's|index  index.html index.htm|index  index.html index.htm index.php|'  /etc/nginx/nginx.conf
 #/etc/rc.local NO NEEDED ANYMORE
 #/usr/bin/python3 /root/smart-router/python/main.py >> /root/smart-router/logs/errors.log 2>&1
 

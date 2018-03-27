@@ -50,6 +50,8 @@ class analyser (threading.Thread):
 
         if "True" in os.environ.get("SLACK_NOTIFICATIONS"):
             self.sendAlert()
+        if "True" in os.environ.get("FILE_ALERT_OUTPUT"):
+            self.writeAlerts()
 
     def sendAlert(self):
 
@@ -79,6 +81,21 @@ class analyser (threading.Thread):
                 logging.error("Alert has not been send to Slack")
             return
         logging.info("No alert sent to Slack because there is not malicious traffic detected")
+
+    def writeAlerts(self):
+        alerts_to_send = []
+        for z in self.all_malicious_domains :
+            a = alert([z.mac_iot, "not needed", z.domain, z.datetime])
+            if a not in self.before_analysis_alerts :
+                alerts_to_send.append(z)
+        txt=""
+        for a in alerts_to_send :
+            txt += a.toSlack()
+        path = os.environ.get("FILE_ALERT_PATH")
+        print("path :" + path)
+        f = open (path, "a")
+        f.write(txt)
+        f.close
 
     def checkHostAndAddItIfNotPresent(self, mac_host):
         if self.db.getHostFromMac(mac_host): return

@@ -29,3 +29,5 @@ db/smartrouter.sqlite
 python/.env
 docs/images/*
 __pycache__/
+
+*.img
