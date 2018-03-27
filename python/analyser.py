@@ -92,7 +92,6 @@ class analyser (threading.Thread):
         for a in alerts_to_send :
             txt += a.toSlack()
         path = os.environ.get("FILE_ALERT_PATH")
-        print("path :" + path)
         f = open (path, "a")
         f.write(txt)
         f.close
