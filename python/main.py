@@ -22,21 +22,17 @@ class main:
             exit(-1)
 
 
-
+    # sniffer process
     def snif(self):
-
         snifDNS = sniffer("dns")
-        # logging.info("Starting DNS  ...")
         snifDNS.start()
         logging.info("OK!")
 
         snifHTTP = sniffer("http")
-        # logging.info("Starting HTTP sniffer ...")
         snifHTTP.start()
         logging.info("OK!")
 
         snifHTTPS = sniffer("https")
-        # logging.info("Starting HTTPS sniffer ...")
         snifHTTPS.start()
         logging.info("OK!")
 
@@ -44,6 +40,7 @@ class main:
         snifHTTP.join()
         snifHTTPS.join()
 
+    # analysis process + sniffer launching
     def run(self):
         logging.info("Launching ...")
 
@@ -54,6 +51,7 @@ class main:
         logging.info("Starting analyser ...")
 
         try:
+            # analysis launching while 1 loop
             while True:
                 logging.info("Running analysis ... ")
                 a.run()
@@ -61,7 +59,7 @@ class main:
                 time.sleep(self.minutes_between_analysis*60)
 
 
-
+        # ctr+c handler
         except KeyboardInterrupt:
             logging.info("Shutting down ..")
 

@@ -29,6 +29,7 @@ class sniffer (threading.Thread):
         self.type = type
 
     def run(self):
+        # dispatching differents type of sniffers
         logging.info("Starting " + self.type +" sniffer")
         if (self.type == "dns"):
             self.dnsQuerry()
@@ -60,42 +61,47 @@ class sniffer (threading.Thread):
             logging.error("failed inserting DNS tuple in database")
 
     def httpQuerryHandler(self, pkt):
-        #FIXME - redo with correct db logic
+        # In not an L3 packet, drop it
         if IP not in pkt: return
         ip_dst = pkt[IP].dst
         ip_src = pkt[IP].src
 
+        # Capture only SYN packets
         SYN = 0x02
         if not pkt['TCP'].flags == SYN: return
 
         # FIXME - Tghe first time tho domain is reached, it is add to DNS tables, beacause of this addition, first request to DNS table can return False if DB is to "slow" to add the DNS entry and commit it
         time.sleep(2)
-        domain = self.db.getDomainFromIp(str(ip_dst))
 
+        # if else condition to determine in wich sense to packet is going (iot->server or server->iot)
+        domain = self.db.getDomainFromIp(str(ip_dst))
         if domain :
             ip = str(pkt[Ether].dst)
         else:
             domain = self.db.getDomainFromIp(str(ip_src))
             if not domain :
-                #Using ip dst if no domains available to not lose data
+                # Using ip dst if no domains available to not lose data
+                # BEGIN - EXPERIMENTAL REVERSE DNS LOOKUP FEATURE
                 #FIXME - experimental feature
                 logging.warning("No corresponding domain for "+ip_dst+", resolving ip ...")#("+ip_dst+")")#, using "+ip_dst+" instead")
                 now = datetime.datetime.now()
                 domain = socket.getfqdn(ip_dst)
+                # END - EXPERIMENTAL REVERSE DNS LOOKUP FEATURE
                 # logging.debug("Resolved ip "+ ip_dst +" added as " + domain)
                 try :
+                    # determine if "domain" is a domain or just an ip address
                     socket.inet_aton(domain)
                     domain = "UNRESOLVED("+ip_dst+")"
                 except OSError :
                     # if exception, domain is domain and not an ip address
                     pass
-
+                # create a new dnsquery object and store it into the db
                 dns_querry = httpquery([ip_dst, domain, str(now)])
                 self.db.insertOrIgnoreIntoTable("dnsqueries", dns_querry.toTuple())
             ip = str(pkt[Ether].src)
 
         now = datetime.datetime.now()
-
+        # create a new httpquery object and store it into the db
         http_querry = httpquery([ip, domain, str(now)])
         if not self.db.insertOrIgnoreIntoTable("httpqueries", http_querry.toTuple()):
             logging.error("failed inserting HTTP tuple in database")
