@@ -77,12 +77,12 @@ class sniffer (threading.Thread):
         else:
             domain = self.db.getDomainFromIp(str(ip_src))
             if not domain :
-                #Using ip dst if no domains availmables to not lose data
+                #Using ip dst if no domains available to not lose data
                 #FIXME - experimental feature
                 logging.warning("No corresponding domain for "+ip_dst+", resolving ip ...")#("+ip_dst+")")#, using "+ip_dst+" instead")
                 now = datetime.datetime.now()
                 domain = socket.getfqdn(ip_dst)
-                logging.debug("Resolved ip "+ ip_dst +" added as " + domain)
+                # logging.debug("Resolved ip "+ ip_dst +" added as " + domain)
                 try :
                     socket.inet_aton(domain)
                     domain = "UNRESOLVED("+ip_dst+")"
@@ -105,16 +105,10 @@ class sniffer (threading.Thread):
 
 
     def dnsQuerry(self):
-        # TODO - check if host, if not, launch sniff wo filter on ip add
-        # sniff(iface=self.interface, filter="ip host " + host + " and port 53", prn=self.dnsQuerryHandler, store=0)
         sniff(iface=self.interface, filter="port 53", prn=self.dnsQuerryHandler, store=0)
 
     def httpQuerry(self):
-        # TODO - check if host, if not, launch sniff wo filter on ip add
-        # sniff(iface=self.interface, filter="ip host " + host + " and port 80", prn=self.httpQuerryHandler, store=0)
-        # sniff(iface=self.interface, filter="port 80", lfilter=lambda d: d.src == '08:00:27:54:8b:1b', prn=self.httpQuerryHandler, store=0)
         sniff(iface=self.interface, filter="port 80", prn=self.httpQuerryHandler, store=0)
 
     def httpsQuerry(self):
-        # TODO - check if host, if not, launch sniff wo filter on ip add
         sniff(iface=self.interface, filter="port 443", prn=self.httpQuerryHandler, store=0)

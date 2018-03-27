@@ -23,12 +23,7 @@ class analyser (threading.Thread):
         self.logfile = os.environ.get("LOGFILE")
         logging.basicConfig(filename=self.logfile, level=logging.DEBUG,format='%(asctime)s %(levelname)s - %(message)s')
         self.learningPeriod = os.environ.get("LEARNING_PERIOD")
-        # if "True" in os.environ.get("SLACK_NOTIFICATIONS"):
-        #     self.slack_alert = True
-        # else:
-        #     self.slack_alert = False
         self.minutes_between_analysis=os.environ.get("MINUTES_BETWEEN_ANALYSIS")
-
         self.slack_token = os.environ.get("SLACK_API_TOKEN")
         self.slack_channel = os.environ.get("SLACK_CHANNEL")
         self.ignored_mac = os.environ.get("IGNORED_MAC").split(",")
@@ -94,7 +89,7 @@ class analyser (threading.Thread):
         path = os.environ.get("FILE_ALERT_PATH")
         f = open (path, "a")
         f.write(txt)
-        f.close
+        f.close()
 
     def checkHostAndAddItIfNotPresent(self, mac_host):
         if self.db.getHostFromMac(mac_host): return
