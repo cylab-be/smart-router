@@ -29,8 +29,42 @@ We accept terms and click next and follow the wizard instructions.
 * Next step is to configure OpenWRT, like seen on the last screenshot, the router has not any password by default, so we need to define one. 
 * We then click on "Go to password configuration...", define a password and save the configuration (bottom of the page) 
 ![alt text](screenshots/6.png)
-* We now have enable ssh on the router. So we enter password in password fileds (because if not done it take randoms password and save it (super idea OpenWRT really..)), and select "lan" interface between ssh section. If we want, we can had a ssh key to be able to log into the router without typing password.
+* We now have to enable ssh on the router. So we enter password in password fileds (because if not done it take randoms password and save it (super idea OpenWRT really..)), and select "lan" interface between ssh section. If we want, we can had a ssh key to be able to log into the router without typing password.
 ![alt text](screenshots/7.png)
-
-* It is now possible to ssh the router 
+* after enabling ssh we have to change to router hostname. For doing this we have to go to System->System, enter a new hostname and Save&Apply.
 ![alt text](screenshots/8.png)
+* It is now possible to ssh the router 
+![alt text](screenshots/9.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Configure the SmartRouter settings
+**For the next step, an USB stick formated on ext4(sudo mkfs.ext4 /dev/diskName) must be plugged into the smart-router and the routeur needs to have an internet connection**
+
+### USB format 
+In linux VM use gparted to create a msdos partion table then next create an ext4 partion of the full size of the USB.
+
