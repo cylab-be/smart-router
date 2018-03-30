@@ -107,10 +107,12 @@ install_package "lighttpd-mod-fastcgi"
 mkdir /var/www
 sed -i 's|"/var"|"/var/www"|' /etc/lighttpd/lighttpd.conf
 sed -i 's|80|81|' /etc/lighttpd/lighttpd.conf
+sed -i 's/#server.port/server.port/' /etc/lighttpd/lighttpd.conf
+ed -i 's|"/www"|"/var/www"|' /etc/lighttpd/lighttpd.conf
 /etc/init.d/lighttpd restart
 /etc/init.d/lighttpd enable
 mkdir /etc/smart-router/logs
-touch /etc/smart-router/logs/alerts.txt
+echo "Temporary alerts file" >> /etc/smart-router/logs/alerts.txt
 ln -s /root/smart-router/logs/alerts.txt /var/www
 printf "${GREEN}[INFO] - web server installed ${NORMAL}\n\n"
 

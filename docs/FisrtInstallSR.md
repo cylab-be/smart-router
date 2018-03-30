@@ -69,6 +69,7 @@ git clone https://github.com/RUCD/smart-router.git
 ### USB format 
 In linux VM (or something else that has gparted) use gparted to create a msdos partion table then next create an ext4 partion of the full size of the USB.
 Once USB formated and plugged into the router, run :
+
 ````
 /root/smart-router/docs/setupScripts/setupUSB.sh
 ````
@@ -80,12 +81,18 @@ Once done, reboot the router
 ````
 /root/smart-router/docs/setupScripts/setupSR.sh
 ````
+If there is no errors during the script, the smart-routeur is ready ! 
+
+You can now see alerts @ http://192.168.1.1:81/alerts.txt
 
 ### Wireless setup script
-* in case you want a default wireless setting with SSID like the router's hostname and pseudorandom password : 
+In case you want a default wireless setting with SSID like the router's hostname and pseudorandom password : 
+
 ````
 /root/smart-router/docs/setupScripts/setupWireless.sh
 ````
+
+
 
 
 
