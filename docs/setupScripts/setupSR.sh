@@ -124,9 +124,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 sed -i -- 's/ash/zsh/g' /etc/passwd
 sed -i -- 's/robbyrussell/agnoster/g' /root/.zshrc
 sed -i "s/prompt_segment blue black '%~'/prompt_segment blue black '%c'/" ~/.oh-my-zsh/themes/agnoster.zsh-theme
-source ~/.zshrc
+zsh -c "source ~/.zshrc"
 printf "${GREEN}[INFO] - ohmyzsh installed ${NORMAL}\n\n"
-zsh
 
 printf "${BLUE}[INFO] - starting smart-router ... ${NORMAL}\n\n"
 /etc/init.d/smartrouter start
