@@ -7,12 +7,34 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NORMAL='\033[0m'
 
+ALREADY_INSTALLED="is up to date"
+CANNOT_INSTALL="Cannot"
+
+
+install_package () {
+	printf "${BLUE}[INFO] - installing $1 ... ${NORMAL}\n\n"		
+	OUT=$(opkg install $1 2>&1)
+	if [ $(echo $OUT | grep -i -c "$ALREADY_INSTALLED" ) -eq 1 ] ; then 
+		printf "${YELLOW}[WARNING] - $1 already installed${NORMAL}\n\n"	
+	else 
+		if [ $(echo $OUT | grep -i -c "$CANNOT_INSTALL") -eq 1 ] ; then 
+			echo $OUT
+			printf "${RED}[ERROR] - cannot install $1${NORMAL}\n\n"
+		else
+			printf "${GREEN}[INFO] - $1 installed${NORMAL}\n\n"		
+		fi
+	fi
+}
+
 printf "${BLUE}[INFO] - Updating sources ${NORMAL}\n" 
 opkg update
 printf "${GREEN}[INFO] - sources updated ${NORMAL}\n\n"
 
 printf "${BLUE}[INFO] - Installing few tools ${NORMAL}\n" 
-opkg install kmod-usb2 kmod-usb-storage kmod-fs-ext4 block-mount
+install_package "kmod-usb2"
+install_package "kmod-usb-storage"
+install_package "kmod-fs-ext4"
+install_package "block-mount"
 printf "${GREEN}[INFO] - few tools installed ${NORMAL}\n\n"
 
 
