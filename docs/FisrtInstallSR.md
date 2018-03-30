@@ -73,11 +73,18 @@ Once USB formated and plugged into the router, run :
 /root/smart-router/docs/setupScripts/setupUSB.sh
 ````
 
+Once done, reboot the router
 
-### setup scripts
-* in case you want a default wireless setting with SSID like the router's hostname and pseudorandom password : 
+
+### Smart-router setup script
+````
+/root/smart-router/docs/setupScripts/setupSR.sh
 ````
 
+### Wireless setup script
+* in case you want a default wireless setting with SSID like the router's hostname and pseudorandom password : 
+````
+/root/smart-router/docs/setupScripts/setupWireless.sh
 ````
 
 
