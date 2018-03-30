@@ -118,7 +118,6 @@ printf "${GREEN}[INFO] - web server installed ${NORMAL}\n\n"
 
 
 #Ohmyzsh
-# opkg update
 printf "${BLUE}[INFO] - Installing ohmyzsh ${NORMAL}\n" 
 printf "${YELLOW}[INFO] - PLEASE TYPE 'exit' AFTER OHMYZSH HAS FINISHED TO INSTALL TO FINISH THE INSTALL ${NORMAL}\n" 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh) ; exit" 

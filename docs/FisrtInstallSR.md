@@ -59,11 +59,11 @@ We accept terms and click next and follow the wizard instructions.
 ## Configure the SmartRouter settings
 **For the next step, an USB stick formated on ext4(sudo mkfs.ext4 /dev/diskName) must be plugged into the smart-router and the routeur needs to have an internet connection**
 
-### git clone 
+<!--### git clone 
 ````
 cd /root
 git clone https://github.com/RUCD/smart-router.git 
-````
+````-->
 
 
 ### USB format 
@@ -71,7 +71,7 @@ In linux VM (or something else that has gparted) use gparted to create a msdos p
 Once USB formated and plugged into the router, run :
 
 ````
-/root/smart-router/docs/setupScripts/setupUSB.sh
+sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/setupUSB.sh -O -)"
 ````
 
 Once done, reboot the router
@@ -79,8 +79,10 @@ Once done, reboot the router
 
 ### Smart-router setup script
 ````
-/root/smart-router/docs/setupScripts/setupSR.sh
+sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/setupSR.sh -O -)"
 ````
+**Check all output because the script does not ecit if there is an error!**
+
 If there is no errors during the script, the smart-routeur is ready ! 
 
 You can now see alerts @ http://192.168.1.1:81/alerts.txt
@@ -89,9 +91,20 @@ You can now see alerts @ http://192.168.1.1:81/alerts.txt
 In case you want a default wireless setting with SSID like the router's hostname and pseudorandom password : 
 
 ````
-/root/smart-router/docs/setupScripts/setupWireless.sh
+sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/setupWireless.sh -O -)"
 ````
 
+### Uninstall
+**Use this script at your own risks**
+
+In case you want to uninstall all things installed, run : 
+
+````
+sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/uninstall.sh -O -)"
+````
+
+
+If the script fails, run it a second time, must do the job.
 
 
 
