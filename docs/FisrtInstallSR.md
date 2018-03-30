@@ -56,15 +56,26 @@ We accept terms and click next and follow the wizard instructions.
 
 
 
-
-
-
-
-
-
 ## Configure the SmartRouter settings
 **For the next step, an USB stick formated on ext4(sudo mkfs.ext4 /dev/diskName) must be plugged into the smart-router and the routeur needs to have an internet connection**
 
 ### USB format 
 In linux VM use gparted to create a msdos partion table then next create an ext4 partion of the full size of the USB.
+Once USB formated and plugged into the router, run :
+````
+lala
+````
+
+### setup scripts
+* in case you want a default wireless setting with SSID like the router's hostname and pseudorandom password : 
+````
+./lalala
+````
+
+
+
+
+
+
+
 
