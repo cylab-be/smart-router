@@ -44,12 +44,12 @@ We accept terms and click next and follow the wizard instructions.
 ## Configure the SmartRouter settings
 **For the next step, an USB stick formated on ext4(sudo mkfs.ext4 /dev/diskName) must be plugged into the smart-router and the routeur needs to have an internet connection**
 
-<!--### git clone 
-````
-cd /root
-git clone https://github.com/RUCD/smart-router.git 
-````-->
-
+### Format the usb for the OpenWRT config from a debian VM
+![alt text](docs/screenshots/u1.png)
+![alt text](docs/screenshots/u2.png)
+![alt text](docs/screenshots/u3.png)
+![alt text](docs/screenshots/u4.png)
+![alt text](docs/screenshots/u5.png)
 
 ### USB format 
 In linux VM (or something else that has gparted) use gparted to create a msdos partion table then next create an ext4 partion of the full size of the USB.
