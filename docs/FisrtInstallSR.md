@@ -59,10 +59,13 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/RUCD/smart-router/master/d
 
 Once done, reboot the router
 
+You can check the correct previous configuration by doing : 
+![alt text](screenshots/10.png)
+
 
 ### Smart-router setup script
 ````
-sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/setupSR.sh -O -)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/setupSR.sh)"
 ````
 **Check all output because the script does not ecit if there is an error!**
 
@@ -74,7 +77,7 @@ You can now see alerts @ http://192.168.1.1:81/alerts.txt
 In case you want a default wireless setting with SSID like the router's hostname and pseudorandom password : 
 
 ````
-sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/setupWireless.sh -O -)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/setupWireless.sh)"
 ````
 
 ### Uninstall
@@ -83,7 +86,7 @@ sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/RUCD/smar
 In case you want to uninstall all things installed, run : 
 
 ````
-sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/uninstall.sh -O -)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/uninstall.sh)"
 ````
 
 

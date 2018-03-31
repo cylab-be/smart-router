@@ -31,10 +31,10 @@ printf "${GREEN}[INFO] - sources updated ${NORMAL}\n\n"
 
 # Divers
 printf "${BLUE}[INFO] - Installing few tools ${NORMAL}\n" 
-install_package "ca-bundle"
-install_package "ca-certificates"
+# install_package "ca-bundle"
+# install_package "ca-certificates"
 install_package "zsh"
-install_package "curl"
+# install_package "curl"
 install_package "git-http"
 install_package "nano"
 install_package "htop"
@@ -108,7 +108,7 @@ mkdir /var/www
 sed -i 's|"/var"|"/var/www"|' /etc/lighttpd/lighttpd.conf
 sed -i 's|80|81|' /etc/lighttpd/lighttpd.conf
 sed -i 's/#server.port/server.port/' /etc/lighttpd/lighttpd.conf
-ed -i 's|"/www"|"/var/www"|' /etc/lighttpd/lighttpd.conf
+sed -i 's|"/www"|"/var/www"|' /etc/lighttpd/lighttpd.conf
 /etc/init.d/lighttpd restart
 /etc/init.d/lighttpd enable
 mkdir /etc/smart-router/logs

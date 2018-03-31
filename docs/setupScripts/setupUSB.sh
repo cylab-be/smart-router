@@ -59,9 +59,9 @@ erase_fstab(){
 }
 
 
-printf "${BLUE}[INFO] - Updating sources ${NORMAL}\n" 
-opkg update
-printf "${GREEN}[INFO] - sources updated ${NORMAL}\n\n"
+# printf "${BLUE}[INFO] - Updating sources ${NORMAL}\n" 
+# opkg update
+# printf "${GREEN}[INFO] - sources updated ${NORMAL}\n\n"
 
 printf "${BLUE}[INFO] - Installing few tools ${NORMAL}\n" 
 install_package "kmod-usb2"
