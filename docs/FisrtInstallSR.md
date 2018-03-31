@@ -2,7 +2,7 @@
 ## Install OpenWRT
 ### Join wireless network
 First, we need to reset de router, he will then create a network with an SSID which can be found at the bottom of the router.
-So we need to connect to the routeur with the IDs found at his bottom.
+So we need to connect to the routeur with the IDs found at his bottom. Or simply connect to in by plugging a network cable into it.
 
 The router me have an internet connection for the next step, so we connect his wan interface to a switch or something like thind wich provide dhcp lease and internet connection.
 
@@ -19,10 +19,10 @@ We accept terms and click next and follow the wizard instructions.
 * Once the wizzard finished, we arrived on the configuration interface of the router : 
 * We then go to the "Connectivity" setting tab and select "Choose file" into the "Manual" section.
 ![alt text](screenshots/4.png)
-* We navigate trough to file "lede-17.01.4-mvebu-linksys-wrt1200ac-squashfs-factory.img" wich can be find on the docs/images folder on the smart-router github repository
+* We navigate trough to file "lede-17.01.4-mvebu-linksys-wrt1200ac-squashfs-factory.img" wich can be find on the docs/images folder on the smart-router github repository, than click on "start" button 
 * The router will than reboot and boot on OpenWRT
-* The router will not broadcast an SSID be default so we ne to connect to him directly by cable (the router does not accept outside conenction by default so we need to plug te cable to a LAN interface).
-* The router will take the address 192.168.1.1 by default so we can take the addresse 192.168.1.100 to connect to it and configure it
+* The router will not broadcast an SSID be default so we need to connect to him directly by cable (the router does not accept outside conenction by default so we need to plug te cable to a LAN interface).
+* The router will take the address 192.168.1.1 by default so we can take the addresse 192.168.1.100 if it does not distribute DHCP address to connect to it and configure it
 ![alt text](screenshots/5.png)
 
 ## Configure OpenWRT
@@ -35,25 +35,6 @@ We accept terms and click next and follow the wizard instructions.
 ![alt text](screenshots/8.png)
 * It is now possible to ssh the router 
 ![alt text](screenshots/9.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ## Configure the SmartRouter settings
@@ -71,7 +52,9 @@ In linux VM (or something else that has gparted) use gparted to create a msdos p
 Once USB formated and plugged into the router, run :
 
 ````
-sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/setupUSB.sh -O -)"
+opkg update 
+opkg install ca-bundle ca-certificates curl
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/RUCD/smart-router/master/docs/setupScripts/setupUSB.sh)"
 ````
 
 Once done, reboot the router

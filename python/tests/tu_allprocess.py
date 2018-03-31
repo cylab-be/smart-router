@@ -51,19 +51,19 @@ class tu_allprocess():
 
 class Executetu_allprocess(unittest.TestCase):
 
-    def testAnalyser(self):
-        self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
-        self.assertTrue(tu_basics.testInserIntoTablesForAnalysisSimulation(self), "Can not create insert into tables")
-        self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after inserting")
-
-        tu_allprocess.testAnalyser(self)
-        self.assertTrue(tu_basics.testAllTablesContainSomething(self), "Tables do not contain anything after analysing")
-
-
-    # def testSniffer(self):
+    # def testAnalyser(self):
     #     self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
-    #     tu_allprocess.testSniffer(self)
-    #     self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after sniffing")
+    #     self.assertTrue(tu_basics.testInserIntoTablesForAnalysisSimulation(self), "Can not create insert into tables")
+    #     self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after inserting")
+    #
+    #     tu_allprocess.testAnalyser(self)
+    #     self.assertTrue(tu_basics.testAllTablesContainSomething(self), "Tables do not contain anything after analysing")
+
+
+    def testSniffer(self):
+        self.assertTrue(tu_basics.testCreateTables(self), "Tables can not been created")
+        tu_allprocess.testSniffer(self)
+        self.assertTrue(tu_basics.testTablesContainSomething(self), "Tables do not contain anything after sniffing")
 
 
 

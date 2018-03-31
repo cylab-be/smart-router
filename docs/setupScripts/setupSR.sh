@@ -133,6 +133,7 @@ printf "${GREEN}[INFO] - smart-router started ${NORMAL}\n\n"
 
 printf "${GREEN}[INFO] - do no forgive to edit /etc/smart-router/python/.env file for more customisation (slack notifications etc.) ${NORMAL}\n\n"
 printf "${YELLOW}[WARNING] - In case you edit the /etc/smart-router/python/.env, do not forget to restart SR (/etc/init.d/smartrouter restart)${NORMAL}\n\n"
+zsh
 
 
 
