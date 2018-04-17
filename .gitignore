@@ -31,3 +31,4 @@ docs/images/*
 __pycache__/
 
 *.img
+*.zip

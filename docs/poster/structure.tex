@@ -1,0 +1,199 @@
+% ==============================================================================
+% POSTER STYLE DON'T MODIFY
+\documentclass[final]{beamer}
+\setbeamertemplate{caption}[numbered]
+\beamertemplatenavigationsymbolsempty
+
+\usepackage[orientation=portrait,size=a0,scale=1.25]{beamerposter}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage{lmodern}
+\usepackage{amsmath,amsthm, amssymb, latexsym}
+\usepackage{url}
+\usepackage{ragged2e}
+\usepackage{parskip}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\MakeRobust{\Call}
+
+\usepackage{multicol}
+\setlength{\columnsep}{80pt}
+
+\usepackage{graphicx}
+\usepackage{listings}
+
+% used for drawing section lines etc...
+\usepackage{tikz}
+\tikzset{every mark/.append style={scale=3.5}}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{	
+	compat=newest,
+	width=7.5in,
+	max space between ticks=100pt,
+	every axis plot post/.append style={ultra thick},
+	/pgfplots/ylabel absolute/.style={%
+		/pgfplots/every axis y label/.style={at={(0,0.5)},xshift=4em,rotate=90},
+		%/pgfplots/every y tick scale label/.style={
+		%at={(0,1)},above right,inner sep=0pt,yshift=0.3em
+		%},
+	},
+}
+
+\linespread{1.05}
+\geometry{hmargin=2.5cm}
+
+% define basic colors
+\definecolor{black}  {RGB}{0,0,0} 		%%% text color
+\definecolor{blue}  {RGB}{20,66,129} 		%%% title and subsection color
+\definecolor{lightblue}  {RGB}{28,130,185} 	%%% section color
+\definecolor{lightgrey}  {RGB}{255,253,250} 	%%% background color
+
+\setbeamercolor{structure}{fg=blue}
+\setbeamercolor{colorbar}{fg=black,bg=blue}
+\setbeamercolor{normal text}{fg=black}
+\beamertemplatesolidbackgroundcolor{lightgrey}
+
+%set bibliography style
+\setbeamertemplate{bibliography item}[text]
+\setbeamercolor{bibliography item}{fg=black,bg=lightgrey}
+\setbeamercolor{bibliography entry author}{fg=black,bg=lightgrey}
+\setbeamerfont{bibliography item}{size=\small}
+\setbeamerfont{bibliography entry author}{size=\small}
+
+% poster title
+\setbeamertemplate{headline}{
+  \leavevmode
+  \vskip 2cm
+  \begin{columns}
+    \begin{column}{0.15\linewidth}
+      \begin{center}
+        %\includegraphics[width=0.55\linewidth]{logo}
+      \end{center}
+    \end{column}
+    
+    \begin{column}{.7\linewidth}
+      \centering{
+        {\color{lightblue}
+        \setlength\lineskip{20pt}
+        \textbf{\huge{\inserttitle}}\\[1ex]}
+      	\vskip 1cm
+        {\color{fg} \Large{\insertauthor}\\[1ex]}
+        {\color{fg} \large{\insertinstitute}\\[1ex]}
+      }
+      \vskip 1cm
+    \end{column}
+    
+    \begin{column}{.15\linewidth}
+      \begin{center}
+        %\includegraphics[width=\linewidth]{eda-logo}
+      \end{center}
+    \end{column}
+
+    %%%\vspace{5cm}
+  \end{columns}
+}
+
+% poster foot
+\setbeamertemplate{footline}{
+  \leavevmode
+  %\vskip 1cm
+  
+  % horizontal line
+  \begin{flushleft}
+    \begin{tikzpicture}[remember picture,overlay]
+      \shade [inner color=lightblue,outer color=lightgrey] (0,0) rectangle (\textwidth,0.3cm);
+    \end{tikzpicture}
+  \end{flushleft}
+        
+  \vskip 1cm
+        
+  \begin{center}
+    \begin{columns}[c]
+	  \begin{column}{0.1\linewidth}
+	    \begin{center}
+	      %\includegraphics[width=6cm]{rma_1600.png}
+	    \end{center}
+	  \end{column}
+	    
+	  \begin{column}{.4\linewidth}
+	    \begin{center}
+	      %\includegraphics[width=6cm]{EURECOM_logo_quadri.pdf}
+          \color{lightblue}
+          \setlength\lineskip{20pt}
+          \textbf{\Large{Cyber Defence Lab\\}}
+          \large{Royal Military Academy\\
+          \url{www.cylab.be}}
+	    \end{center}
+	  \end{column}
+	    
+	  \begin{column}{.1\linewidth}
+	    \begin{center}
+           %\includegraphics[width=6cm]{symantec-logo-300dpi.png}
+	    \end{center}
+      \end{column}
+    \end{columns}
+  \end{center}
+  
+  \vskip 1cm
+}
+
+% Section
+\renewcommand{\section}[1]{
+    % horizontal line
+    %\par\vskip\medskipamount%
+    %\begin{flushleft}
+    \begin{tikzpicture}[remember picture,overlay]
+      \shade [inner color=lightblue,outer color=lightgrey] (0,0) rectangle (\columnwidth,0.3cm);
+    \end{tikzpicture}
+    %\end{flushleft}
+    
+    \vskip 1.25cm
+
+    \begin{center}
+      %\vskip1cm
+      \textcolor{lightblue}{\textbf{\Large #1}}
+      %\parskip0pt\par
+    \end{center}
+
+    %\begin{flushleft}
+    \vskip 0.25cm
+    
+    % horizontal line
+    \begin{tikzpicture}[remember picture,overlay]
+      \shade [inner color=lightblue,outer color=lightgrey] (0,0) rectangle (\columnwidth,0.3cm);
+    \end{tikzpicture}
+    %\end{flushleft}
+    
+    \parskip 10pt \par
+    \justifying
+}
+
+%%% Sub-section
+\renewcommand{\subsection}[1]{
+  %\par\vskip\medskipamount%
+  %\begin{center}
+  \vskip 1.2cm
+  \textcolor{lightblue}{\textbf{\textsl{\large #1}}}
+  %{\parskip0pt\par}
+  %\end{center}
+  \justifying
+}
+
+% ==============================================================================
+% Title, date and authors of the poster
+\title{Smart Router}
+
+\author[shortname]{
+	Thibault Debatty \inst{1} \and
+	Pietro Michiardi \inst{2} \and
+	Olivier Thonnard \inst{3} \and
+	Wim Mees \inst{1}
+}
+\institute[shortinst]{
+	\inst{1} Royal Military Academy, Brussels, Belgium \and
+        \inst{2} EURECOM, Campus SophiaTech, France \and
+        \inst{3} Symantec Research Labs, Sophia Antipolis, France
+}
