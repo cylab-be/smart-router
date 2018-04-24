@@ -23,7 +23,7 @@ script:
   - cp /home/travis/build/RUCD/smart-router/docs/template.env /home/travis/build/RUCD/smart-router/python/.env
   - sed -i 's|/home/vagrant|/home/travis/build/RUCD/smart-router|g' /home/travis/build/RUCD/smart-router/python/.env
   - python3 --version
-  - cd ../python/
+  - cd /home/travis/build/RUCD/smart-router/python/
   - sudo python3 -m unittest tu_basics.py
   - sudo python3 -m unittest tu_db.py
   - sudo python3 -m unittest tu_allprocess.py
