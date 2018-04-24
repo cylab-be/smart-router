@@ -20,11 +20,12 @@ before_script:
 script:
   - vendor/bin/phpunit 
   - vendor/bin/phpcs
-  - cd ../python/tests
-  - python3 --version
-  - python3 tu_basics.py
+  - cp /home/travis/build/RUCD/smart-router/docs/template.env /home/travis/build/RUCD/smart-router/python/.env
   - sed -i 's|/home/vagrant|/home/travis/build/RUCD/smart-router|g' /home/travis/build/RUCD/smart-router/python/.env
-  - sudo python3 tu_db.py
-  - sudo python3 tu_allprocess.py
+  - python3 --version
+  - cd ../python/
+  - sudo python3 -m unittest tu_basics.py
+  - sudo python3 -m unittest tu_db.py
+  - sudo python3 -m unittest tu_allprocess.py
 notifications:
     slack: cylab-be:SgDUjbNn00DSxqr5h20OG5Hs
