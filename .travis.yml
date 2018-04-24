@@ -9,6 +9,7 @@ before_install:
   - sudo pip3 install requests
   - sudo pip3 install PyMySQL
   - sudo pip3 install python-dotenv
+  - sudo pip3 install slackclient
 before_script:
   - mkdir /home/travis/build/RUCD/smart-router/logs
   - touch /home/travis/build/RUCD/smart-router/logs/smartrouter.log
