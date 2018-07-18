@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/RUCD/smart-router.svg?branch=master)](https://travis-ci.org/RUCD/smart-router)
 
+Developement takes place at https://gitlab.cylab.be/cylab/smart-router
+
 
 ## Install OpenWRT on Linksys WRT1200AC
 ### Join wireless network
