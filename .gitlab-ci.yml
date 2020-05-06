@@ -1,0 +1,35 @@
+## Cache composer packages between all jobs and all branches
+## of this project...
+cache:
+  key: one-key-to-rull-them-all
+  paths:
+    - composer-cache/
+
+# Test with PHP7.2
+test:
+  image: cylab/php72
+  before_script:
+    #- sudo apt update
+    #- sudo apt install -y python3-pip
+    #- sudo pip3 install scapy-python3
+    #- sudo pip3 install requests
+    #- sudo pip3 install PyMySQL
+    #- sudo pip3 install python-dotenv
+    - mkdir logs
+    - touch logs/smartrouter.log
+    - cd ui
+    # Install all project dependencies
+    - COMPOSER_CACHE_DIR=composer-cache composer install
+    - cp env.travis .env
+    - php artisan key:generate
+    #- touch storage/db.sqlite
+    #- php artisan migrate
+  script:
+    - vendor/bin/phpunit --coverage-text --colors=never --coverage-html build/coverage
+    - vendor/bin/phpcs
+    #- cd ../python/tests
+    #- python3 --version
+    #- sed -i 's|/home/vagrant|/home/travis/build/RUCD/smart-router|g' /home/travis/build/RUCD/smart-router/python/.env
+    #- python3 tu_basics.py
+    #- sudo python3 tu_all_process.py
+
