@@ -22,8 +22,8 @@ test:
     - COMPOSER_CACHE_DIR=composer-cache composer install
     - cp env.travis .env
     - php artisan key:generate
-    #- touch storage/db.sqlite
-    #- php artisan migrate
+    - touch storage/app/db.sqlite
+    - php artisan migrate
   script:
     - vendor/bin/phpunit --coverage-text --colors=never --coverage-html build/coverage
     - vendor/bin/phpcs
