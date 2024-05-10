@@ -1,34 +1,17 @@
 #Python
 *.pyc
-logs/
 
-# Laravel 5 & Lumen specific
-ui/public/storage
-ui/public/hot
-ui/storage/*.key
-ui/.env.*.php
-ui/.env.php
-ui/.env
-ui/Homestead.yaml
-ui/Homestead.json
-ui/vendor/
-ui/node_modules/
-ui/npm-debug.log
-
-
-.vagrant
 .DS_Store
-
 
 #Inteliji
 .idea/
 
 #SqlLite
-db/smartrouter.sqlite
 
 python/.env
+venv/
 docs/images/*
 __pycache__/
 
-*.img
-SRdev.dmg
+#Pcap
+*.pcap
