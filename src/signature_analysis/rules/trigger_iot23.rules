@@ -1,0 +1,13 @@
+# Rules from rules of snort default installation
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 6666:7000 (msg:"CHAT IRC nick change"; flow:to_server,established; content:"NICK "; offset:0; nocase; classtype:policy-violation; sid:542; rev:11;)
+alert tcp $HOME_NET any <> $EXTERNAL_NET 6666:7000 (msg:"CHAT IRC message"; flow:established; content:"PRIVMSG "; nocase; classtype:policy-violation; sid:1463; rev:6;)
+alert tcp $EXTERNAL_NET any <> $HOME_NET 0 (msg:"BAD-TRAFFIC tcp port 0 traffic"; flow:stateless; classtype:misc-activity; sid:524; rev:8;)
+
+alert icmp any any -> any any (msg:"ICMP Destination Unreachable Communication with Destination Host is Administratively Prohibited"; icode:10; itype:3; classtype:misc-activity; sid:486; rev:4;)
+alert tcp $TELNET_SERVERS 23 -> $EXTERNAL_NET any (msg:"INFO TELNET access"; flow:from_server,established; content:"|FF FD|"; rawbytes; content:"|FF FD|"; distance:0; rawbytes; content:"|FF FD|"; distance:0; rawbytes; reference:arachnids,08; reference:cve,1999-0619; reference:nessus,10280; classtype:not-suspicious; sid:716; rev:13;)
+alert icmp any any -> any any (msg:"ICMP Destination Unreachable Communication Administratively Prohibited"; icode:13; itype:3; classtype:misc-activity; sid:485; rev:4;)
+alert tcp $HOME_NET 23 -> $EXTERNAL_NET any (msg:"INFO TELNET Bad Login"; flow:from_server,established; content:"Login incorrect"; nocase; classtype:bad-unknown; sid:1251; rev:6;)
+alert tcp $TELNET_SERVERS 23 -> $EXTERNAL_NET any (msg:"INFO TELNET login incorrect"; flow:from_server,established; content:"Login incorrect"; reference:arachnids,127; classtype:bad-unknown; sid:718; rev:9;)
+
+alert udp $EXTERNAL_NET any <> $HOME_NET 0 (msg:"BAD-TRAFFIC udp port 0 traffic"; reference:bugtraq,576; reference:cve,1999-0675; reference:nessus,10074; classtype:misc-activity; sid:525; rev:9;)

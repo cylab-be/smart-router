@@ -15,6 +15,3 @@ __pycache__/
 
 #Pcap
 *.pcap
-
-#Abuse.ch rules
-*.rules
