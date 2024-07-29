@@ -1,11 +1,15 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+
+from .models import MaliciousURL
+
 import threading
 from signature_analysis.url import start_capture
 
 
 def index(request):
-    return render(request, "dashboard/index.html")
+    malicious_urls = MaliciousURL.objects.all()
+    return render(request, "dashboard/index.html", {"malicious_urls": malicious_urls})
 
 def start_network_monitor(request):
     interface = "en0"

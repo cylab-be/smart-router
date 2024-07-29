@@ -37,16 +37,27 @@
     <div class="container">
         <div class="card">
             <h2>Statistiques de Détection</h2>
-            <p>Nombre total de malwares détectés: <strong>123</strong></p>
+            <p>Nombre total d'alertes déclenchées: <strong>123</strong></p>
             <p>Appareils affectés: <strong>45</strong></p>
         </div>
         <div class="card">
             <h2>Dernières Détections</h2>
-            <ul>
-                <li>Appareil 1 - Malware: Trojan - Date: 2023-10-01</li>
-                <li>Appareil 2 - Malware: Worm - Date: 2023-10-02</li>
-                <li>Appareil 3 - Malware: Spyware - Date: 2023-10-03</li>
-            </ul>
+                <table border="1">
+                    <tr>
+                        <th>URL</th>
+                        <th>Malware Type</th>
+                        <th>Detected At</th>
+                        <th>Source IP</th>
+                    </tr>
+                    {% for alert in malicious_urls %}
+                    <tr>
+                        <td>{{ alert.url }}</td>
+                        <td>{{ alert.malware_type }}</td>
+                        <td>{{ alert.detected_at }}</td>
+                        <td>{{ alert.source_ip }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
         </div>
     </div>
 </body>
