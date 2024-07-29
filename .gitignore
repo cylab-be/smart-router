@@ -15,3 +15,6 @@ __pycache__/
 
 #Pcap
 *.pcap
+
+chatgpt.rules
+test.rules

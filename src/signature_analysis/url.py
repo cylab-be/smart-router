@@ -34,12 +34,13 @@ def process_http(packet):
             print("URL demandée :", full_url)
             # improve for http://buycodeshop.com/ and http://buycodeshop.com/.nttpd%2C6-arm-le-t1-z
             # improve for http://scan.nperm.net/thinkphp
+            # https://heko.ro/ProjectE_5.exe
             # trouver + d'info que l'url précise avec URLhaus
 
             # Recherche de l'URL sur l'API URLhaus
             response = query_urlhaus("http://" + full_url)
-            if response['query_status'] == 'ok':
-                print(json.dumps(response, indent=4, sort_keys=False)) # show all the data
+            if response['query_status'] == 'ok':    # and his online (big alert) his offline small alert
+                print(json.dumps(response, indent=4, sort_keys=False))  # show all the data
                 # can extract the type of the malware for example
                 tags = ""
                 for tag in response['tags']:
@@ -56,5 +57,6 @@ def start_capture(interface):
 
 
 if __name__ == "__main__":
-    interface = "en0"  # Spécifiez l'interface réseau à utiliser, en0 pour Ethernet sur macOS
+    interface = "br-lan"  # Spécifiez l'interface réseau à utiliser, en0 pour Ethernet sur macOS
     start_capture(interface)
+    #print(query_urlhaus("https://heko.ro/ProjectE_5.exe"))
