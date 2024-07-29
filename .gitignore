@@ -1,6 +1,7 @@
 #Python
 *.pyc
 
+#Mac
 .DS_Store
 
 #Inteliji
@@ -16,6 +17,9 @@ __pycache__/
 
 #Pcap
 *.pcap
+
+#Migrations files for Django
+**/migrations/*.py
 
 chatgpt.rules
 test.rules
