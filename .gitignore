@@ -7,6 +7,7 @@
 .idea/
 
 #SqlLite
+db.sqlite3
 
 python/.env
 venv/
