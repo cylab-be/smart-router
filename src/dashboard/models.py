@@ -8,3 +8,13 @@ class MaliciousURL(models.Model):
 
     def __str__(self):
         return self.url
+
+class SnortAlert(models.Model):
+    timestamp = models.DateTimeField()
+    alert_name = models.CharField(max_length=255)
+    classification = models.CharField(max_length=255)
+    priority = models.IntegerField()
+    src_ip = models.GenericIPAddressField()
+    src_port = models.IntegerField()
+    dest_ip = models.GenericIPAddressField()
+    dest_port = models.IntegerField()

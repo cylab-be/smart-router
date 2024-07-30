@@ -8,6 +8,11 @@ def startup():
     thread.daemon = True
     thread.start()
 
+    from signature_analysis.snort.launch import run_snort
+    thread = threading.Thread(target=run_snort)
+    thread.daemon = True
+    thread.start()
+
 class DashboardConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'dashboard'

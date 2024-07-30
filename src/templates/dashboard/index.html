@@ -58,6 +58,31 @@
                     </tr>
                     {% endfor %}
                 </table>
+            <h1>Snort Alerts</h1>
+            <table border="1">
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Alert Name</th>
+                    <th>Classification</th>
+                    <th>Priority</th>
+                    <th>Source IP</th>
+                    <th>Source Port</th>
+                    <th>Destination IP</th>
+                    <th>Destination Port</th>
+                </tr>
+                {% for alert in snort_alerts %}
+                <tr>
+                    <td>{{ alert.timestamp }}</td>
+                    <td>{{ alert.alert_name }}</td>
+                    <td>{{ alert.classification }}</td>
+                    <td>{{ alert.priority }}</td>
+                    <td>{{ alert.src_ip }}</td>
+                    <td>{{ alert.src_port }}</td>
+                    <td>{{ alert.dest_ip }}</td>
+                    <td>{{ alert.dest_port }}</td>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
 </body>
