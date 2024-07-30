@@ -39,6 +39,7 @@ printf "${GREEN}[INFO] - few tools installed ${NORMAL}\n\n"
 #Snort
 printf "${BLUE}[INFO] - Installing snort ${NORMAL}\n"
 install_package "snort"
+mkdir /usr/lib/snort_dynamicrules
 printf "${GREEN}[INFO] - snort installed ${NORMAL}\n\n"
 
 #Python3 (Django, scapy)
@@ -57,6 +58,10 @@ printf "${BLUE}[INFO] - Installing SmartRouter ${NORMAL}\n"
 git clone https://gitlab.cylab.be/cylab/smart-router.git
 cd smart-router
 git checkout v2
+# copy snort.conf
+cp src/signature_analysis/snort/snort.conf /etc/snort/snort.conf
+# copy rules folder
+cp -r src/signature_analysis/snort/rules /etc/snort/
 printf "${GREEN}[INFO] - SmartRouter installed ${NORMAL}\n\n"
 
 #web
