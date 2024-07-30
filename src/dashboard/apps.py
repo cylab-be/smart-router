@@ -3,7 +3,7 @@ from django.apps import AppConfig
 def startup():
     import threading
     from signature_analysis.url import start_capture
-    interface = "en0"
+    interface = "br-lan"
     thread = threading.Thread(target=start_capture, args=(interface,))
     thread.daemon = True
     thread.start()
