@@ -32,7 +32,7 @@ def run_snort():
     snort_command = [
         "snort",
         "-c", "/etc/snort/snort.conf",
-        "-i", "lo",
+        "-i", "br-lan",
         "-A", "console",
         "-l", ".",
         "--daq-dir", "/usr/lib/daq"
