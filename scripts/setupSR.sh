@@ -33,6 +33,7 @@ printf "${GREEN}[INFO] - sources updated ${NORMAL}\n\n"
 # Divers
 printf "${BLUE}[INFO] - Installing few tools ${NORMAL}\n"
 install_package "git-http"
+install_package "screen"
 install_package "openssh-sftp-server"
 printf "${GREEN}[INFO] - few tools installed ${NORMAL}\n\n"
 
@@ -71,3 +72,9 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py runserver 192.168.1.3:8000
 printf "${GREEN}[INFO] - web server installed ${NORMAL}\n\n"
+
+#Auto start after reboot
+printf "${BLUE}[INFO] - Configure auto startup after reboot ${NORMAL}\n"
+cp /root/smart-router/scripts/rc.local /etc/rc.local
+chmod +x /root/smart-router/scripts/startupSR.sh
+printf "${GREEN}[INFO] - Auto startup configured ${NORMAL}\n\n"
