@@ -28,6 +28,15 @@
         .card h2 {
             margin-top: 0;
         }
+        .high {
+            background-color: red;
+        }
+        .medium {
+            background-color: orange;
+        }
+        .low {
+            background-color: yellow;
+        }
     </style>
 </head>
 <body>
@@ -37,17 +46,19 @@
     <div class="container">
         <div class="card">
             <h2>Statistiques de Détection</h2>
-            <p>Nombre total d'alertes déclenchées: <strong>123</strong></p>
+            <p>Nombre total d'alertes Snort: <strong>{{ snort_alert_count }}</strong></p>
+            <p>Nombre total d'URL malveillantes: <strong>{{ malicious_url_count }}</strong></p>
             <p>Appareils affectés: <strong>45</strong></p>
         </div>
         <div class="card">
-            <h2>Dernières Détections</h2>
+            <h1>URL Malware Distribution</h1>
                 <table border="1">
                     <tr>
                         <th>URL</th>
                         <th>Malware Type</th>
                         <th>Detected At</th>
                         <th>Source IP</th>
+                        <th>Reference URL</th>
                     </tr>
                     {% for alert in malicious_urls %}
                     <tr>
@@ -55,6 +66,13 @@
                         <td>{{ alert.malware_type }}</td>
                         <td>{{ alert.detected_at }}</td>
                         <td>{{ alert.source_ip }}</td>
+                        <td>
+                            {% if alert.reference_url %}
+                                <a href="{{ alert.reference_url }}" target="_blank">{{ alert.reference_url }}</a>
+                            {% else %}
+                                None
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -64,22 +82,22 @@
                     <th>Timestamp</th>
                     <th>Alert Name</th>
                     <th>Classification</th>
-                    <th>Priority</th>
                     <th>Source IP</th>
                     <th>Source Port</th>
                     <th>Destination IP</th>
                     <th>Destination Port</th>
+                    <th>Priority</th>
                 </tr>
                 {% for alert in snort_alerts %}
-                <tr>
+                <tr class="{{ alert.priority_label }}">
                     <td>{{ alert.timestamp }}</td>
                     <td>{{ alert.alert_name }}</td>
                     <td>{{ alert.classification }}</td>
-                    <td>{{ alert.priority }}</td>
                     <td>{{ alert.src_ip }}</td>
                     <td>{{ alert.src_port }}</td>
                     <td>{{ alert.dest_ip }}</td>
                     <td>{{ alert.dest_port }}</td>
+                    <td>{{ alert.priority_label }}</td>
                 </tr>
                 {% endfor %}
             </table>

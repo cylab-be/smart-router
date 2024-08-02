@@ -32,8 +32,21 @@ def process_http(packet):
 
             response = query_urlhaus("http://" + full_url)
             if response['query_status'] == 'ok':
-                tags = " ".join(response['tags'])
-                MaliciousURL.objects.create(url=full_url, malware_type=tags, detected_at=timezone.now(), source_ip=src_ip)
+                if response['urlhaus_reference']:
+                    reference_url = response['urlhaus_reference']
+                else:
+                    reference_url = "None"
+                if response['tags']:
+                    tags = " ".join(response['tags'])
+                else:
+                    tags = "no information"
+                MaliciousURL.objects.create(
+                    url=full_url,
+                    malware_type=tags,
+                    detected_at=timezone.now(),
+                    source_ip=src_ip,
+                    reference_url=reference_url
+                )
             elif response['query_status'] == 'no_results':
                 print(url)
                 print("No results")
