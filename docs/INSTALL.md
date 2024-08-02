@@ -21,8 +21,8 @@ We accept the terms and click next and follow the wizard instructions.
 ![alt text](screenshots/4.png)
 * We navigate trough to the file "openwrt-23.05.3-mvebu-cortexa9-linksys_wrt1200ac-squashfs-factory" which can be found on the docs/images folder on the smart-router github repository, then click on "start" button 
 * The router will reboot and boot on OpenWRT
-* The router will not broadcast an SSID be default so we need to connect to him directly by cable (the router does not accept outside connection by default, so we need to plug the cable to a LAN interface).
-* The router will take the address 192.168.1.1 by default so we can take the address 192.168.1.5 if it does not distribute DHCP address to connect to it and configure it
+* The router will not broadcast an SSID by default, so we need to connect to him directly by cable (the router does not accept outside connection by default, so we need to plug the cable to a LAN interface).
+* The router will take the address 192.168.1.1 by default, so we can take the address 192.168.1.5 if it does not distribute DHCP address to connect to it and configure it
 
 ## Configure OpenWRT
 * Next step is to configure OpenWRT, like seen on the last screenshot, the router has not any password by default, so we need to define one. 
