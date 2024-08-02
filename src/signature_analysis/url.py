@@ -10,6 +10,20 @@ def query_urlhaus(url):
     json_response = response.json()
     return json_response
 
+def determine_priority(url_status, date_added):
+    date_format = "%Y-%m-%d %H:%M:%S %Z"
+    date_added = datetime.strptime(date_added, date_format)
+    days_diff = (datetime.utcnow() - date_added).days
+
+    if url_status == "online" or days_diff <= 7:
+        return "high"
+    elif url_status == "offline" and days_diff <= 90:
+        return "medium"
+    elif url_status == "offline" and days_diff > 90:
+        return "low"
+    else:
+        return "low"
+
 def process_http(packet):
     if packet.haslayer('IP') and packet.haslayer('TCP') and packet.haslayer('Raw'):
         src_ip = packet[IP].src
@@ -40,12 +54,18 @@ def process_http(packet):
                     tags = " ".join(response['tags'])
                 else:
                     tags = "no information"
+                if response['url_status']:
+                    url_status = response['url_status']
+                if response['date_added']:
+                    date_added = response['date_added']
+                priority = determine_priority(url_status, date_added)
                 MaliciousURL.objects.create(
                     url=full_url,
                     malware_type=tags,
                     detected_at=timezone.now(),
                     source_ip=src_ip,
-                    reference_url=reference_url
+                    reference_url=reference_url,
+                    priority=priority
                 )
             elif response['query_status'] == 'no_results':
                 print(url)

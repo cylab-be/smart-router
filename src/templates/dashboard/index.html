@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>SmartRouter dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,21 +46,25 @@
     </div>
     <div class="container">
         <div class="card">
-            <h2>Statistiques de Détection</h2>
-            <p>Nombre total d'alertes Snort: <strong>{{ snort_alert_count }}</strong></p>
-            <p>Nombre total d'URL malveillantes: <strong>{{ malicious_url_count }}</strong></p>
-            <p>Appareils affectés: <strong>45</strong></p>
+            <h2>Detection statistics</h2>
+            <p>Total number of Snort alerts: <strong>{{ snort_alert_count }}</strong></p>
+            <p>Total number of malicious URLs: <strong>{{ malicious_url_count }}</strong></p>
+            <p>Infected devices: <strong>45</strong></p>
         </div>
         <div class="card">
             <h1>URL Malware Distribution</h1>
-                <table border="1">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
                     <tr>
                         <th>URL</th>
                         <th>Malware Type</th>
                         <th>Detected At</th>
                         <th>Source IP</th>
                         <th>Reference URL</th>
+                        <th>Priority</th>
                     </tr>
+                </thead>
+                <tbody>
                     {% for alert in malicious_urls %}
                     <tr>
                         <td>{{ alert.url }}</td>
@@ -73,33 +78,39 @@
                                 None
                             {% endif %}
                         </td>
+                        <td>{{ alert.priority }}</td>
                     </tr>
                     {% endfor %}
-                </table>
+                </tbody>
+            </table>
             <h1>Snort Alerts</h1>
-            <table border="1">
-                <tr>
-                    <th>Timestamp</th>
-                    <th>Alert Name</th>
-                    <th>Classification</th>
-                    <th>Source IP</th>
-                    <th>Source Port</th>
-                    <th>Destination IP</th>
-                    <th>Destination Port</th>
-                    <th>Priority</th>
-                </tr>
-                {% for alert in snort_alerts %}
-                <tr class="{{ alert.priority_label }}">
-                    <td>{{ alert.timestamp }}</td>
-                    <td>{{ alert.alert_name }}</td>
-                    <td>{{ alert.classification }}</td>
-                    <td>{{ alert.src_ip }}</td>
-                    <td>{{ alert.src_port }}</td>
-                    <td>{{ alert.dest_ip }}</td>
-                    <td>{{ alert.dest_port }}</td>
-                    <td>{{ alert.priority_label }}</td>
-                </tr>
-                {% endfor %}
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Alert Name</th>
+                        <th>Classification</th>
+                        <th>Source IP</th>
+                        <th>Source Port</th>
+                        <th>Destination IP</th>
+                        <th>Destination Port</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for alert in snort_alerts %}
+                    <tr>
+                        <td>{{ alert.timestamp }}</td>
+                        <td>{{ alert.alert_name }}</td>
+                        <td>{{ alert.classification }}</td>
+                        <td>{{ alert.src_ip }}</td>
+                        <td>{{ alert.src_port }}</td>
+                        <td>{{ alert.dest_ip }}</td>
+                        <td>{{ alert.dest_port }}</td>
+                        <td class="{{ alert.priority_label }}"> {{ alert.priority_label }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
