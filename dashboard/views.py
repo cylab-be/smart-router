@@ -13,6 +13,9 @@ def index(request):
     for alert in snort_alerts:
         alert.priority_label = priority_map.get(alert.priority, 'unknown')
 
+    for alert in malicious_urls:
+        alert.priority_label = alert.priority
+
     return render(request, "dashboard/index.html", {
         "malicious_urls": malicious_urls,
         "snort_alerts": snort_alerts,
