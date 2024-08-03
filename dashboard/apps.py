@@ -2,13 +2,13 @@ from django.apps import AppConfig
 
 def startup():
     import threading
-    from signature_analysis.url import start_capture
+    from tools.url import start_capture
     interface = "br-lan"
     thread = threading.Thread(target=start_capture, args=(interface,))
     thread.daemon = True
     thread.start()
 
-    from signature_analysis.snort.launch import run_snort
+    from tools.snort.launch import run_snort
     thread = threading.Thread(target=run_snort)
     thread.daemon = True
     thread.start()

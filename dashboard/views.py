@@ -3,10 +3,6 @@ from django.shortcuts import render
 
 from .models import MaliciousURL, SnortAlert
 
-import threading
-from signature_analysis.url import start_capture
-
-
 def index(request):
     malicious_urls = MaliciousURL.objects.all()
     snort_alerts = SnortAlert.objects.all()
@@ -23,10 +19,3 @@ def index(request):
         "malicious_url_count": malicious_url_count,
         "snort_alert_count": snort_alert_count
     })
-
-def start_network_monitor(request):
-    interface = "en0"
-    thread = threading.Thread(target=start_capture, args=(interface,))
-    thread.daemon = True
-    thread.start()
-    return HttpResponse("Network monitoring started.")
