@@ -67,7 +67,6 @@ printf "${GREEN}[INFO] - SmartRouter installed ${NORMAL}\n\n"
 
 #web
 printf "${BLUE}[INFO] - Installing web server ${NORMAL}\n"
-cd src
 python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py runserver 192.168.1.3:8000
