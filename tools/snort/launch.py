@@ -28,20 +28,18 @@ def save_snort_alert(alert_data):
         dest_port=alert_data['dest_port']
     )
 
-def run_snort():
+def run_snort(interface):
     snort_command = [
         "snort",
         "-c", "/etc/snort/snort.conf",
-        "-i", "br-lan",
+        "-i", f"{interface}",
         "-A", "console",
         "-l", ".",
         "--daq-dir", "/usr/lib/daq"
     ]
 
-# snort -r 2018-07-25-10-53-16-192.168.100.111.pcap -c /etc/snort/snort.conf -A fast -l . --daq-dir /usr/lib/daq
-
     process = subprocess.Popen(snort_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    print("process running SNORT")
+    print("Process running Snort")
     try:
         while True:
             output = process.stdout.readline()

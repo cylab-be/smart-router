@@ -9,7 +9,7 @@ def startup():
     thread.start()
 
     from tools.snort.launch import run_snort
-    thread = threading.Thread(target=run_snort)
+    thread = threading.Thread(target=run_snort, args=(interface,))
     thread.daemon = True
     thread.start()
 
