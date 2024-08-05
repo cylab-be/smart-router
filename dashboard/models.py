@@ -5,8 +5,8 @@ class MaliciousURL(models.Model):
     malware_type = models.CharField(max_length=255)
     detected_at = models.DateTimeField(auto_now_add=True)
     source_ip = models.GenericIPAddressField()
-    reference_url = models.URLField(max_length=255, null=True, blank=True)
-    priority = models.CharField(max_length=10, null=True, blank=True)
+    reference_url = models.URLField(max_length=255)
+    priority = models.CharField(max_length=10)
 
     def __str__(self):
         return self.url
