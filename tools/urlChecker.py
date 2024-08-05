@@ -10,7 +10,7 @@ def query_urlhaus(url):
     json_response = response.json()
     return json_response
 
-def determine_priority(url_status, date_added):
+def define_priority(url_status, date_added):
     date_format = "%Y-%m-%d %H:%M:%S %Z"
     date_added = datetime.strptime(date_added, date_format)
     days_diff = (datetime.utcnow() - date_added).days
@@ -24,7 +24,7 @@ def determine_priority(url_status, date_added):
     else:
         return "low"
 
-def process_http(packet):
+def analyzer(packet):
     if packet.haslayer('IP') and packet.haslayer('TCP') and packet.haslayer('Raw'):
         src_ip = packet[IP].src
         payload = packet[Raw].load.decode("utf-8", errors="ignore")
@@ -58,7 +58,7 @@ def process_http(packet):
                     url_status = response['url_status']
                 if response['date_added']:
                     date_added = response['date_added']
-                priority = determine_priority(url_status, date_added)
+                priority = define_priority(url_status, date_added)
                 MaliciousURL.objects.create(
                     url=full_url,
                     malware_type=tags,
@@ -75,8 +75,4 @@ def process_http(packet):
                 print("Something went wrong")
 
 def start_capture(interface):
-    sniff(iface=interface, prn=process_http)
-
-if __name__ == "__main__":
-    interface = "en0"
-    start_capture(interface)
+    sniff(iface=interface, prn=analyzer)
