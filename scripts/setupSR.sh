@@ -60,9 +60,9 @@ git clone https://gitlab.cylab.be/cylab/smart-router.git
 cd smart-router
 git checkout v2
 # copy snort.conf
-cp src/signature_analysis/snort/snort.conf /etc/snort/snort.conf
+cp src/tools/snort/snort.conf /etc/snort/snort.conf
 # copy rules folder
-cp -r src/signature_analysis/snort/rules /etc/snort/
+cp -r src/tools/snort/rules /etc/snort/
 printf "${GREEN}[INFO] - SmartRouter installed ${NORMAL}\n\n"
 
 #web
