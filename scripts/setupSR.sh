@@ -69,7 +69,7 @@ printf "${GREEN}[INFO] - SmartRouter installed ${NORMAL}\n\n"
 printf "${BLUE}[INFO] - Installing web server ${NORMAL}\n"
 python3 manage.py makemigrations
 python3 manage.py migrate
-python3 manage.py runserver 192.168.1.3:8000
+screen -dmS IDS sh -c 'python3 manage.py runserver 192.168.1.3:8000'
 printf "${GREEN}[INFO] - web server installed ${NORMAL}\n\n"
 
 #Auto start after reboot
