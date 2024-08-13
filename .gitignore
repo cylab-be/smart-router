@@ -20,6 +20,3 @@ __pycache__/
 
 #Migrations files for Django
 **/migrations/*.py
-
-chatgpt.rules
-test.rules
