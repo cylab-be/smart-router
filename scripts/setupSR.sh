@@ -47,11 +47,7 @@ printf "${GREEN}[INFO] - snort installed ${NORMAL}\n\n"
 printf "${BLUE}[INFO] - Installing python3 and some packages ${NORMAL}\n"
 install_package "python3"
 install_package "python3-pip"
-# faire un fichier requirements.txt
-python3 -m pip install scapy
-python3 -m pip install requests
-python3 -m pip install django
-python3 -m pip install tzdata
+python3 -m pip install -r requirements.txt
 printf "${GREEN}[INFO] - Installing python3 and some packages ${NORMAL}\n\n"
 
 #SmartRouter config

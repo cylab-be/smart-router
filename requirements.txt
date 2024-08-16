@@ -1,0 +1,4 @@
+Django==5.1
+requests==2.32.3
+scapy==2.5.0
+tzdata==2024.1
