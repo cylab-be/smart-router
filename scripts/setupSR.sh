@@ -43,13 +43,6 @@ install_package "snort"
 mkdir /usr/lib/snort_dynamicrules
 printf "${GREEN}[INFO] - snort installed ${NORMAL}\n\n"
 
-#Python3 (Django, scapy)
-printf "${BLUE}[INFO] - Installing python3 and some packages ${NORMAL}\n"
-install_package "python3"
-install_package "python3-pip"
-python3 -m pip install -r requirements.txt
-printf "${GREEN}[INFO] - Installing python3 and some packages ${NORMAL}\n\n"
-
 #SmartRouter config
 printf "${BLUE}[INFO] - Installing SmartRouter ${NORMAL}\n"
 git clone https://gitlab.cylab.be/cylab/smart-router.git
@@ -60,6 +53,13 @@ cp tools/snort/snort.conf /etc/snort/snort.conf
 # copy rules folder
 cp -r tools/snort/rules /etc/snort/
 printf "${GREEN}[INFO] - SmartRouter installed ${NORMAL}\n\n"
+
+#Python3 (Django, scapy)
+printf "${BLUE}[INFO] - Installing python3 and some packages ${NORMAL}\n"
+install_package "python3"
+install_package "python3-pip"
+python3 -m pip install -r requirements.txt
+printf "${GREEN}[INFO] - Installing python3 and some packages ${NORMAL}\n\n"
 
 #web
 printf "${BLUE}[INFO] - Installing web server ${NORMAL}\n"
