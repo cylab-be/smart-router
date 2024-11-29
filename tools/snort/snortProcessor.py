@@ -4,8 +4,9 @@ from dashboard.models import SnortAlert
 import re
 
 def parse_snort_alert(alert):
+    print(alert)
     pattern = re.compile(
-        r'(?P<timestamp>\d{2}/\d{2}-\d{2}:\d{2}:\d{2}\.\d{6})\s+\[\*\*\]\s+\[\d+:(?P<sid>\d+):\d+\]\s+(?P<alert_name>.+?)\s+\[\*\*\]\s+\[Classification:\s+(?P<classification>.+?)\]\s+\[Priority:\s+(?P<priority>\d+)\]\s+\{(?P<protocol>\w+)\}\s+(?P<src_ip>\d+\.\d+\.\d+\.\d+):(?P<src_port>\d+)\s+->\s+(?P<dest_ip>\d+\.\d+\.\d+\.\d+):(?P<dest_port>\d+)'
+        r'(?P<timestamp>\d{2}/\d{2}-\d{2}:\d{2}:\d{2}\.\d{6})\s+\[\*\*\]\s+\[\d+:(?P<sid>\d+):\d+\]\s+(?P<alert_name>.+?)\s+\[\*\*\]\s+\[Classification:\s+(?P<classification>.+?)\]\s+\[Priority:\s+(?P<priority>\d+)\]\s+\{(?P<protocol>\w+)\}\s+(?P<src_ip>\d+\.\d+\.\d+\.\d+)(?::(?P<src_port>\d+))?\s+->\s+(?P<dest_ip>\d+\.\d+\.\d+\.\d+)(?::(?P<dest_port>\d+))?'
     )
     match = pattern.match(alert)
     if match:
