@@ -96,8 +96,8 @@ exit_on_cmd_failure
 
 
 print_green "Installing Zeek"
-UBUNTU_VERSION=$(lsb_release -r | awk '{print $2}')
-ZEEK_REPO_URL="download.opensuse.org/repositories/security:/zeek/Raspbian_12"
+DEBIAN_VERSION=$(lsb_release -r | awk '{print $2}')
+ZEEK_REPO_URL="download.opensuse.org/repositories/security:/zeek/Raspbian_${DEBIAN_VERSION}"
 
 # Add the repository to the sources list
 echo "deb http://${ZEEK_REPO_URL}/ /" |  tee /etc/apt/sources.list.d/security:zeek.list \
