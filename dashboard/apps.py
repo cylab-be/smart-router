@@ -2,8 +2,9 @@ from django.apps import AppConfig
 
 def startup():
     import threading
-    from tools.urlChecker import start_capture
-    interface = "br-lan"
+    interface = "br-lan"    # Change this to the interface you want to monitor, for OpenWRT it is usually "br-lan"
+
+    from tools.scapyCapture import start_capture
     thread = threading.Thread(target=start_capture, args=(interface,))
     thread.daemon = True
     thread.start()

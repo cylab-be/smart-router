@@ -24,7 +24,7 @@ def define_priority(url_status, date_added):
     else:
         return "low"
 
-def analyzer(packet):
+def check_urlhaus(packet):
     if packet.haslayer('IP') and packet.haslayer('TCP') and packet.haslayer('Raw'):
         src_ip = packet[IP].src
         payload = packet[Raw].load.decode("utf-8", errors="ignore")
@@ -73,6 +73,3 @@ def analyzer(packet):
             else:
                 print(url)
                 print("Something went wrong")
-
-def start_capture(interface):
-    sniff(iface=interface, prn=analyzer)
