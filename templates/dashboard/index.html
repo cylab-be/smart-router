@@ -113,6 +113,29 @@
                 </tbody>
             </table>
         </div>
+        <div class="card">
+            <h1>Discovered Devices</h1>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>MAC Address</th>
+                        <th>IP Address</th>
+                        <th>Hostname</th>
+                        <th>Vendor Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for device in discovered_devices %}
+                    <tr>
+                        <td>{{ device.src_mac }}</td>
+                        <td>{{ device.src_ip }}</td>
+                        <td>{{ device.hostname }}</td>
+                        <td>{{ device.vendor_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
