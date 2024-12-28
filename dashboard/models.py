@@ -20,3 +20,12 @@ class SnortAlert(models.Model):
     src_port = models.IntegerField()
     dest_ip = models.GenericIPAddressField()
     dest_port = models.IntegerField()
+
+class DiscoveredDevice(models.Model):
+    src_mac = models.CharField(max_length=17, unique=True)
+    src_ip = models.GenericIPAddressField()
+    hostname = models.CharField(max_length=255)
+    vendor_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.hostname} ({self.src_mac})"
