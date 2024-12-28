@@ -1,6 +1,7 @@
 from scapy.all import *
 import socket
 from mac_vendor_lookup import MacLookup
+from dashboard.models import DiscoveredDevice
 
 # Dictionary to store discovered MAC addresses
 discovered_macs = []
@@ -57,3 +58,12 @@ def identify_devices(packet):
             hostname = get_hostname(src_ip)
             vendor_name = check_mac(src_mac)
             print(f"New MAC discovered: {src_mac} with local IP: {src_ip}, hostname: {hostname}, vendor name: {vendor_name}")
+
+            # Save to the database
+            if not DiscoveredDevice.objects.filter(src_mac=src_mac).exists():
+                DiscoveredDevice.objects.create(
+                    src_mac=src_mac,
+                    src_ip=src_ip,
+                    hostname=hostname,
+                    vendor_name=vendor_name
+                )
