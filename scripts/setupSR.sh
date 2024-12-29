@@ -65,7 +65,7 @@ printf "${GREEN}[INFO] - Installing python3 and some packages ${NORMAL}\n\n"
 printf "${BLUE}[INFO] - Installing web server ${NORMAL}\n"
 python3 manage.py makemigrations dashboard
 python3 manage.py migrate
-screen -dmS IDS sh -c 'python3 manage.py runserver 192.168.1.3:8000'
+screen -dmS IDS sh -c 'python3 manage.py runserver 0.0.0.0:8000'
 printf "${GREEN}[INFO] - web server installed ${NORMAL}\n\n"
 
 #Auto start after reboot
