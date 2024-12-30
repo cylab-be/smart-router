@@ -60,6 +60,9 @@ install_package "python3"
 install_package "python3-pip"
 python3 -m pip install -r requirements.txt
 pip3 install mac-vendor-lookup --index-url https://www.piwheels.org/simple
+cd /root
+mkdir .cache
+cd smart-router
 printf "${GREEN}[INFO] - Installing python3 and some packages ${NORMAL}\n\n"
 
 #web
