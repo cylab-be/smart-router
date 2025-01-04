@@ -26,6 +26,7 @@ class DiscoveredDevice(models.Model):
     src_ip = models.GenericIPAddressField()
     hostname = models.CharField(max_length=255)
     vendor_name = models.CharField(max_length=255)
+    protocols = models.JSONField(default=list)
 
     def __str__(self):
         return f"{self.hostname} ({self.src_mac})"

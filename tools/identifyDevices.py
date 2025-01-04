@@ -1,5 +1,6 @@
 from scapy.all import *
 import socket
+import csv
 from mac_vendor_lookup import MacLookup
 from dashboard.models import DiscoveredDevice
 
@@ -9,6 +10,58 @@ discovered_macs = []
 # Initialize MacLookup
 mac_lookup = MacLookup()
 mac_lookup.update_vendors()
+
+# All protocols name with their port number
+protocols = {}
+
+def get_protocol_name(port, transport_protocol):
+    global protocols
+    if not protocols:
+        protocols = load_protocol_database("./tools/service-names-port-numbers.csv")
+
+    if str(port) in protocols[transport_protocol]:
+        if protocols[transport_protocol][str(port)] != '':
+            return protocols[transport_protocol][str(port)]
+    return "Unknown"
+
+def load_protocol_database(filename):
+    with open(filename, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            port = row['Port Number']
+            protocol = row['Transport Protocol']
+            service = row['Service Name']
+            if protocol not in protocols:
+                protocols[protocol] = {}
+            protocols[protocol][port] = service
+    return protocols
+
+def identify_protocol(packet):
+    if packet.haslayer(IP):
+        src_ip = packet[IP].src
+        if src_ip.startswith('192.168.'):
+            if packet.haslayer(TCP) or packet.haslayer(UDP):
+                if packet.haslayer(TCP):
+                    proto_layer = packet[TCP]
+                    transport_protocol = "tcp"
+                else:
+                    proto_layer = packet[UDP]
+                    transport_protocol = "udp"
+
+                dst_port = proto_layer.dport
+
+                # Use socket to determine the protocol
+                protocol = get_protocol_name(dst_port, transport_protocol)
+
+                if protocol != "Unknown":
+                    if DiscoveredDevice.objects.filter(src_ip=src_ip).exists():
+                        # Update the device's protocols in the database
+                        device = DiscoveredDevice.objects.get(src_ip=src_ip)
+                        if protocol.upper() not in device.protocols:
+                            print(f"Protocol detected: {protocol.upper()} on port {dst_port} from IP: {src_ip}")
+                            device.protocols.append(protocol.upper())
+                            device.save()
+    return None
 
 def get_hostname(ip):
     try:
@@ -67,3 +120,4 @@ def identify_devices(packet):
                     hostname=hostname,
                     vendor_name=vendor_name
                 )
+    identify_protocol(packet)
