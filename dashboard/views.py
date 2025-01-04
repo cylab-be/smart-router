@@ -25,7 +25,8 @@ def index(request):
         "malicious_url_count": malicious_url_count,
         "snort_alert_count": snort_alert_count,
         "infected_device_count": infected_device_count,
-        'discovered_devices': discovered_devices
+        'discovered_devices': discovered_devices,
+        'iot_protocols': ['MQTT', 'COAP' 'RTSP', 'RTSPS']
     })
 
 def get_unique_internal_ips():

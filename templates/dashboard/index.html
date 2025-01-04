@@ -38,6 +38,9 @@
         .low {
             background-color: yellow;
         }
+        .iot-protocol {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -132,7 +135,20 @@
                         <td>{{ device.src_ip }}</td>
                         <td>{{ device.hostname }}</td>
                         <td>{{ device.vendor_name }}</td>
-                        <td>{{ device.protocols|join:", " }}</td>
+                        <td>
+                            {% if device.protocols %}
+                                {% for protocol in device.protocols %}
+                                    {% if protocol in iot_protocols %}
+                                        <span class="iot-protocol">{{ protocol }}</span>
+                                    {% else %}
+                                        {{ protocol }}
+                                    {% endif %}
+                                    {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
