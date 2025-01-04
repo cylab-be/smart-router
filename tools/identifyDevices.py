@@ -1,6 +1,8 @@
 from scapy.all import *
+import requests
 import socket
 import csv
+import os
 from mac_vendor_lookup import MacLookup
 from dashboard.models import DiscoveredDevice
 
@@ -17,15 +19,26 @@ protocols = {}
 def get_protocol_name(port, transport_protocol):
     global protocols
     if not protocols:
-        protocols = load_protocol_database("./tools/service-names-port-numbers.csv")
+        protocols = load_protocol_database("/root/.cache/service-names-port-numbers.csv")
 
     if str(port) in protocols[transport_protocol]:
         if protocols[transport_protocol][str(port)] != '':
             return protocols[transport_protocol][str(port)]
     return "Unknown"
 
-def load_protocol_database(filename):
-    with open(filename, 'r') as file:
+def download_protocol_database(path):
+    # URl of the CSV file
+    url = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv"
+
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open(path, "wb") as file:
+            file.write(response.content)
+
+def load_protocol_database(path):
+    if not os.path.exists(path):
+        download_protocol_database(path)
+    with open(path, 'r') as file:
         reader = csv.DictReader(file)
         for row in reader:
             port = row['Port Number']
