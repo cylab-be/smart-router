@@ -122,6 +122,7 @@
                         <th>IP Address</th>
                         <th>Hostname</th>
                         <th>Vendor Name</th>
+                        <th>Protocols</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -131,6 +132,7 @@
                         <td>{{ device.src_ip }}</td>
                         <td>{{ device.hostname }}</td>
                         <td>{{ device.vendor_name }}</td>
+                        <td>{{ device.protocols|join:", " }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
