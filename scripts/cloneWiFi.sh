@@ -65,11 +65,19 @@ if [ "$response" = "Y" ] || [ "$response" = "y" ]; then
     echo "Have you cut the current Wifi network? (Y/N)"
     read -r confirmation
     if [ "$confirmation" = "Y" ] || [ "$confirmation" = "y" ]; then
+        # 2,4 GHz
         uci set wireless.@wifi-iface[1].mode='ap'
-	uci set wireless.@wifi-iface[1].network='lan'
+	      uci set wireless.@wifi-iface[1].network='lan'
         uci set wireless.@wifi-iface[1].ssid="$SSID"
         uci set wireless.@wifi-iface[1].key="$PASSWORD"
         uci set wireless.@wifi-iface[1].encryption="psk2"
+        uci commit wireless
+        # 5 GHz
+        uci set wireless.@wifi-iface[0].mode='ap'
+	      uci set wireless.@wifi-iface[0].network='lan'
+        uci set wireless.@wifi-iface[0].ssid="$SSID"
+        uci set wireless.@wifi-iface[0].key="$PASSWORD"
+        uci set wireless.@wifi-iface[0].encryption="psk2"
         uci commit wireless
         wifi up
 
